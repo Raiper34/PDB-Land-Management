@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vutbr.fit.pdb.projekt.FXMLController">
+    <stylesheets>
+        <URL value="@/styles/fxml.css" />
+    </stylesheets>
+   <children>
+      <CheckBox fx:id="checkBox" layoutX="112.0" layoutY="46.0" mnemonicParsing="false" onAction="#checked" text="CheckBox" />
+      <Label fx:id="label" layoutX="282.0" layoutY="46.0" text="Klikni, pro vykresleni obdelniku z databaze!" />
+      <Canvas fx:id="canvas" height="300.0" layoutX="35.0" layoutY="96.0" width="600.0" />
+   </children>
+</AnchorPane>

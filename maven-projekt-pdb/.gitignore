@@ -1,0 +1,13 @@
+##
+## Specifies intentionally untracked files to ignore for Maven
+## https://raw.githubusercontent.com/github/gitignore/master/Maven.gitignore
+##
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
