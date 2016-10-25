@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oracle.jdbc.pool.OracleDataSource;
+import cz.vutbr.fit.pdb.spatial.QueryComposer;
 
 /**
  *
@@ -36,9 +37,13 @@ public class NewFXMain extends Application {
     public static void main(String[] args) {
         //launch(args);
         
+        QueryComposer test = new QueryComposer();
+        
         Photo fotka1 = new Photo();
         Photo fotka2 = new Photo();
         Photo fotka3 = new Photo();
+        
+        
                 
         try {
             OracleDataSource ods = new OracleDataSource();
