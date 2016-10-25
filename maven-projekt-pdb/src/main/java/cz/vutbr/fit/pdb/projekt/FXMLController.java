@@ -24,38 +24,36 @@ import oracle.spatial.geometry.JGeometry;
  *
  * @author jan
  */
-public class FXMLController implements Initializable {  
-    
+public class FXMLController implements Initializable {
+
     @FXML
     private CheckBox checkBox;
-    
+
     @FXML
     private Label label;
-    
+
     @FXML
     private Canvas canvas;
-    
+
     private GraphicsContext gc;
-    
+
     private int clickedCount = 2;
 
     @FXML
     void checked(ActionEvent event) throws SQLException {
         DatabaseTest databaseTest = new DatabaseTest();
         JGeometry geom = databaseTest.databaseOperation();
-        
+
         if (clickedCount % 2 != 0) {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             label.setText("Klikni, pro vykresleni obdelniku z databaze!");
-        }
-        else {
+        } else {
             if (geom.isRectangle()) {
                 double x1 = geom.getOrdinatesArray()[0];
                 double y1 = geom.getOrdinatesArray()[1];
 
                 double x2 = geom.getOrdinatesArray()[2];
                 double y2 = geom.getOrdinatesArray()[3];
-
 
                 gc.setFill(Color.AQUA);
                 gc.setStroke(Color.BLACK);
@@ -70,17 +68,13 @@ public class FXMLController implements Initializable {
         }
         clickedCount++;
     }
-    
+
     /**
      * Initializes the controller class.
      */
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         gc = canvas.getGraphicsContext2D();
-    }  
-    
-    
+    }
+
 }
-
-

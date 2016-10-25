@@ -11,19 +11,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 /**
  *
  * @author jan
  */
 public class NewFXMain extends Application {
-    
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXML.fxml"));
-        
+
         Scene scene = new Scene(root);
-        
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -34,5 +33,5 @@ public class NewFXMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
