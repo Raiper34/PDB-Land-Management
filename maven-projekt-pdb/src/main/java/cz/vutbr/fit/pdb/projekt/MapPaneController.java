@@ -17,6 +17,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -24,42 +25,25 @@ import javafx.scene.shape.Rectangle;
 import oracle.spatial.geometry.JGeometry;
 
 
-
 /**
  * FXML Controller class
  *
  * @author jan
  */
-public class FXMLController implements Initializable {
+public class MapPaneController implements Initializable {
 
-    @FXML
-    private CheckBox checkBox;
-
-    @FXML
-    private Label label;
-
-    @FXML
-    private Canvas canvas;
     
-    //@FXML 
-    //private Window mapPane;
     
     @FXML
-    private AnchorPane mapa;
-
-    private GraphicsContext gc;
+    public AnchorPane mapa;
     
-    @FXML
-    private Button wer;
-
-    private int clickedCount = 2;
+    public int cislo;
     
-    @FXML
-    private AnchorPane mapPane;
+    public FXMLController cccc;
     
-    @FXML private MapPaneController mapPaneController;
+    @FXML private FXMLController fXMLController;
 
-    @FXML
+    /*@FXML
     void checked(ActionEvent event) throws SQLException {
         DatabaseTest databaseTest = new DatabaseTest();
         JGeometry geom = databaseTest.databaseOperation();
@@ -87,15 +71,13 @@ public class FXMLController implements Initializable {
             label.setText("Obdelnik z databaze vykreslen!");
         }
         clickedCount++;
-    }
+    }*/
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.mapPaneController.addParent(this);
-        
         //gc = canvas.getGraphicsContext2D();
         /*Rectangle r = new Rectangle();
                  r.setX(50);
@@ -113,20 +95,41 @@ public class FXMLController implements Initializable {
                  r.setArcWidth(20);
                  r.setArcHeight(20);
                  r.fillProperty();*/
-                 //mapPane.getChildren().add(r);
-                 //mapPane.getChildren().add(r1);
-                 //this.mapPaneController.mapa.getChildren().add(r);
-                 //this.mapPaneController.mapa.getChildren().add(r1);
-                 
-                 
+                 //mapa.getChildren().add(r);
+                    //mapa.getChildren().add(r1);
                  
                  //apPane.getProperties().getChildren().add(r);
                  //mapPane.getChildren().
+                 //cccc.test();
     }
     
-    public void test()
+    public void addParent(FXMLController c1)
     {
-        
+        this.cccc = c1;
+    }
+    
+    @FXML
+    void clicked(MouseEvent event) {
+        this.cccc.test();
+        System.out.println("Test");
+        Rectangle r = new Rectangle();
+                 r.setX(50);
+                 r.setY(50);
+                 r.setWidth(200);
+                 r.setHeight(100);
+                 r.setArcWidth(20);
+                 r.setArcHeight(20);
+                 
+        Rectangle r1 = new Rectangle();
+                 r.setX(50);
+                 r.setY(50);
+                 r.setWidth(200);
+                 r.setHeight(100);
+                 r.setArcWidth(20);
+                 r.setArcHeight(20);
+                 r.fillProperty();
+                 mapa.getChildren().add(r);
+                    mapa.getChildren().add(r1);
     }
 
 }
