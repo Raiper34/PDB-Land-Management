@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="975.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="cz.vutbr.fit.pdb.projekt.FXMLController">
+    <stylesheets>
+        <URL value="@/styles/fxml.css" />
+    </stylesheets>
+    <children>
+        <AnchorPane prefHeight="650.0" prefWidth="650.0">
+          <fx:include source="MapPane.fxml" fx:id="mapPane" />  
+        </AnchorPane>
+        <AnchorPane layoutX="650.0" prefHeight="650.0" prefWidth="320.0">
+            <children>
+                <Accordion prefHeight="600.0" prefWidth="325.0">
+                    <panes>
+                        <TitledPane text="Add entity">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <fx:include source="AddEntityPane.fxml" fx:id="addEntityPane" />
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                        <TitledPane expanded="false" text="Entity modification">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <fx:include source="EntityModificationPane.fxml" fx:id="entityModificationPane" />
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                        <TitledPane expanded="false" text="Multimedia">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <fx:include source="MultimediaPane.fxml" fx:id="muldimediaPane" />
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                        <TitledPane expanded="false" text="Time">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <fx:include source="TimePane.fxml" fx:id="timePane" />
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                        <TitledPane expanded="false" text="Spatial">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <fx:include source="SpatialPane.fxml" fx:id="spatialPane" />
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                        <TitledPane expanded="false" text="Freeholders">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <fx:include source="FreeholdersPane.fxml" fx:id="freeholdersPane" />
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                    </panes>
+                </Accordion>
+                <CheckBox layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
+                <CheckBox layoutX="100.0" layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
+                <CheckBox layoutX="200.0" layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
