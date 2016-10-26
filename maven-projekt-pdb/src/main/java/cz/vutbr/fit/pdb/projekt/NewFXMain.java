@@ -23,7 +23,7 @@ public class NewFXMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXML1.fxml"));
 
         Scene scene = new Scene(root);
 
@@ -35,8 +35,8 @@ public class NewFXMain extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //launch(args);
-        
+        launch(args);
+        return;
         QueryComposer test = new QueryComposer();
         
         Photo fotka1 = new Photo();

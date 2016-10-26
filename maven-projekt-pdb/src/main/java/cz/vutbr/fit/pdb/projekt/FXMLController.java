@@ -16,7 +16,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import oracle.spatial.geometry.JGeometry;
 
 /**
@@ -38,6 +40,9 @@ public class FXMLController implements Initializable {
     private GraphicsContext gc;
 
     private int clickedCount = 2;
+    
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
     void checked(ActionEvent event) throws SQLException {
@@ -74,7 +79,26 @@ public class FXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        gc = canvas.getGraphicsContext2D();
+        //gc = canvas.getGraphicsContext2D();
+        Rectangle r = new Rectangle();
+                 r.setX(50);
+                 r.setY(50);
+                 r.setWidth(200);
+                 r.setHeight(100);
+                 r.setArcWidth(20);
+                 r.setArcHeight(20);
+                 
+        Rectangle r1 = new Rectangle();
+                 r.setX(50);
+                 r.setY(50);
+                 r.setWidth(200);
+                 r.setHeight(100);
+                 r.setArcWidth(20);
+                 r.setArcHeight(20);
+                 r.fillProperty()
+
+                 anchorPane.getChildren().add(r);
+                 anchorPane.getChildren().add(r1);
     }
 
 }
