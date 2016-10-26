@@ -57,7 +57,7 @@ public class FXMLController implements Initializable {
     @FXML
     private AnchorPane mapPane;
     
-    @FXML private MapPaneController mapPaneController;
+    @FXML public MapPaneController mapPaneController;
 
     @FXML
     void checked(ActionEvent event) throws SQLException {

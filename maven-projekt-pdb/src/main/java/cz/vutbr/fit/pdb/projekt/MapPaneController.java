@@ -128,7 +128,7 @@ public class MapPaneController implements Initializable {
                  r.setArcWidth(20);
                  r.setArcHeight(20);
                  r.fillProperty();
-                 mapa.getChildren().add(r);
+                 this.cccc.mapPaneController.mapa.getChildren().add(r);
                     mapa.getChildren().add(r1);
     }
 
