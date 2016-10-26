@@ -3,69 +3,100 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="975.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="cz.vutbr.fit.pdb.projekt.FXMLController">
+<AnchorPane id="AnchorPane" prefHeight="670.0" prefWidth="975.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vutbr.fit.pdb.projekt.FXMLController">
     <stylesheets>
         <URL value="@/styles/fxml.css" />
     </stylesheets>
     <children>
-        <AnchorPane prefHeight="650.0" prefWidth="650.0">
-          <fx:include source="MapPane.fxml" fx:id="mapPane" />  
-        </AnchorPane>
-        <AnchorPane layoutX="650.0" prefHeight="650.0" prefWidth="320.0">
-            <children>
-                <Accordion prefHeight="600.0" prefWidth="325.0">
-                    <panes>
-                        <TitledPane text="Add entity">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <fx:include source="AddEntityPane.fxml" fx:id="addEntityPane" />
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                        <TitledPane expanded="false" text="Entity modification">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <fx:include source="EntityModificationPane.fxml" fx:id="entityModificationPane" />
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                        <TitledPane expanded="false" text="Multimedia">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <fx:include source="MultimediaPane.fxml" fx:id="muldimediaPane" />
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                        <TitledPane expanded="false" text="Time">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <fx:include source="TimePane.fxml" fx:id="timePane" />
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                        <TitledPane expanded="false" text="Spatial">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <fx:include source="SpatialPane.fxml" fx:id="spatialPane" />
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                        <TitledPane expanded="false" text="Freeholders">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <fx:include source="FreeholdersPane.fxml" fx:id="freeholdersPane" />
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                    </panes>
-                </Accordion>
-                <CheckBox layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
-                <CheckBox layoutX="100.0" layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
-                <CheckBox layoutX="200.0" layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
-            </children>
-        </AnchorPane>
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <right>
+              <AnchorPane prefHeight="650.0" prefWidth="320.0" BorderPane.alignment="CENTER">
+                  <children>
+                      <Accordion prefHeight="600.0" prefWidth="325.0">
+                          <panes>
+                              <TitledPane text="Add entity">
+                                  <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                          <fx:include fx:id="addEntityPane" source="AddEntityPane.fxml" />
+                                      </AnchorPane>
+                                  </content>
+                              </TitledPane>
+                              <TitledPane expanded="false" text="Entity modification">
+                                  <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                          <fx:include fx:id="entityModificationPane" source="EntityModificationPane.fxml" />
+                                      </AnchorPane>
+                                  </content>
+                              </TitledPane>
+                              <TitledPane expanded="false" text="Multimedia">
+                                  <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                          <fx:include fx:id="muldimediaPane" source="MultimediaPane.fxml" />
+                                      </AnchorPane>
+                                  </content>
+                              </TitledPane>
+                              <TitledPane expanded="false" text="Time">
+                                  <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                          <fx:include fx:id="timePane" source="TimePane.fxml" />
+                                      </AnchorPane>
+                                  </content>
+                              </TitledPane>
+                              <TitledPane expanded="false" text="Spatial">
+                                  <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                          <fx:include fx:id="spatialPane" source="SpatialPane.fxml" />
+                                      </AnchorPane>
+                                  </content>
+                              </TitledPane>
+                              <TitledPane expanded="false" text="Freeholders">
+                                  <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                          <fx:include fx:id="freeholdersPane" source="FreeholdersPane.fxml" />
+                                      </AnchorPane>
+                                  </content>
+                              </TitledPane>
+                          </panes>
+                      </Accordion>
+                      <CheckBox layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
+                      <CheckBox layoutX="100.0" layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
+                      <CheckBox layoutX="200.0" layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
+                  </children>
+              </AnchorPane>
+         </right>
+         <left>
+              <AnchorPane prefHeight="650.0" prefWidth="650.0" BorderPane.alignment="CENTER">
+                <fx:include fx:id="mapPane" source="MapPane.fxml" />  
+              </AnchorPane>
+         </left>
+         <top>
+            <MenuBar BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+      </BorderPane>
     </children>
 </AnchorPane>
