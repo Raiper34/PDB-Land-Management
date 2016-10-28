@@ -5,17 +5,22 @@
  */
 package cz.vutbr.fit.pdb.spatial;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author archie
  */
 public class Shapes {
-    //private List<ImprovedCircle> circles;
-    //private List<ImprovedPath> paths;
-    //private List<ImprovedPolygon> polygons;
+    private List<ImprovedCircle> circles;
+    private List<ImprovedPath> paths;
+    private List<ImprovedPolygon> polygons;
+    
     public Shapes() {
-        //this.circles = 
-        //this.paths =
-        //this.polygons =
+        this.circles = new ArrayList<ImprovedCircle>();
+        this.paths = new ArrayList<ImprovedPath>();
+        this.polygons = new ArrayList<ImprovedPolygon>();
     }
+    
 }
