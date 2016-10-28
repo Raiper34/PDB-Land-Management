@@ -77,6 +77,7 @@ public class DatabaseSettingsController implements Initializable {
         {
             this.dbInfo.saveAccessInfo(username, password, host, port, serviceName); 
             this.mainController.makeModalInvisible();
+            this.mainController.databaseInitialized();
         }
         else
         {

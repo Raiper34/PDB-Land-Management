@@ -156,5 +156,13 @@ public class FXMLController implements Initializable {
         DatabaseModel db = DatabaseModel.getInstance();
         db.initializeDatabase();
     }
+    
+    public void databaseInitialized()
+    {
+        this.mapPaneController.initializeSpatialEntitiesModel();
+        this.mapPaneController.loadEntities();
+        this.mapPaneController.loadEstates();
+        this.mapPaneController.drawSpatialEntities();
+    }
 
 }
