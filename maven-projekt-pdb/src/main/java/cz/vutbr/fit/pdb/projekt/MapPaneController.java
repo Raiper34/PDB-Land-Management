@@ -184,8 +184,8 @@ public class MapPaneController implements Initializable {
             System.out.println(estate);
             for (ImprovedPolygon shape : estate.toShapes().polygons){
                 shape.setFill(Color.TRANSPARENT);
-                shape.setStroke(Color.rgb(50, 50, 50, 0.25));
-                shape.setStrokeWidth(0.5);
+                shape.setStroke(Color.rgb(160, 160, 160, 0.6));
+                shape.setStrokeWidth(1.0);
                 mapa.getChildren().add(shape);
             }
         }
@@ -198,8 +198,8 @@ public class MapPaneController implements Initializable {
                 if (shape.getEntityReference().getLayer().equals("overground")) {
                     // house
                     if (shape.getEntityReference().getEntityType().equals("house")) {
-                        shape.setFill(Color.rgb(97, 96, 117, 0.6));
-                        shape.setStroke(Color.rgb(97, 96, 117, 0.7));
+                        shape.setFill(Color.rgb(85, 92, 128, 0.6));
+                        shape.setStroke(Color.rgb(85, 92, 128, 0.7));
                     }
                     mapa.getChildren().add(shape);
                 }
@@ -239,7 +239,7 @@ public class MapPaneController implements Initializable {
                     }
                     // path
                     else if (shape.getEntityReference().getEntityType().equals("path")) {
-                        shape.setStroke(Color.rgb(0, 0, 0, 0.5));
+                        shape.setStroke(Color.rgb(80, 80, 80, 0.6));
                         shape.setStrokeWidth(10.0);
                     }
                     mapa.getChildren().add(shape);
