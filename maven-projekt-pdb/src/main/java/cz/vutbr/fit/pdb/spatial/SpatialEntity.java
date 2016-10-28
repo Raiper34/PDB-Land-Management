@@ -5,6 +5,7 @@
  */
 package cz.vutbr.fit.pdb.spatial;
 
+import cz.vutbr.fit.pdb.projekt.Freeholder;
 import cz.vutbr.fit.pdb.projekt.Photo;
 import oracle.spatial.geometry.JGeometry;
 import java.util.Date;
@@ -16,14 +17,30 @@ public class SpatialEntity {
     private int id;
     private String name;
     private String description; 
-    private String type; //Mozeme tu zadat akeho typu je to napr 1 = Pozemok, 2 = Dom, 3 = Strom atd...
     private JGeometry geometry;
     private Date valid_from;
     private Date valid_to;
     
-    public Shapes toShapes(){
+    public SpatialEntity(
+            int id, 
+            String name, 
+            String description, 
+            JGeometry geometry,
+            Date valid_from,
+            Date valid_to
+            ) 
+    {
+        this.id = id;
+        this.name = name;
+        this.description = description; 
+        this.geometry = geometry;
+        this.valid_from = valid_from;
+        this.valid_to = valid_to;
+        
+    }
+    
+    public Shapes toShapes(SpatialEntity spatialEntity, String entityOrEstate){
         Shapes shapes = new Shapes();
         return shapes;
     }
-    
 }
