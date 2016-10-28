@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author archie
  */
-public class spatialEntity {
+public class SpatialEntity {
     private int id;
     private String name;
     private String description; 
@@ -19,6 +19,7 @@ public class spatialEntity {
     private JGeometry geometry;
     private Date valid_from;
     private Date valid_to;
+    private Photo photo;
     
     public Shapes toShapes(){
         Shapes shapes = new Shapes();

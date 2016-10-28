@@ -9,6 +9,6 @@ package cz.vutbr.fit.pdb.projekt;
  *
  * @author archie
  */
-public class Estate extends spatialEntity{
+public class Estate extends SpatialEntity{
     
 }
