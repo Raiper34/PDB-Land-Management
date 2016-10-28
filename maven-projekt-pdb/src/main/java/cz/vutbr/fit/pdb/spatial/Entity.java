@@ -31,6 +31,14 @@ public class Entity extends SpatialEntity{
         this.entityType = entityType;
         this.layer = layer; 
     }
+        
+    public String getEntityType() {
+        return this.entityType;
+    }
+    
+    public String getLayer() {
+        return this.layer;
+    }
     
     
     public Shapes toShapes(){

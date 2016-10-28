@@ -7,6 +7,9 @@ package cz.vutbr.fit.pdb.projekt;
 
 import cz.vutbr.fit.pdb.spatial.Entity;
 import cz.vutbr.fit.pdb.spatial.Estate;
+import cz.vutbr.fit.pdb.spatial.ImprovedCircle;
+import cz.vutbr.fit.pdb.spatial.ImprovedPath;
+import cz.vutbr.fit.pdb.spatial.ImprovedPolygon;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -108,7 +111,7 @@ public class MapPaneController implements Initializable {
     }
     
     public void drawMap() {
-        Rectangle r = new Rectangle();
+        /*Rectangle r = new Rectangle();
         r.setX(50);
         r.setY(50);
         r.setWidth(200);
@@ -126,7 +129,7 @@ public class MapPaneController implements Initializable {
         r.setArcHeight(20);
         r.fillProperty();
         mapa.getChildren().add(r);
-        mapa.getChildren().add(r1);
+        mapa.getChildren().add(r1);*/
     }
     
     public void initializeSpatialEntitiesModel(){
@@ -142,12 +145,106 @@ public class MapPaneController implements Initializable {
     }
     
     public void drawSpatialEntities(){
-        for (Estate estate : estates){
-            System.out.println(estate);
+        // first print underground object
+        for (Entity entity : entities){
+            // underground circle type objects
+            for (ImprovedCircle shape : entity.toShapes().circles){
+                if (shape.getEntityReference().getLayer().equals("underground")) {
+                    // water connection
+                    if (shape.getEntityReference().getEntityType().equals("water connection")) {
+                        shape.setFill(Color.rgb(1, 186, 186, 0.6));
+                        shape.setStroke(Color.rgb(1, 186, 186, 0.7));
+                    }
+                    // connection to gas
+                    else if (shape.getEntityReference().getEntityType().equals("connection to gas")) {
+                        shape.setFill(Color.rgb(214, 107, 0, 0.6));
+                        shape.setStroke(Color.rgb(214, 107, 0, 0.7));
+                    }
+                    mapa.getChildren().add(shape);
+                }
+            }
+            // underground path type objects
+            for (ImprovedPath shape : entity.toShapes().paths){
+                if (shape.getEntityReference().getLayer().equals("underground")) {
+                    // water connection
+                    if (shape.getEntityReference().getEntityType().equals("water pipes")) {
+                        shape.setStroke(Color.rgb(1, 186, 186, 0.6));
+                    }
+                    // connection to gas
+                    else if (shape.getEntityReference().getEntityType().equals("gas pipes")) {
+                        shape.setStroke(Color.rgb(214, 107, 0, 0.6));
+                    }
+                    mapa.getChildren().add(shape);
+                }
+            }
         }
         
+        // next print estaes
+        for (Estate estate : estates){
+            System.out.println(estate);
+            for (ImprovedPolygon shape : estate.toShapes().polygons){
+                shape.setFill(Color.TRANSPARENT);
+                shape.setStroke(Color.rgb(50, 50, 50, 0.25));
+                shape.setStrokeWidth(0.5);
+                mapa.getChildren().add(shape);
+            }
+        }
+        
+        // next print overground objects
         for (Entity entity : entities){
             System.out.println(entity);
+            // overground polygon type objects
+            for (ImprovedPolygon shape : entity.toShapes().polygons){
+                if (shape.getEntityReference().getLayer().equals("overground")) {
+                    // house
+                    if (shape.getEntityReference().getEntityType().equals("house")) {
+                        shape.setFill(Color.rgb(97, 96, 117, 0.6));
+                        shape.setStroke(Color.rgb(97, 96, 117, 0.7));
+                    }
+                    mapa.getChildren().add(shape);
+                }
+            }
+            // overground circle type objects
+            for (ImprovedCircle shape : entity.toShapes().circles){
+                if (shape.getEntityReference().getLayer().equals("overground")) {
+                    // water area
+                    if (shape.getEntityReference().getEntityType().equals("water area")) {
+                        shape.setFill(Color.rgb(1, 51, 186, 0.6));
+                        shape.setStroke(Color.rgb(1, 51, 186, 0.7));
+                    }
+                    // connection to electricity
+                    else if (shape.getEntityReference().getEntityType().equals("connection to electricity")) {
+                        shape.setFill(Color.rgb(186, 1, 29, 0.6));
+                        shape.setStroke(Color.rgb(186, 1, 29, 0.7));
+                    }
+                    // bushes
+                    else if (shape.getEntityReference().getEntityType().equals("bushes")) {
+                        shape.setFill(Color.rgb(122, 186, 1, 0.6));
+                        shape.setStroke(Color.rgb(122, 186, 1, 0.7));
+                    }
+                    // trees
+                    else if (shape.getEntityReference().getEntityType().equals("trees")) {
+                        shape.setFill(Color.rgb(1, 186, 26, 0.6));
+                        shape.setStroke(Color.rgb(1, 186, 26, 0.7));
+                    }
+                    mapa.getChildren().add(shape);
+                }
+            }
+            // overground path type objects
+            for (ImprovedPath shape : entity.toShapes().paths){
+                if (shape.getEntityReference().getLayer().equals("overground")) {
+                    // power lines
+                    if (shape.getEntityReference().getEntityType().equals("power lines")) {
+                        shape.setStroke(Color.rgb(186, 1, 29, 0.6));
+                    }
+                    // path
+                    else if (shape.getEntityReference().getEntityType().equals("path")) {
+                        shape.setStroke(Color.rgb(0, 0, 0, 0.5));
+                        shape.setStrokeWidth(10.0);
+                    }
+                    mapa.getChildren().add(shape);
+                }
+            }
         }
     }
 

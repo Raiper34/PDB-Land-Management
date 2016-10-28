@@ -17,4 +17,8 @@ public class ImprovedPath extends Path {
         super();
         this.entityReference = entityReference;
     }
+    
+    public Entity getEntityReference() {
+        return this.entityReference;
+    }
 }

@@ -12,6 +12,7 @@ import java.util.Date;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import java.util.Arrays;
+import javafx.scene.paint.Color;
 /**
  *
  * @author archie
@@ -58,12 +59,11 @@ public class SpatialEntity {
             }
             
             // slice original polygon points (remove 2 last points which close polygon)
-            double[] polygonPoints = Arrays.copyOfRange(this.geometry.getOrdinatesArray(), 0, this.geometry.getOrdinatesArray().length - 3);
-            for (double point: polygonPoints) {
+            //double[] polygonPoints = Arrays.copyOfRange(this.geometry.getOrdinatesArray(), 0, this.geometry.getOrdinatesArray().length - 1);
+            for (double point: this.geometry.getOrdinatesArray()) {
                 improvedPolygon.getPoints().add(point);
             }            
            
-            
             shapes.polygons.add(improvedPolygon);
         }
         
@@ -72,10 +72,11 @@ public class SpatialEntity {
             ImprovedCircle improvedCircle = new ImprovedCircle((Entity) spatialEntity);
 
             double centerX = this.geometry.getOrdinatesArray()[0];
-            double centerY = this.geometry.getOrdinatesArray()[3] - this.geometry.getOrdinatesArray()[1];
+            double centerY = this.geometry.getOrdinatesArray()[1] + (this.geometry.getOrdinatesArray()[3] - this.geometry.getOrdinatesArray()[1]) / 2.0;
             improvedCircle.setCenterX(centerX);
             improvedCircle.setCenterY(centerY);
             improvedCircle.setRadius(centerY - this.geometry.getOrdinatesArray()[1]);
+            improvedCircle.setFill(Color.BLUE);
             shapes.circles.add(improvedCircle);
         }
         
@@ -91,11 +92,11 @@ public class SpatialEntity {
         
         // entity is multipoint
         else if (this.geometry.getType() == JGeometry.GTYPE_MULTIPOINT) {
-            ImprovedCircle improvedCircle = new ImprovedCircle((Entity) spatialEntity);
             
             JGeometry[] elements = this.geometry.getElements();
             for (JGeometry element : elements) {
-  
+                ImprovedCircle improvedCircle = new ImprovedCircle((Entity) spatialEntity);
+                
                 improvedCircle.setCenterX(element.getPoint()[0]);
                 improvedCircle.setCenterY(element.getPoint()[1]);
                 improvedCircle.setRadius(5.0f);
@@ -108,7 +109,7 @@ public class SpatialEntity {
         else if (this.geometry.getType() == JGeometry.GTYPE_CURVE) {
             ImprovedPath improvedPath = new ImprovedPath((Entity) spatialEntity);
 
-            for (int i = 0; i < this.geometry.getNumPoints();i = i+2) {
+            for (int i = 0; i < this.geometry.getNumPoints() * 2;) {
                
                 // in first iteration we iniliaize path start
                 if (i == 0) {
@@ -124,6 +125,8 @@ public class SpatialEntity {
                     lineTo.setY(this.geometry.getOrdinatesArray()[i+1]);
                     improvedPath.getElements().add(lineTo);
                 }
+                
+                i += 2;
             }
             
             shapes.paths.add(improvedPath);
@@ -131,12 +134,13 @@ public class SpatialEntity {
         
         // entity is multi curve/line
         else if (this.geometry.getType() == JGeometry.GTYPE_MULTICURVE) {
-            ImprovedPath improvedPath = new ImprovedPath((Entity) spatialEntity);
             
             JGeometry[] elements = this.geometry.getElements();
             for (JGeometry element : elements) {
-  
-                for (int i = 0; i < element.getNumPoints();i = i+2) {
+                
+                ImprovedPath improvedPath = new ImprovedPath((Entity) spatialEntity);
+                
+                for (int i = 0; i < element.getNumPoints() * 2;i = i+2) {
                
                     // in first iteration we iniliaize path start
                     if (i == 0) {

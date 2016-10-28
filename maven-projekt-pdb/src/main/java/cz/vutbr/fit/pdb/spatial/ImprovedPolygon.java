@@ -22,4 +22,8 @@ public class ImprovedPolygon extends Polygon {
         this.estateReference = estateReference;
         this.isEstate = isEstate;
     }
+    
+    public Entity getEntityReference() {
+        return this.entityReference;
+    }
 }

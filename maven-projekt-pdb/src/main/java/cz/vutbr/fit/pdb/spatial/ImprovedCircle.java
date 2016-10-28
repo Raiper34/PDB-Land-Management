@@ -18,4 +18,8 @@ public class ImprovedCircle extends Circle {
         super();
         this.entityReference = entityReference;
     }
+    
+    public Entity getEntityReference() {
+        return this.entityReference;
+    }
 }
