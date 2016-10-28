@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.vutbr.fit.pdb.projekt;
+package cz.vutbr.fit.pdb.spatial;
 
+import cz.vutbr.fit.pdb.projekt.Photo;
 import oracle.spatial.geometry.JGeometry;
 import java.util.Date;
 /**
@@ -19,7 +20,6 @@ public class SpatialEntity {
     private JGeometry geometry;
     private Date valid_from;
     private Date valid_to;
-    private Photo photo;
     
     public Shapes toShapes(){
         Shapes shapes = new Shapes();
