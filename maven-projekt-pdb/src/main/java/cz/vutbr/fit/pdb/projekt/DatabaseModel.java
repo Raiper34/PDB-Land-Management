@@ -53,9 +53,10 @@ public class DatabaseModel {
      * @param port
      * @param serviceName
      * @param username
-     * @param password 
+     * @param password
+     * @return boolean
      */
-    public void connectDatabase(String host, String port, String serviceName, String username, String password) {
+    public boolean connectDatabase(String host, String port, String serviceName, String username, String password) {
         if(!this.isConnected) 
         {
             try 
@@ -74,8 +75,10 @@ public class DatabaseModel {
             {
                 this.isConnected = false;
                 System.err.println("Exception: " + ex.getMessage());
+                return false;
             }
         }
+        return true;
     }
     
     /**
@@ -140,6 +143,15 @@ public class DatabaseModel {
                 Logger.getLogger(DatabaseModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+    }
+    
+    /**
+     * Return actual connection
+     * @return 
+     */
+    public Connection getConnection()
+    {
+        return this.connection;
     }
 
 }

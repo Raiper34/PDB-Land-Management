@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -36,6 +37,9 @@ public class DatabaseSettingsController implements Initializable {
     @FXML
     private TextField serviceNameInput;
     
+    @FXML
+    private Label errorLabel;
+    
     private DatabaseAccessInfo dbInfo;
     
     private FXMLController mainController;
@@ -61,6 +65,7 @@ public class DatabaseSettingsController implements Initializable {
     @FXML
     private void connectButtonClick(ActionEvent event)
     {
+        this.errorLabel.setText("");
         String username = this.usernameInput.getText();
         String password = this.passwordInput.getText();
         String host = this.hostInput.getText();
@@ -68,11 +73,16 @@ public class DatabaseSettingsController implements Initializable {
         String serviceName = this.serviceNameInput.getText();
         
         DatabaseModel database = DatabaseModel.getInstance();
-        database.connectDatabase(host, port, serviceName, username, password);
-        //database.initializeDatabase();
+        if(database.connectDatabase(host, port, serviceName, username, password))
+        {
+            this.dbInfo.saveAccessInfo(username, password, host, port, serviceName); 
+            this.mainController.makeModalInvisible();
+        }
+        else
+        {
+            this.errorLabel.setText("Could not connect, maybe wrong access data!");
+        }
         
-        this.dbInfo.saveAccessInfo(username, password, host, port, serviceName); 
-        this.mainController.makeModalInvisible();
     }
     
     /**

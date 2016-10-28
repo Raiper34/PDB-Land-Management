@@ -37,6 +37,7 @@
             <Label text="Service name" GridPane.rowIndex="4" />
             <TextField fx:id="serviceNameInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Button mnemonicParsing="false" onAction="#connectButtonClick" text="Connect" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="errorLabel" textFill="RED" wrapText="true" GridPane.rowIndex="5" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
