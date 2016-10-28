@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 //import javafx.stage.Window;
 import oracle.spatial.geometry.JGeometry;
@@ -28,7 +29,7 @@ import oracle.spatial.geometry.JGeometry;
 /**
  * FXML Controller class
  *
- * @author jan
+ * @author gulan
  */
 public class MapPaneController implements Initializable {
 
@@ -88,6 +89,7 @@ public class MapPaneController implements Initializable {
                  r.setArcHeight(20);
                  
         Rectangle r1 = new Rectangle();
+
                  r.setX(50);
                  r.setY(50);
                  r.setWidth(200);
@@ -112,13 +114,24 @@ public class MapPaneController implements Initializable {
     void clicked(MouseEvent event) {
         this.cccc.test();
         System.out.println("Test");
-        Rectangle r = new Rectangle();
+        Polygon polygon = new Polygon();
+    polygon.getPoints().addAll(new Double[]{
+        0.0, 0.0,
+        20.0, 10.0,
+        10.0, 20.0 });
+        mapa.getChildren().add(polygon);
+                polygon.setRotate(50.0);
+                polygon.setScaleX(5);
+                polygon.setScaleY(5);
+        /*Rectangle r = new Rectangle();
                  r.setX(50);
                  r.setY(50);
                  r.setWidth(200);
                  r.setHeight(100);
                  r.setArcWidth(20);
                  r.setArcHeight(20);
+                 r.onMouseClickedProperty().addListener(listener);
+                 r.
                  
         Rectangle r1 = new Rectangle();
                  r.setX(50);
@@ -129,7 +142,7 @@ public class MapPaneController implements Initializable {
                  r.setArcHeight(20);
                  r.fillProperty();
                  this.cccc.mapPaneController.mapa.getChildren().add(r);
-                    mapa.getChildren().add(r1);
+                    mapa.getChildren().add(r1);*/
     }
 
 }

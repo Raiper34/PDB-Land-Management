@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65">
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vutbr.fit.pdb.projekt.DatabaseSettingsController">
    <children>
       <GridPane layoutX="2.0" layoutY="4.0" prefHeight="304.0" prefWidth="502.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -27,20 +26,20 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField prefHeight="26.0" prefWidth="228.0" GridPane.columnIndex="1" />
             <Label alignment="CENTER" text="Username" />
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="usernameInput" prefHeight="26.0" prefWidth="228.0" GridPane.columnIndex="1" />
             <Label text="Password" GridPane.rowIndex="1" />
+            <PasswordField fx:id="passwordInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Host" GridPane.rowIndex="2" />
+            <TextField fx:id="hostInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Port" GridPane.rowIndex="3" />
+            <TextField fx:id="portInput" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Service name" GridPane.rowIndex="4" />
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button mnemonicParsing="false" text="Connect" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="serviceNameInput" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#connectButtonClick" text="Connect" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </GridPane>
    </children>

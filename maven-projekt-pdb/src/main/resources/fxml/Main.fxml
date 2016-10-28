@@ -98,5 +98,16 @@
             </MenuBar>
          </top>
       </BorderPane>
+      <AnchorPane fx:id="databaseSettingsModal" opacity="0.68" prefHeight="670.0" prefWidth="975.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TitledPane animated="false" collapsible="false" layoutX="185.0" layoutY="184.0" prefHeight="367.0" prefWidth="651.0" text="Database connection">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <fx:include fx:id="databaseSettings" source="DatabaseSettings.fxml" />
+                </AnchorPane>
+              </content>
+            </TitledPane>
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>

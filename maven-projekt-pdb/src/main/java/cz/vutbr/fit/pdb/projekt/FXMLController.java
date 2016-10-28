@@ -20,15 +20,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-//import javafx.stage.Window;
 import oracle.spatial.geometry.JGeometry;
 
 
 
 /**
- * FXML Controller class
- *
- * @author jan
+ * 
+ * @author raiper34
  */
 public class FXMLController implements Initializable {
 
@@ -41,8 +39,6 @@ public class FXMLController implements Initializable {
     @FXML
     private Canvas canvas;
     
-    //@FXML 
-    //private Window mapPane;
     
     @FXML
     private AnchorPane mapa;
@@ -57,7 +53,14 @@ public class FXMLController implements Initializable {
     @FXML
     private AnchorPane mapPane;
     
-    @FXML public MapPaneController mapPaneController;
+    @FXML
+    public AnchorPane databaseSettingsModal;
+    
+    @FXML 
+    public MapPaneController mapPaneController;
+    
+    @FXML 
+    public DatabaseSettingsController databaseSettingsController;
 
     @FXML
     void checked(ActionEvent event) throws SQLException {
@@ -94,7 +97,9 @@ public class FXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.injects();
         this.mapPaneController.addParent(this);
+        //this.databaseSettingsModal.setVisible(false);
         
         //gc = canvas.getGraphicsContext2D();
         /*Rectangle r = new Rectangle();
@@ -124,9 +129,25 @@ public class FXMLController implements Initializable {
                  //mapPane.getChildren().
     }
     
+    /**
+     * Inject this main controller to all his "children"
+     */
+    private void injects()
+    {
+        this.databaseSettingsController.injectMainController(this);
+    }
+    
     public void test()
     {
         
+    }
+    
+    /**
+     * Make Database settings modal invisible
+     */
+    public void makeModalInvisible()
+    {
+        this.databaseSettingsModal.setVisible(false);
     }
 
 }
