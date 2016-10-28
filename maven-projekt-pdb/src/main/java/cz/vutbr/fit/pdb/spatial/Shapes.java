@@ -13,14 +13,14 @@ import java.util.List;
  * @author archie
  */
 public class Shapes {
-    private List<ImprovedCircle> circles;
-    private List<ImprovedPath> paths;
-    private List<ImprovedPolygon> polygons;
+    public List<ImprovedCircle> circles;
+    public List<ImprovedPath> paths;
+    public List<ImprovedPolygon> polygons;
     
     public Shapes() {
-        this.circles = new ArrayList<ImprovedCircle>();
-        this.paths = new ArrayList<ImprovedPath>();
-        this.polygons = new ArrayList<ImprovedPolygon>();
+        this.circles = new ArrayList<>();
+        this.paths = new ArrayList<>();
+        this.polygons = new ArrayList<>();
     }
     
 }
