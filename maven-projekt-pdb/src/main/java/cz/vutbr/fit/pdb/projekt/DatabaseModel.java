@@ -114,29 +114,31 @@ public class DatabaseModel {
         SqlParser sqlParser = new SqlParser();
         sqlParser.parseSql("initilizingScript.sql");
         sqlParser.queries.forEach((query) -> {
-        try 
-        {
-            Statement stmt = this.connection.createStatement();
             try 
             {
-                ResultSet rset;
-                try
+                Statement stmt = this.connection.createStatement();
+                try 
                 {
-                    rset = stmt.executeQuery(query); 
-                    rset.close();
-                }
-                catch (SQLException ex)
+                    ResultSet rset;
+                    try
+                    {
+                        rset = stmt.executeQuery(query); 
+                        rset.close();
+                    }
+                    catch (SQLException ex)
+                    {
+                        Logger.getLogger(DatabaseModel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } finally
                 {
-                    Logger.getLogger(DatabaseModel.class.getName()).log(Level.SEVERE, null, ex);
+                    stmt.close();
                 }
-                
-            } finally
+            }   
+            catch (SQLException ex) 
             {
-                stmt.close();
+                Logger.getLogger(DatabaseModel.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }   catch (SQLException ex) {
-            Logger.getLogger(DatabaseModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
         });
     }
 

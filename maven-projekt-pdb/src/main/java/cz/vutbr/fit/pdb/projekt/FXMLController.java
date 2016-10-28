@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oracle.spatial.geometry.JGeometry;
+import cz.vutbr.fit.pdb.projekt.DatabaseModel;
 
 
 
@@ -148,6 +149,12 @@ public class FXMLController implements Initializable {
     public void makeModalInvisible()
     {
         this.databaseSettingsModal.setVisible(false);
+    }
+    
+    public void initializeClick(ActionEvent event)
+    {
+        DatabaseModel db = DatabaseModel.getInstance();
+        db.initializeDatabase();
     }
 
 }
