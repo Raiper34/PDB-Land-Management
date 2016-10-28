@@ -13,7 +13,7 @@ import oracle.spatial.geometry.JGeometry;
  * @author archie
  */
 public class Entity extends SpatialEntity{
-    private String entity_type; 
+    private String entityType; 
     private String layer;
     
         public Entity(
@@ -23,12 +23,12 @@ public class Entity extends SpatialEntity{
             JGeometry geometry,
             Date valid_from,
             Date valid_to,
-            String entity_type,
+            String entityType,
             String layer
             ) 
     {
         super(id, name, description, geometry, valid_from, valid_to);
-        this.entity_type = entity_type;
+        this.entityType = entityType;
         this.layer = layer; 
     }
     

@@ -24,13 +24,13 @@ public class Estate extends SpatialEntity{
             String name, 
             String description, 
             JGeometry geometry,
-            Date valid_from,
-            Date valid_to,
+            Date validFrom,
+            Date validTo,
             Photo photo,
             Freeholder freeholder
             ) 
     {
-        super(id, name, description, geometry, valid_from, valid_to);
+        super(id, name, description, geometry, validFrom, validTo);
         this.photo = photo;
         this.freeholder = freeholder; 
     }

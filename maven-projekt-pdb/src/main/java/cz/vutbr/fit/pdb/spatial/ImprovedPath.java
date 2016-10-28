@@ -11,17 +11,10 @@ import javafx.scene.shape.Path;
  * @author jan
  */
 public class ImprovedPath extends Path {
-    public int id;
-    public String name;
-    public String description;
-    public String layer;
-    public String entityType;
-    public String validFrom;
-    public String validTo;
-    public int freeholdersId;
-    public int photosId;
+    private Entity entityReference;
     
-    public ImprovedPath() {
+    public ImprovedPath(Entity entityReference) {
         super();
+        this.entityReference = entityReference;
     }
 }

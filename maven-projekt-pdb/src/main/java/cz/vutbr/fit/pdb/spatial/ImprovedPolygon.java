@@ -12,18 +12,14 @@ import javafx.scene.shape.Polygon;
  * @author jan
  */
 public class ImprovedPolygon extends Polygon {
-    public int id;
-    public String name;
-    public String description;
-    public String layer;
-    public String entityType;
-    public boolean isEstate;
-    public String validFrom;
-    public String validTo;
-    public int freeholdersId;
-    public int photosId;
+    private Entity entityReference;
+    private Estate estateReference;
+    private boolean isEstate;
     
-    public ImprovedPolygon() {
+    public ImprovedPolygon(boolean isEstate, Entity entityReference, Estate estateReference) {
         super();
+        this.entityReference = entityReference;
+        this.estateReference = estateReference;
+        this.isEstate = isEstate;
     }
 }
