@@ -66,10 +66,10 @@ public class DatabaseSettingsController implements Initializable {
         String host = this.hostInput.getText();
         String port = this.portInput.getText();
         String serviceName = this.serviceNameInput.getText();
-        String url = "jdbc:oracle:thin:@//" + host + ":" + port + "/" + serviceName;
         
         DatabaseModel database = DatabaseModel.getInstance();
-        database.connectDatabase(url, username, password);
+        database.connectDatabase(host, port, serviceName, username, password);
+        //database.initializeDatabase();
         
         this.dbInfo.saveAccessInfo(username, password, host, port, serviceName); 
         this.mainController.makeModalInvisible();

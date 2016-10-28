@@ -5,11 +5,17 @@
  */
 package cz.vutbr.fit.pdb.projekt;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.jdbc.pool.OracleDataSource;
+import cz.vutbr.fit.pdb.projekt.SqlParser;
 
 /**
  * Database Model - singleton patern
@@ -43,20 +49,23 @@ public class DatabaseModel {
 
     /**
      * Connect to database and store connection
-     * @param url
+     * @param host
+     * @param port
+     * @param serviceName
      * @param username
      * @param password 
      */
-    public void connectDatabase(String url, String username, String password) {
+    public void connectDatabase(String host, String port, String serviceName, String username, String password) {
         if(!this.isConnected) 
         {
             try 
             {
+                String url = "jdbc:oracle:thin:@//" + host + ":" + port + "/" + serviceName;
                 this.ods = new OracleDataSource();
                 this.ods.setURL(url);
 
-                this.ods.setUser(username);//XHEREC00
-                this.ods.setPassword(password);//0oxxz6gs
+                this.ods.setUser(username);
+                this.ods.setPassword(password);
                 this.connection = this.ods.getConnection();
                 this.isConnected = true;
 
@@ -102,7 +111,33 @@ public class DatabaseModel {
      */
     public void initializeDatabase()
     {
-        //todo
+        SqlParser sqlParser = new SqlParser();
+        sqlParser.parseSql("initilizingScript.sql");
+        sqlParser.queries.forEach((query) -> {
+        try 
+        {
+            Statement stmt = this.connection.createStatement();
+            try 
+            {
+                ResultSet rset;
+                try
+                {
+                    rset = stmt.executeQuery(query); 
+                    rset.close();
+                }
+                catch (SQLException ex)
+                {
+                    Logger.getLogger(DatabaseModel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            } finally
+            {
+                stmt.close();
+            }
+        }   catch (SQLException ex) {
+            Logger.getLogger(DatabaseModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        });
     }
 
 }
