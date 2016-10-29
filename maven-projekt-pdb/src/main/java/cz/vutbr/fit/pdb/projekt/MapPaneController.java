@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 
 import javafx.fxml.FXML;
@@ -160,6 +161,13 @@ public class MapPaneController implements Initializable {
                         shape.setFill(Color.rgb(214, 107, 0, 0.6));
                         shape.setStroke(Color.rgb(214, 107, 0, 0.7));
                     }
+                    shape.setOnMouseClicked(new EventHandler<MouseEvent>()
+                    {
+                        @Override
+                        public void handle(MouseEvent t) {
+                            System.out.println("Clicked circle");
+                        }
+                    });
                     mapa.getChildren().add(shape);
                 }
             }
@@ -201,6 +209,13 @@ public class MapPaneController implements Initializable {
                         shape.setFill(Color.rgb(85, 92, 128, 0.6));
                         shape.setStroke(Color.rgb(85, 92, 128, 0.7));
                     }
+                    shape.setOnMouseClicked(new EventHandler<MouseEvent>()
+                    {
+                        @Override
+                        public void handle(MouseEvent t) {
+                            System.out.println("Clicked polygon");
+                        }
+                    });
                     mapa.getChildren().add(shape);
                 }
             }
@@ -227,6 +242,13 @@ public class MapPaneController implements Initializable {
                         shape.setFill(Color.rgb(1, 186, 26, 0.6));
                         shape.setStroke(Color.rgb(1, 186, 26, 0.7));
                     }
+                    shape.setOnMouseClicked(new EventHandler<MouseEvent>()
+                    {
+                        @Override
+                        public void handle(MouseEvent t) {
+                            System.out.println("Clicked circle");
+                        }
+                    });
                     mapa.getChildren().add(shape);
                 }
             }
@@ -242,6 +264,13 @@ public class MapPaneController implements Initializable {
                         shape.setStroke(Color.rgb(80, 80, 80, 0.6));
                         shape.setStrokeWidth(10.0);
                     }
+                    shape.setOnMouseClicked(new EventHandler<MouseEvent>()
+                    {
+                        @Override
+                        public void handle(MouseEvent t) {
+                            System.out.println("Clicked path");
+                        }
+                    });
                     mapa.getChildren().add(shape);
                 }
             }
