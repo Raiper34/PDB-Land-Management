@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.vutbr.fit.pdb.projekt;
+package pdb.model;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pdb.controller.DatabaseSettingsController;
 
 /**
  * Database acces info, aka class to get and put db access informations to file

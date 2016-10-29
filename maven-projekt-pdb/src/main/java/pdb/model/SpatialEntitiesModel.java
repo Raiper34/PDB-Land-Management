@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.vutbr.fit.pdb.projekt;
+package pdb.model;
 
-import cz.vutbr.fit.pdb.spatial.Entity;
-import cz.vutbr.fit.pdb.spatial.Estate;
+import pdb.model.Freeholder;
+import pdb.model.DatabaseModel;
+import pdb.model.spatial.Entity;
+import pdb.model.spatial.Estate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;

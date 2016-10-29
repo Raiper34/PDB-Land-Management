@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.vutbr.fit.pdb.projekt;
+package pdb.controller;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -12,16 +12,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import oracle.spatial.geometry.JGeometry;
-import cz.vutbr.fit.pdb.projekt.DatabaseModel;
+import pdb.model.DatabaseModel;
+import pdb.model.DatabaseModel;
+import pdb.model.DatabaseTest;
 
 
 
@@ -29,7 +34,7 @@ import cz.vutbr.fit.pdb.projekt.DatabaseModel;
  * 
  * @author raiper34
  */
-public class FXMLController implements Initializable {
+public class MainController implements Initializable {
 
     @FXML
     private CheckBox checkBox;
@@ -99,35 +104,6 @@ public class FXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.injects();
-        this.mapPaneController.addParent(this);
-        //this.databaseSettingsModal.setVisible(false);
-        
-        //gc = canvas.getGraphicsContext2D();
-        /*Rectangle r = new Rectangle();
-                 r.setX(50);
-                 r.setY(50);
-                 r.setWidth(200);
-                 r.setHeight(100);
-                 r.setArcWidth(20);
-                 r.setArcHeight(20);
-                 
-        Rectangle r1 = new Rectangle();
-                 r.setX(50);
-                 r.setY(50);
-                 r.setWidth(200);
-                 r.setHeight(100);
-                 r.setArcWidth(20);
-                 r.setArcHeight(20);
-                 r.fillProperty();*/
-                 //mapPane.getChildren().add(r);
-                 //mapPane.getChildren().add(r1);
-                 //this.mapPaneController.mapa.getChildren().add(r);
-                 //this.mapPaneController.mapa.getChildren().add(r1);
-                 
-                 
-                 
-                 //apPane.getProperties().getChildren().add(r);
-                 //mapPane.getChildren().
     }
     
     /**
@@ -136,11 +112,7 @@ public class FXMLController implements Initializable {
     private void injects()
     {
         this.databaseSettingsController.injectMainController(this);
-    }
-    
-    public void test()
-    {
-        
+        this.mapPaneController.addParent(this);
     }
     
     /**
@@ -151,10 +123,18 @@ public class FXMLController implements Initializable {
         this.databaseSettingsModal.setVisible(false);
     }
     
+    @FXML
     public void initializeClick(ActionEvent event)
     {
         DatabaseModel db = DatabaseModel.getInstance();
         db.initializeDatabase();
+    }
+    
+    @FXML
+    public void closeClick(ActionEvent event)
+    {
+        final Stage stage = (Stage) this.mapPane.getScene().getWindow();
+        stage.close();
     }
     
     public void databaseInitialized()

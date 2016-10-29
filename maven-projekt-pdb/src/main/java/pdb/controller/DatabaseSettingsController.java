@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.vutbr.fit.pdb.projekt;
+package pdb.controller;
 
+import pdb.model.DatabaseModel;
+import pdb.model.DatabaseAccessInfo;
+import pdb.controller.MainController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -42,7 +45,7 @@ public class DatabaseSettingsController implements Initializable {
     
     private DatabaseAccessInfo dbInfo;
     
-    private FXMLController mainController;
+    private MainController mainController;
 
     /**
      * Initializes the controller class.
@@ -90,7 +93,7 @@ public class DatabaseSettingsController implements Initializable {
      * Inject main controller to this controller
      * @param mainController 
      */
-    public void injectMainController(FXMLController mainController)
+    public void injectMainController(MainController mainController)
     {
         this.mainController = mainController;
     }

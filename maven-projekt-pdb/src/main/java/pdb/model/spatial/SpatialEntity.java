@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.vutbr.fit.pdb.spatial;
+package pdb.model.spatial;
 
-import cz.vutbr.fit.pdb.projekt.Freeholder;
-import cz.vutbr.fit.pdb.projekt.Photo;
+import pdb.model.Freeholder;
+import pdb.model.Photo;
 import oracle.spatial.geometry.JGeometry;
 import java.util.Date;
 import javafx.scene.shape.LineTo;

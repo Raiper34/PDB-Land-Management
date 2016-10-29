@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.vutbr.fit.pdb.projekt;
+package pdb.controller;
 
-import cz.vutbr.fit.pdb.spatial.Entity;
-import cz.vutbr.fit.pdb.spatial.Estate;
-import cz.vutbr.fit.pdb.spatial.ImprovedCircle;
-import cz.vutbr.fit.pdb.spatial.ImprovedPath;
-import cz.vutbr.fit.pdb.spatial.ImprovedPolygon;
+import pdb.controller.MainController;
+import pdb.model.spatial.Entity;
+import pdb.model.spatial.Estate;
+import pdb.model.spatial.ImprovedCircle;
+import pdb.model.spatial.ImprovedPath;
+import pdb.model.spatial.ImprovedPolygon;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -31,6 +32,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 //import javafx.stage.Window;
 import oracle.spatial.geometry.JGeometry;
+import pdb.model.SpatialEntitiesModel;
 
 /**
  * FXML Controller class
@@ -50,10 +52,10 @@ public class MapPaneController implements Initializable {
 
     public int cislo;
 
-    public FXMLController cccc;
+    public MainController cccc;
 
     @FXML
-    private FXMLController fXMLController;
+    private MainController fXMLController;
 
     /*@FXML
     void checked(ActionEvent event) throws SQLException {
@@ -92,13 +94,13 @@ public class MapPaneController implements Initializable {
         drawMap();
     }
 
-    public void addParent(FXMLController c1) {
+    public void addParent(MainController c1) {
         this.cccc = c1;
     }
 
     @FXML
     void clicked(MouseEvent event) {
-        this.cccc.test();
+        //this.cccc.test();
         System.out.println("Test");
         Polygon polygon = new Polygon();
         polygon.getPoints().addAll(new Double[]{

@@ -3,18 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.vutbr.fit.pdb.spatial;
+package pdb.model.spatial;
 
-import javafx.scene.shape.Circle;
-
+import javafx.scene.shape.Path;
 /**
  *
  * @author jan
  */
-public class ImprovedCircle extends Circle {
+public class ImprovedPath extends Path {
     private Entity entityReference;
     
-    public ImprovedCircle(Entity entityReference) {
+    public ImprovedPath(Entity entityReference) {
         super();
         this.entityReference = entityReference;
     }

@@ -3,19 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.vutbr.fit.pdb.spatial;
+package pdb.model.spatial;
 
-import javafx.scene.shape.Path;
+import javafx.scene.shape.Polygon;
+
 /**
  *
  * @author jan
  */
-public class ImprovedPath extends Path {
+public class ImprovedPolygon extends Polygon {
     private Entity entityReference;
+    private Estate estateReference;
+    private boolean isEstate;
     
-    public ImprovedPath(Entity entityReference) {
+    public ImprovedPolygon(boolean isEstate, Entity entityReference, Estate estateReference) {
         super();
         this.entityReference = entityReference;
+        this.estateReference = estateReference;
+        this.isEstate = isEstate;
     }
     
     public Entity getEntityReference() {

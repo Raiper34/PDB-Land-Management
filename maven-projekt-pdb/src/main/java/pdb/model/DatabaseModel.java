@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.vutbr.fit.pdb.projekt;
+package pdb.model;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.jdbc.pool.OracleDataSource;
-import cz.vutbr.fit.pdb.projekt.SqlParser;
+import pdb.model.SqlParser;
 
 /**
  * Database Model - singleton patern
