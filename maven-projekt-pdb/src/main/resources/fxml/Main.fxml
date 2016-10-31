@@ -3,6 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -15,11 +16,11 @@
         <URL value="@/styles/fxml.css" />
     </stylesheets>
     <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <BorderPane prefHeight="200.0" prefWidth="1060.0">
          <right>
-              <AnchorPane prefHeight="650.0" prefWidth="320.0" BorderPane.alignment="CENTER">
+              <AnchorPane prefHeight="667.0" prefWidth="412.0" BorderPane.alignment="CENTER">
                   <children>
-                      <Accordion prefHeight="600.0" prefWidth="325.0">
+                      <Accordion prefHeight="600.0" prefWidth="410.0">
                           <panes>
                               <TitledPane text="Add entity">
                                   <content>
@@ -65,9 +66,10 @@
                               </TitledPane>
                           </panes>
                       </Accordion>
-                      <CheckBox layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
-                      <CheckBox layoutX="100.0" layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
-                      <CheckBox layoutX="200.0" layoutY="615.0" mnemonicParsing="false" selected="true" text="CheckBox" />
+                      <CheckBox layoutX="100.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Underground" />
+                      <CheckBox layoutX="217.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Ground" />
+                      <CheckBox layoutX="299.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Overground" />
+                  <Label layoutX="10.0" layoutY="610.0" text="Show layers: " />
                   </children>
               </AnchorPane>
          </right>
@@ -81,12 +83,12 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Program">
                   <items>
-                    <MenuItem onAction="#closeClick"  mnemonicParsing="false" text="Close" />
+                    <MenuItem mnemonicParsing="false" onAction="#closeClick" text="Close" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Database">
                   <items>
-                    <MenuItem onAction="#initializeClick"  mnemonicParsing="false" text="Initialize" />
+                    <MenuItem mnemonicParsing="false" onAction="#initializeClick" text="Initialize" />
                   </items>
                 </Menu>
               </menus>

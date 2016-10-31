@@ -163,6 +163,7 @@ public class MapPaneController implements Initializable {
                         shape.setFill(Color.rgb(214, 107, 0, 0.6));
                         shape.setStroke(Color.rgb(214, 107, 0, 0.7));
                     }
+                    
                     shape.setOnMouseClicked(new EventHandler<MouseEvent>()
                     {
                         @Override
