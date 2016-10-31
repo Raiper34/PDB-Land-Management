@@ -5,7 +5,6 @@
  */
 package pdb.model;
 
-import pdb.model.multimedial.Photo;
 import pdb.model.Freeholder;
 import pdb.model.DatabaseModel;
 import pdb.model.spatial.Entity;
@@ -81,7 +80,6 @@ public class SpatialEntitiesModel {
                         Date validto = rset.getDate("valid_to");
                         //rset.getInt("freeholders_id");
                         //rset.getInt("photos_id");
-                        Photo photo = new Photo();
                         Freeholder freeholder = new Freeholder();
                         Estate newEstate = new Estate(rset.getInt("id"),
                                 rset.getString("name"),
@@ -89,7 +87,6 @@ public class SpatialEntitiesModel {
                                 jGeometry,
                                 rset.getDate("valid_from"),
                                 rset.getDate("valid_to"),
-                                photo,
                                 freeholder);
                         estates.add(newEstate);
                     }
