@@ -6,7 +6,7 @@
 package pdb.model.spatial;
 
 import pdb.model.Freeholder;
-import pdb.model.Photo;
+import pdb.model.multimedial.Photo;
 import oracle.spatial.geometry.JGeometry;
 import java.util.Date;
 import javafx.scene.shape.LineTo;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pdb.model;
+package pdb.model.multimedial;
 
 import java.io.IOException;
 import java.sql.Connection;

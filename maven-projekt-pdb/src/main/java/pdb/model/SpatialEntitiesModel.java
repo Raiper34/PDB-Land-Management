@@ -5,6 +5,7 @@
  */
 package pdb.model;
 
+import pdb.model.multimedial.Photo;
 import pdb.model.Freeholder;
 import pdb.model.DatabaseModel;
 import pdb.model.spatial.Entity;

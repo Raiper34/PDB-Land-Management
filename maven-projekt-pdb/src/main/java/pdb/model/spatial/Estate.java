@@ -5,7 +5,7 @@
  */
 package pdb.model.spatial;
 
-import pdb.model.Photo;
+import pdb.model.multimedial.Photo;
 import pdb.model.Freeholder;
 import java.util.Date;
 import oracle.spatial.geometry.JGeometry;
