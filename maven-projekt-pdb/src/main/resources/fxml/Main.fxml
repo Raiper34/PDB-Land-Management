@@ -66,9 +66,9 @@
                               </TitledPane>
                           </panes>
                       </Accordion>
-                      <CheckBox layoutX="100.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Underground" />
-                      <CheckBox layoutX="217.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Ground" />
-                      <CheckBox layoutX="299.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Overground" />
+                      <CheckBox fx:id="undergroundCheckbox" onAction="#groundCheckboxClick"  layoutX="100.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Underground" />
+                      <CheckBox fx:id="groundCheckbox" onAction="#groundCheckboxClick" layoutX="217.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Ground" />
+                      <CheckBox fx:id="overgroundCheckbox" onAction="#groundCheckboxClick" layoutX="299.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Overground" />
                   <Label layoutX="10.0" layoutY="610.0" text="Show layers: " />
                   </children>
               </AnchorPane>

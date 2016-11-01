@@ -77,6 +77,15 @@ public class MainController implements Initializable {
     
     @FXML 
     public DatabaseSettingsController databaseSettingsController;
+    
+    @FXML
+    public CheckBox undergroundCheckbox;
+    
+    @FXML
+    public CheckBox groundCheckbox;
+    
+    @FXML
+    public CheckBox overgroundCheckbox;
 
     /**
      * Initializes the controller class.
@@ -143,6 +152,13 @@ public class MainController implements Initializable {
                 }
                 break;
         }
+    }
+    
+    @FXML
+    public void groundCheckboxClick(ActionEvent event)
+    {
+        this.mapPaneController.clearMap();
+        this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
     }
 
 }

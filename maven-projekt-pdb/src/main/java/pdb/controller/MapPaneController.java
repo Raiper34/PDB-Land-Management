@@ -301,39 +301,59 @@ public class MapPaneController implements Initializable {
         });
     }
     
+    public void clearMap()
+    {
+        this.mapa.getChildren().clear();
+    }
+    
     public void drawSpatialEntities(){
+        this.drawSpatialEntitiesByLayer(true, true, true);
+    }
+    
+    public void drawSpatialEntities(boolean underground, boolean ground, boolean overground){
+        this.drawSpatialEntitiesByLayer(underground, ground, overground);
+    }
+    
+    public void drawSpatialEntitiesByLayer(boolean underground, boolean ground, boolean overground)
+    {
         // first print underground object
         for (Entity entity : entities){
             // underground circle type objects
             for (ImprovedCircle shape : entity.toShapes().circles){
                 if (shape.getEntityReference().getLayer().equals("underground")) {
-                    // water connection
-                    if (shape.getEntityReference().getEntityType().equals("water connection")) {
-                        shape.setFill(ShapesColorsDefinition.waterConnectionFill);
-                        shape.setStroke(ShapesColorsDefinition.waterConnectionStroke);
+                    if(underground)
+                    {
+                        // water connection
+                        if (shape.getEntityReference().getEntityType().equals("water connection")) {
+                            shape.setFill(ShapesColorsDefinition.waterConnectionFill);
+                            shape.setStroke(ShapesColorsDefinition.waterConnectionStroke);
+                        }
+                        // connection to gas
+                        else if (shape.getEntityReference().getEntityType().equals("connection to gas")) {
+                            shape.setFill(ShapesColorsDefinition.connectionToGasFill);
+                            shape.setStroke(ShapesColorsDefinition.connectionToGasStroke);
+                        }
+                        this.addShapeToMapAndSetListeners(shape);
                     }
-                    // connection to gas
-                    else if (shape.getEntityReference().getEntityType().equals("connection to gas")) {
-                        shape.setFill(ShapesColorsDefinition.connectionToGasFill);
-                        shape.setStroke(ShapesColorsDefinition.connectionToGasStroke);
-                    }
-                    this.addShapeToMapAndSetListeners(shape);
                 }
             }
             // underground path type objects
             for (ImprovedPath shape : entity.toShapes().paths){
                 if (shape.getEntityReference().getLayer().equals("underground")) {
-                    // water pipes
-                    if (shape.getEntityReference().getEntityType().equals("water pipes")) {
-                        shape.setStroke(ShapesColorsDefinition.waterPipesStroke);
-                        shape.setStrokeWidth(2.0);
+                    if(underground)
+                    {
+                        // water pipes
+                        if (shape.getEntityReference().getEntityType().equals("water pipes")) {
+                            shape.setStroke(ShapesColorsDefinition.waterPipesStroke);
+                            shape.setStrokeWidth(2.0);
+                        }
+                        // gas pipes
+                        else if (shape.getEntityReference().getEntityType().equals("gas pipes")) {
+                            shape.setStroke(ShapesColorsDefinition.gasPipesStroke);
+                            shape.setStrokeWidth(2.0);
+                        }
+                        this.addShapeToMapAndSetListeners(shape);
                     }
-                    // gas pipes
-                    else if (shape.getEntityReference().getEntityType().equals("gas pipes")) {
-                        shape.setStroke(ShapesColorsDefinition.gasPipesStroke);
-                        shape.setStrokeWidth(2.0);
-                    }
-                    this.addShapeToMapAndSetListeners(shape);
                 }
             }
         }
@@ -341,10 +361,13 @@ public class MapPaneController implements Initializable {
         // next print estaes
         for (Estate estate : estates){
             for (ImprovedPolygon shape : estate.toShapes().polygons){
-                shape.setFill(ShapesColorsDefinition.estateFill);
-                shape.setStroke(ShapesColorsDefinition.estateStroke);
-                shape.setStrokeWidth(1.0);
-                this.addShapeToMapAndSetListeners(shape);
+                if(ground)
+                {
+                    shape.setFill(ShapesColorsDefinition.estateFill);
+                    shape.setStroke(ShapesColorsDefinition.estateStroke);
+                    shape.setStrokeWidth(1.0);
+                    this.addShapeToMapAndSetListeners(shape);
+                }
             }
         }
         
@@ -353,57 +376,66 @@ public class MapPaneController implements Initializable {
             // overground polygon type objects
             for (ImprovedPolygon shape : entity.toShapes().polygons){
                 if (shape.getEntityReference().getLayer().equals("overground")) {
-                    // house
-                    if (shape.getEntityReference().getEntityType().equals("house")) {
-                        shape.setFill(ShapesColorsDefinition.houseFill);
-                        shape.setStroke(ShapesColorsDefinition.houseStroke);
-                    }
+                    if(overground)
+                    {
+                        // house
+                        if (shape.getEntityReference().getEntityType().equals("house")) {
+                            shape.setFill(ShapesColorsDefinition.houseFill);
+                            shape.setStroke(ShapesColorsDefinition.houseStroke);
+                        }
 
-                    this.addShapeToMapAndSetListeners(shape);
+                        this.addShapeToMapAndSetListeners(shape);
+                    }
                 }
             }
             // overground circle type objects
             for (ImprovedCircle shape : entity.toShapes().circles){
                 if (shape.getEntityReference().getLayer().equals("overground")) {
-                    // water area
-                    if (shape.getEntityReference().getEntityType().equals("water area")) {
-                        shape.setFill(ShapesColorsDefinition.waterAreaFill);
-                        shape.setStroke(ShapesColorsDefinition.waterAreaStroke);
-                    }
-                    // connection to electricity
-                    else if (shape.getEntityReference().getEntityType().equals("connection to electricity")) {
-                        shape.setFill(Color.rgb(186, 1, 29, 0.6));
-                        shape.setStroke(Color.rgb(186, 1, 29, 0.7));
-                    }
-                    // bushes
-                    else if (shape.getEntityReference().getEntityType().equals("bushes")) {
-                        shape.setFill(ShapesColorsDefinition.bushesFill);
-                        shape.setStroke(ShapesColorsDefinition.bushesStroke);
-                    }
-                    // trees
-                    else if (shape.getEntityReference().getEntityType().equals("trees")) {
-                        shape.setFill(ShapesColorsDefinition.treesFill);
-                        shape.setStroke(ShapesColorsDefinition.treesStroke);
-                    }
+                    if(overground)
+                    {
+                        // water area
+                        if (shape.getEntityReference().getEntityType().equals("water area")) {
+                            shape.setFill(ShapesColorsDefinition.waterAreaFill);
+                            shape.setStroke(ShapesColorsDefinition.waterAreaStroke);
+                        }
+                        // connection to electricity
+                        else if (shape.getEntityReference().getEntityType().equals("connection to electricity")) {
+                            shape.setFill(Color.rgb(186, 1, 29, 0.6));
+                            shape.setStroke(Color.rgb(186, 1, 29, 0.7));
+                        }
+                        // bushes
+                        else if (shape.getEntityReference().getEntityType().equals("bushes")) {
+                            shape.setFill(ShapesColorsDefinition.bushesFill);
+                            shape.setStroke(ShapesColorsDefinition.bushesStroke);
+                        }
+                        // trees
+                        else if (shape.getEntityReference().getEntityType().equals("trees")) {
+                            shape.setFill(ShapesColorsDefinition.treesFill);
+                            shape.setStroke(ShapesColorsDefinition.treesStroke);
+                        }
 
-                    this.addShapeToMapAndSetListeners(shape);
+                        this.addShapeToMapAndSetListeners(shape);
+                    }
                 }
             }
             // overground path type objects
             for (ImprovedPath shape : entity.toShapes().paths){
                 if (shape.getEntityReference().getLayer().equals("overground")) {
-                    // power lines
-                    if (shape.getEntityReference().getEntityType().equals("power lines")) {
-                        shape.setStroke(ShapesColorsDefinition.powerLinesStroke);
-                        shape.setStrokeWidth(2.0);
-                    }
-                    // path
-                    else if (shape.getEntityReference().getEntityType().equals("path")) {
-                        shape.setStroke(ShapesColorsDefinition.pathStroke);
-                        shape.setStrokeWidth(10.0);
-                    }
+                    if(overground)
+                    {
+                        // power lines
+                        if (shape.getEntityReference().getEntityType().equals("power lines")) {
+                            shape.setStroke(ShapesColorsDefinition.powerLinesStroke);
+                            shape.setStrokeWidth(2.0);
+                        }
+                        // path
+                        else if (shape.getEntityReference().getEntityType().equals("path")) {
+                            shape.setStroke(ShapesColorsDefinition.pathStroke);
+                            shape.setStrokeWidth(10.0);
+                        }
 
-                    this.addShapeToMapAndSetListeners(shape);
+                        this.addShapeToMapAndSetListeners(shape);
+                    }
                 }
             }
         }
