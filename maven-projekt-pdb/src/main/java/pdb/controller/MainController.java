@@ -27,7 +27,6 @@ import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.DatabaseModel;
-import pdb.model.DatabaseTest;
 import pdb.model.spatial.ImprovedPolygon;
 
 
