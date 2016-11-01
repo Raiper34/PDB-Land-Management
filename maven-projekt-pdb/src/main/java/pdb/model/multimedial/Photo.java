@@ -12,6 +12,7 @@ import oracle.ord.im.OrdImage;
 import oracle.jdbc.OraclePreparedStatement;
 import java.sql.PreparedStatement;
 import oracle.jdbc.OracleResultSet;
+import pdb.model.DatabaseModel;
 
 /**
  *
@@ -19,38 +20,44 @@ import oracle.jdbc.OracleResultSet;
  */
 public class Photo {
 
-    //The last used ID of the Photo
-    public static int lastId = 0;
-    public int id;
-
+    private DatabaseModel database;
+    private Connection connection;
+    
     public Photo() {
-        this.id = lastId++;
+        this.database = DatabaseModel.getInstance();
+        this.connection = this.database.getConnection();
     }
 
-    public void insertPhotoFromFile(Connection connection,
-            String filename) throws SQLException, IOException {
-        boolean autoCommit = connection.getAutoCommit();
-        connection.setAutoCommit(false);
-        try {
+    public void insertPhotoFromFile(String filename) throws SQLException, IOException {
+        int id = 21;
+        boolean autoCommit = this.connection.getAutoCommit();
+        this.connection.setAutoCommit(false);
+        try 
+        {
             OrdImage imgProxy = null;
 
             // insert a new record with an empty ORDImage object
-            OraclePreparedStatement pstmtInsert = (OraclePreparedStatement) connection.prepareStatement(
+            OraclePreparedStatement pstmtInsert = (OraclePreparedStatement) this.connection.prepareStatement(
                     "insert into photos(id, photo) values (" + id + ", ordsys.ordimage.init())");
 
             pstmtInsert.executeUpdate();
             pstmtInsert.close();
 
             // retrieve the previously created ORDImage object for future updating
-            OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) connection.prepareStatement(
+            OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
                     "select photo from photos where id=" + id + " for update");
-            try {
+            try 
+            {
                 OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
-                try {
-                    if (rset.next()) {
+                try 
+                {
+                    if (rset.next()) 
+                    {
                         imgProxy = (OrdImage) rset.getORAData("photo", OrdImage.getORADataFactory());
                     }
-                } finally {
+                } 
+                finally 
+                {
                     rset.close();
                 }
             } finally {
@@ -60,37 +67,50 @@ public class Photo {
             imgProxy.loadDataFromFile(filename);
             imgProxy.setProperties();
             
-            OraclePreparedStatement pstmtUpdate1 = (OraclePreparedStatement) connection.prepareStatement(
-                    "update photos set photo = ? where id = " + id);
+            OraclePreparedStatement pstmtUpdate1 = (OraclePreparedStatement) this.connection.prepareStatement(
+                "update photos set photo = ? where id = " + id
+            );
             try {
                 pstmtUpdate1.setORAData(1, imgProxy);
                 pstmtUpdate1.executeUpdate();
-            } finally {
+            } 
+            finally 
+            {
                 pstmtUpdate1.close();
             }
             
-            PreparedStatement pstmtUpdate2 = connection.prepareStatement(
-                    "update photos p set p.photo_si=SI_StillImage(p.photo.getContent()) where id = " + id);
-            try {
+            PreparedStatement pstmtUpdate2 = this.connection.prepareStatement(
+                "update photos p set p.photo_si=SI_StillImage(p.photo.getContent()) where id = " + id
+            );
+            try 
+            {
                 pstmtUpdate2.executeUpdate();
-            } finally {
+            } 
+            finally 
+            {
                 pstmtUpdate2.close();
             }
             
-            PreparedStatement pstmtUpdate3 = connection.prepareStatement(
+            PreparedStatement pstmtUpdate3 = this.connection.prepareStatement(
                     "update photos p set"+
                     " p.photo_ac=SI_AverageColor(p.photo_si),"+
                     " p.photo_ch=SI_ColorHistogram(p.photo_si),"+
                     " p.photo_pc=SI_PositionalColor(p.photo_si),"+
-                    " p.photo_tx=SI_Texture(p.photo_si) where id = "+id);
-            try {
+                    " p.photo_tx=SI_Texture(p.photo_si) where id = "+id
+            );
+            try 
+            {
                 pstmtUpdate3.executeUpdate();
-            } finally {
+            } 
+            finally 
+            {
                 pstmtUpdate3.close();
             }
-            connection.commit();
-        } finally {
-            connection.setAutoCommit(autoCommit);
+            this.connection.commit();
+        } 
+        finally 
+        {
+            this.connection.setAutoCommit(autoCommit);
         }
     }
 
