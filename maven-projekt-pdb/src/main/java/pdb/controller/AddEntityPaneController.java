@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
@@ -184,6 +185,13 @@ public class AddEntityPaneController implements Initializable {
         r.fillProperty();
         addEntityAnchorPane.getChildren().add(r);
         addEntityAnchorPane.getChildren().add(r1);
+    }
+
+    public void handleInputEventForMap(InputEvent event) {
+        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+            //Get the x and y of the click and create there a new circle
+            this.addNewSpatialEntity((MouseEvent) event); 
+        }
     }
     
 }

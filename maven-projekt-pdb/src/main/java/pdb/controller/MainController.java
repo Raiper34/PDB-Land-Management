@@ -223,29 +223,27 @@ public class MainController implements Initializable {
         this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
     }
     
-    void mapClickedEventHandler(MouseEvent event) {
+    public void handleInputEventForMap(InputEvent event) {
         switch (this.currentTitledPane) {
             case "DEFAULT":
                 break;
             case "Add entity":
-                //Get the x and y of the click and create there a new circle
-                this.addEntityPaneController.addNewSpatialEntity(event); 
-                // addEntityPaneController.mapClickedEventHandler(MouseEvent event);
+                addEntityPaneController.handleInputEventForMap(event);
                 break;
             case "Entity modification":
-                // entityModificationPaneController.mapClickedEventHandler(MouseEvent event);
+                // entityModificationPaneController.handleInputEventForMap(InputEvent event);
                 break;
             case "Multimedia":
-                // multimediaPaneController.mapClickedEventHandler(MouseEvent event);
+                // multimediaPaneController.handleInputEventForMap(InputEvent event);
                 break;
             case "Time":
-                // timePaneController.mapClickedEventHandler(MouseEvent event);
+                // timePaneController.handleInputEventForMap(InputEvent event);
                 break;
             case "Spatial":
-                // spatialPaneController.mapClickedEventHandler(MouseEvent event);
+                // spatialPaneController.handleInputEventForMap(InputEvent event);
                 break;
             case "Freeholders":
-                // freeHoldersPaneController.mapClickedEventHandler(MouseEvent event);
+                // freeHoldersPaneController.handleInputEventForMap(InputEvent event);
                 break;
         
         }     

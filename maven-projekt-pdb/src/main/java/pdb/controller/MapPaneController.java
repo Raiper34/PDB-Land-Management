@@ -97,17 +97,18 @@ public class MapPaneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        mapa.addEventHandler(InputEvent.ANY, new EventHandler<InputEvent>()
+        {
+            @Override
+            public void handle(InputEvent t) {
+                mainController.handleInputEventForMap(t);
+            }
+        });
         drawMap();
     }
 
     public void addParent(MainController c1) {
         this.mainController = c1;
-    }
-
-    @FXML
-    void clicked(MouseEvent event) {
-        System.out.println("Clicked to map!");
-        mainController.mapClickedEventHandler(event);
     }
     
     public void drawMap() {
