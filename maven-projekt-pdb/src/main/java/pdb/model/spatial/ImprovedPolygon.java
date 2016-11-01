@@ -26,4 +26,8 @@ public class ImprovedPolygon extends Polygon {
     public Entity getEntityReference() {
         return this.entityReference;
     }
+    
+    public boolean isEstate() {
+        return isEstate;
+    }
 }

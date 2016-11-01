@@ -30,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 //import javafx.stage.Window;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.SpatialEntitiesModel;
@@ -47,12 +48,14 @@ public class MapPaneController implements Initializable {
     
     List<Entity> entities;
     
+    List<Shape> shapes;
+    
     @FXML
     public AnchorPane mapa;
 
     public int cislo;
 
-    public MainController cccc;
+    public MainController mainController;
 
     @FXML
     private MainController fXMLController;
@@ -95,7 +98,7 @@ public class MapPaneController implements Initializable {
     }
 
     public void addParent(MainController c1) {
-        this.cccc = c1;
+        this.mainController = c1;
     }
 
     @FXML
@@ -147,6 +150,17 @@ public class MapPaneController implements Initializable {
         entities = spatialEntitiesModel.getEntities();
     }
     
+    public void addShapeToMapAndSetListeners(Shape shape) {
+        mapa.getChildren().add(shape);
+        shape.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                mainController.handleMouseEventForShape(t, shape);
+            }
+        });
+    }
+    
     public void drawSpatialEntities(){
         // first print underground object
         for (Entity entity : entities){
@@ -164,14 +178,7 @@ public class MapPaneController implements Initializable {
                         shape.setStroke(Color.rgb(214, 107, 0, 0.7));
                     }
                     
-                    shape.setOnMouseClicked(new EventHandler<MouseEvent>()
-                    {
-                        @Override
-                        public void handle(MouseEvent t) {
-                            System.out.println("Clicked circle");
-                        }
-                    });
-                    mapa.getChildren().add(shape);
+                    this.addShapeToMapAndSetListeners(shape);
                 }
             }
             // underground path type objects
@@ -185,7 +192,7 @@ public class MapPaneController implements Initializable {
                     else if (shape.getEntityReference().getEntityType().equals("gas pipes")) {
                         shape.setStroke(Color.rgb(214, 107, 0, 0.6));
                     }
-                    mapa.getChildren().add(shape);
+                    this.addShapeToMapAndSetListeners(shape);
                 }
             }
         }
@@ -197,7 +204,7 @@ public class MapPaneController implements Initializable {
                 shape.setFill(Color.TRANSPARENT);
                 shape.setStroke(Color.rgb(160, 160, 160, 0.6));
                 shape.setStrokeWidth(1.0);
-                mapa.getChildren().add(shape);
+                this.addShapeToMapAndSetListeners(shape);
             }
         }
         
@@ -212,14 +219,8 @@ public class MapPaneController implements Initializable {
                         shape.setFill(Color.rgb(85, 92, 128, 0.6));
                         shape.setStroke(Color.rgb(85, 92, 128, 0.7));
                     }
-                    shape.setOnMouseClicked(new EventHandler<MouseEvent>()
-                    {
-                        @Override
-                        public void handle(MouseEvent t) {
-                            System.out.println("Clicked polygon");
-                        }
-                    });
-                    mapa.getChildren().add(shape);
+
+                    this.addShapeToMapAndSetListeners(shape);
                 }
             }
             // overground circle type objects
@@ -245,14 +246,8 @@ public class MapPaneController implements Initializable {
                         shape.setFill(Color.rgb(1, 186, 26, 0.6));
                         shape.setStroke(Color.rgb(1, 186, 26, 0.7));
                     }
-                    shape.setOnMouseClicked(new EventHandler<MouseEvent>()
-                    {
-                        @Override
-                        public void handle(MouseEvent t) {
-                            System.out.println("Clicked circle");
-                        }
-                    });
-                    mapa.getChildren().add(shape);
+
+                    this.addShapeToMapAndSetListeners(shape);
                 }
             }
             // overground path type objects
@@ -267,14 +262,8 @@ public class MapPaneController implements Initializable {
                         shape.setStroke(Color.rgb(80, 80, 80, 0.6));
                         shape.setStrokeWidth(10.0);
                     }
-                    shape.setOnMouseClicked(new EventHandler<MouseEvent>()
-                    {
-                        @Override
-                        public void handle(MouseEvent t) {
-                            System.out.println("Clicked path");
-                        }
-                    });
-                    mapa.getChildren().add(shape);
+
+                    this.addShapeToMapAndSetListeners(shape);
                 }
             }
         }

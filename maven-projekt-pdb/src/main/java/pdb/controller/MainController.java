@@ -19,14 +19,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.DatabaseModel;
 import pdb.model.DatabaseModel;
 import pdb.model.DatabaseTest;
+import pdb.model.spatial.ImprovedPolygon;
 
 
 
@@ -50,6 +53,8 @@ public class MainController implements Initializable {
     private AnchorPane mapa;
 
     private GraphicsContext gc;
+    
+    private String currentState = "DEFAULT"; // default state
     
     @FXML
     private Button wer;
@@ -143,6 +148,21 @@ public class MainController implements Initializable {
         this.mapPaneController.loadEntities();
         this.mapPaneController.loadEstates();
         this.mapPaneController.drawSpatialEntities();
+    }
+    
+    public void handleMouseEventForShape(MouseEvent t, Shape shape) {
+        switch (this.currentState) {
+            case "DEFAULT":
+                if (shape instanceof ImprovedPolygon) {
+                    ImprovedPolygon polygon = (ImprovedPolygon) shape;
+                    if (!polygon.isEstate()) {
+                        if (polygon.getEntityReference().getEntityType().equals("house")) {
+                            System.out.println("Clicked house");
+                        }
+                    }
+                }
+                break;
+        }
     }
 
 }
