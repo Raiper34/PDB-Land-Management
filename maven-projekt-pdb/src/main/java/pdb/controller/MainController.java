@@ -160,5 +160,12 @@ public class MainController implements Initializable {
         this.mapPaneController.clearMap();
         this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
     }
+    
+    @FXML
+    public void disconnectClick(ActionEvent event)
+    {
+        this.mapPaneController.clearMemoryAndMap();
+        this.databaseSettingsModal.setVisible(true);
+    }
 
 }

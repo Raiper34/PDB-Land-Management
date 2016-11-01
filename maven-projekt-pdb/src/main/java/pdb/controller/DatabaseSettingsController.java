@@ -76,6 +76,10 @@ public class DatabaseSettingsController implements Initializable {
         String serviceName = this.serviceNameInput.getText();
         
         DatabaseModel database = DatabaseModel.getInstance();
+        if(database.isConnected())
+        {
+            database.disconnectDatabase();
+        }
         if(database.connectDatabase(host, port, serviceName, username, password))
         {
             this.dbInfo.saveAccessInfo(username, password, host, port, serviceName); 
