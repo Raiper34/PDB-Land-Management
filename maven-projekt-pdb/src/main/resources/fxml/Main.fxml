@@ -89,6 +89,7 @@
                 <Menu mnemonicParsing="false" text="Database">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#initializeClick" text="Initialize" />
+                    <MenuItem mnemonicParsing="false" onAction="#disconnectClick" text="Disconnect" />
                   </items>
                 </Menu>
               </menus>

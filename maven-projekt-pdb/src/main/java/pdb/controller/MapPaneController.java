@@ -292,6 +292,14 @@ public class MapPaneController implements Initializable {
         });
     }
     
+    public void clearMemoryAndMap()
+    {
+        this.clearMap();
+        //this.entities.clear();
+        //this.estates.clear();
+        //this.shapes.clear();
+    }
+    
     public void clearMap()
     {
         this.mapa.getChildren().clear();

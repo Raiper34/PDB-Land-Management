@@ -164,7 +164,6 @@ public class MainController implements Initializable {
         this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
     }
     
-    
     void mapClickedEventHandler(MouseEvent event) {
         
         //Get the x and y of the click and create there a new circle
@@ -174,5 +173,12 @@ public class MainController implements Initializable {
     public void setCurrentState(String state) {
         this.currentState = state;
     }
+    
+    @FXML
+    public void disconnectClick(ActionEvent event)
+    {
+        this.mapPaneController.clearMemoryAndMap();
+        this.databaseSettingsModal.setVisible(true);
 
+    }
 }
