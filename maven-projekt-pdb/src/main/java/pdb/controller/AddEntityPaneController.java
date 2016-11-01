@@ -6,7 +6,9 @@
 package pdb.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,11 +22,15 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import oracle.spatial.geometry.JGeometry;
 import static oracle.spatial.geometry.JGeometry.GTYPE_POINT;
 import pdb.model.SpatialEntitiesModel;
 import pdb.model.spatial.Entity;
+import pdb.model.spatial.Estate;
 
 /**
  *
@@ -43,40 +49,95 @@ public class AddEntityPaneController implements Initializable {
     @FXML
     private MainController fXMLController;
     
+    private Entity newEntity;
+    
+    private Estate newEstate;
+    
+    private String typeOfNewSpatialEntity;
+    
     //private SpatialEntitiesModel spatialEntitiesModel;
     
-    public int countOfAddedEntities = 0;
+    public int countOfAddedPoints = 0;
+    
+    private List<Line> newLines;
+    private List<Circle> newPoints;
+    
+    public void addPoint(MouseEvent event) {
+        Circle point = new Circle(event.getX(), event.getY(), 5.0f, Paint.valueOf("Black") );
+        newPoints.add(point);
+        mainController.mapPaneController.mapa.getChildren().add(point);
+    }
+    
+    public void addLine(MouseEvent event) {
+        Circle point = new Circle(event.getX(), event.getY(), 5.0f, Paint.valueOf("Black") );
+        newPoints.add(point);
+    }
     
     public void addNewSpatialEntity(MouseEvent event) {
         
-        String shapeType = "POINT";
+        String shapeType = "Multiline";
         
-        if (shapeType == "POINT" && countOfAddedEntities == 1  )
+        if ( shapeType == "Point" && countOfAddedPoints > 0 )
             return;
+
+        addPoint(event);
         
-        //getLastID of entities
-        int id = mainController.mapPaneController.spatialEntitiesModel.getMaxId("related_spatial_entities") + 1;
-        double x = event.getX();
-        double y = event.getY();
-        
-        JGeometry geometry = new JGeometry(x, y, GTYPE_POINT);
-        Date validFrom =  new Date();
-        Date validTo = new Date();
-        
-        //int id, String name, String description, JGeometry geometry, Date valid_from, Date valid_to, String entityType,String layer
-        Entity newEntity = new Entity(id , "NewBushesPoint", "NewBushesPoint", geometry, validFrom, validTo, "bushes", "overground");
-        mainController.mapPaneController.entities.add(newEntity);
-        mainController.mapPaneController.drawSpatialEntities();
-        countOfAddedEntities++;
+        if(shapeType == "Multiline" || shapeType == "Line") {
+            if (newPoints != null && newPoints.size() > 1 ) {
+                
+                Line newLine = new Line(
+                        newPoints.get(newPoints.size()-1).getCenterX(), 
+                        newPoints.get(newPoints.size()-1).getCenterY(), 
+                        newPoints.get(newPoints.size()-2).getCenterX(), 
+                        newPoints.get(newPoints.size()-2).getCenterY() 
+                );
+                newLines.add(newLine);
+                mainController.mapPaneController.mapa.getChildren().add(newLine);
+            }
+        }
+
+        countOfAddedPoints++;
     }
     
+    public void saveNewSpatialEntity() {
+        //Create the new entity and jgeometry from the points I have got
+        
+        //JGeometry geometry = new JGeometry();
+        
+//        //getLastID of entities
+//        int id = mainController.mapPaneController.spatialEntitiesModel.getMaxId("related_spatial_entities") + 1;
+//        
+//        JGeometry geometry = new JGeometry(x, y, GTYPE_POINT);
+//        Date validFrom =  new Date();
+//        Date validTo = new Date();
+//        
+//        //int id, String name, String description, JGeometry geometry, Date valid_from, Date valid_to, String entityType,String layer
+//        Entity newEntity = new Entity(id , "NewBushesPoint", "NewBushesPoint", geometry, validFrom, validTo, "bushes", "overground");
+//        mainController.mapPaneController.entities.add(newEntity);
+//        mainController.mapPaneController.drawSpatialEntities();
+    }
     
+    public void deleteNewEntity() {
+        //Remove all the new shapes from map
+        for (Circle shape : newPoints){
+            mainController.mapPaneController.mapa.getChildren().remove(shape);
+        }
+        for (Line shape : newLines){
+            mainController.mapPaneController.mapa.getChildren().remove(shape);
+        }
+        newLines.clear();
+        newPoints.clear();
+        countOfAddedPoints = 0;
+    }
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        newPoints = new ArrayList<>();
+        newLines = new ArrayList<>();
+        
         //drawTest();
         System.out.println("Hello from addentity");
         toggleNewObject.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){

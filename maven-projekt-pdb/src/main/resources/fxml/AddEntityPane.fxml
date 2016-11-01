@@ -10,8 +10,8 @@
 
 <AnchorPane id="AnchorPane" fx:id="addEntityAnchorPane" prefHeight="300.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.AddEntityPaneController">
    <children>
-      <Button layoutX="136.0" layoutY="294.0" mnemonicParsing="false" text="Save" />
-      <Button layoutX="200.0" layoutY="294.0" mnemonicParsing="false" text="Delete" />
+      <Button layoutX="136.0" layoutY="294.0" mnemonicParsing="false" onMouseClicked="#saveNewSpatialEntity"  text="Save" />
+      <Button layoutX="200.0" layoutY="294.0" mnemonicParsing="false" onMouseClicked="#deleteNewEntity" text="Delete" />
       <Group layoutX="6.0" layoutY="39.0">
          <children>
             <Label layoutX="17.0" text="House" />
