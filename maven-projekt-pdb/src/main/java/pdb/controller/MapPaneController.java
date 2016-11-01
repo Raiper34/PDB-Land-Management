@@ -199,7 +199,6 @@ public class MapPaneController implements Initializable {
         
         // next print estaes
         for (Estate estate : estates){
-            System.out.println(estate);
             for (ImprovedPolygon shape : estate.toShapes().polygons){
                 shape.setFill(Color.TRANSPARENT);
                 shape.setStroke(Color.rgb(160, 160, 160, 0.6));
@@ -210,7 +209,6 @@ public class MapPaneController implements Initializable {
         
         // next print overground objects
         for (Entity entity : entities){
-            System.out.println(entity);
             // overground polygon type objects
             for (ImprovedPolygon shape : entity.toShapes().polygons){
                 if (shape.getEntityReference().getLayer().equals("overground")) {
