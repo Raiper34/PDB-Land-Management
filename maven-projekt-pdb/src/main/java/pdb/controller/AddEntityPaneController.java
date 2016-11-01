@@ -147,7 +147,7 @@ public class AddEntityPaneController implements Initializable {
                 
                 System.out.println("Selected Radio Button - "+chk.getId());
                 if(chk.getId() == "BushesPoint") {
-                    mainController.setCurrentState("AddEntity");
+                    mainController.setCurrentTitledPane("AddEntity");
                 }
             }
         });

@@ -9,6 +9,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
@@ -16,10 +18,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TitledPane;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -42,6 +46,9 @@ import pdb.model.spatial.ImprovedPolygon;
 public class MainController implements Initializable {
 
     @FXML
+    private Accordion accordion;
+    
+    @FXML
     private CheckBox checkBox;
 
     @FXML
@@ -56,7 +63,7 @@ public class MainController implements Initializable {
 
     private GraphicsContext gc;
     
-    private String currentState = "DEFAULT"; // default state
+    private String currentTitledPane = "DEFAULT"; // default 
     
     @FXML
     private Button wer;
@@ -95,6 +102,39 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // detect change of current titledPane 
+        accordion.expandedPaneProperty().addListener(new ChangeListener<TitledPane>() {
+            @Override 
+            public void changed(ObservableValue<? extends TitledPane> property, final TitledPane oldPane, final TitledPane newPane) {
+                if (newPane == null) return;
+                switch (newPane.getText()) {
+                    case "Add entity":
+                        // addEntityPaneController.resetState();
+                        currentTitledPane = "Add entity";
+                        break;
+                    case "Entity modification":
+                        // entityModificationPaneController.resetState();
+                        currentTitledPane = "Entity modification";
+                        break;
+                    case "Multimedia":
+                        // multimediaPaneController.resetState();
+                        currentTitledPane = "Multimedia";
+                        break;
+                    case "Time":
+                        // timePaneController.resetState();
+                        currentTitledPane = "Time";
+                        break;
+                    case "Spatial":
+                        // spatialPaneController.resetState();
+                        currentTitledPane = "Spatial";
+                        break;
+                    case "Freeholders":
+                        // freeHoldersPaneController.resetState();
+                        currentTitledPane = "Freeholders";
+                        break;
+                } 
+            }
+          });
         this.injects();
     }
     
@@ -140,7 +180,7 @@ public class MainController implements Initializable {
     }
     
     public void handleInputEventForShape(InputEvent t, Shape shape) {
-        switch (this.currentState) {
+        switch (this.currentTitledPane) {
             case "DEFAULT":
                 if (shape instanceof ImprovedPolygon) {
                     ImprovedPolygon polygon = (ImprovedPolygon) shape;
@@ -154,6 +194,25 @@ public class MainController implements Initializable {
                     }
                 }
                 break;
+            case "Add entity":
+                // addEntityPaneController.handleInputEventForShape(InputEvent t, Shape shape);
+                break;
+            case "Entity modification":
+                // entityModificationPaneController.handleInputEventForShape(InputEvent t, Shape shape);
+                break;
+            case "Multimedia":
+                // multimediaPaneController.handleInputEventForShape(InputEvent t, Shape shape);
+                break;
+            case "Time":
+                // timePaneController.handleInputEventForShape(InputEvent t, Shape shape);
+                break;
+            case "Spatial":
+                // spatialPaneController.handleInputEventForShape(InputEvent t, Shape shape);
+                break;
+            case "Freeholders":
+                // freeHoldersPaneController.handleInputEventForShape(InputEvent t, Shape shape);
+                break;
+        
         }
     }
     
@@ -165,13 +224,35 @@ public class MainController implements Initializable {
     }
     
     void mapClickedEventHandler(MouseEvent event) {
+        switch (this.currentTitledPane) {
+            case "DEFAULT":
+                break;
+            case "Add entity":
+                //Get the x and y of the click and create there a new circle
+                this.addEntityPaneController.addNewSpatialEntity(event); 
+                // addEntityPaneController.mapClickedEventHandler(MouseEvent event);
+                break;
+            case "Entity modification":
+                // entityModificationPaneController.mapClickedEventHandler(MouseEvent event);
+                break;
+            case "Multimedia":
+                // multimediaPaneController.mapClickedEventHandler(MouseEvent event);
+                break;
+            case "Time":
+                // timePaneController.mapClickedEventHandler(MouseEvent event);
+                break;
+            case "Spatial":
+                // spatialPaneController.mapClickedEventHandler(MouseEvent event);
+                break;
+            case "Freeholders":
+                // freeHoldersPaneController.mapClickedEventHandler(MouseEvent event);
+                break;
         
-        //Get the x and y of the click and create there a new circle
-        this.addEntityPaneController.addNewSpatialEntity(event);      
+        }     
     }
     
-    public void setCurrentState(String state) {
-        this.currentState = state;
+    public void setCurrentTitledPane(String state) {
+        this.currentTitledPane = state;
     }
     
     @FXML

@@ -155,7 +155,7 @@ public class MapPaneController implements Initializable {
             }
         });
         
-        // more bright to current object
+        // more bright to current object on mouseenter
         shape.setOnMouseEntered(new EventHandler<MouseEvent>()
         {
             @Override
@@ -223,7 +223,7 @@ public class MapPaneController implements Initializable {
             }
         });
         
-        // redraw shape with origin color
+        // redraw shape with origin color on mouseleave
         shape.setOnMouseExited(new EventHandler<MouseEvent>()
         {
             @Override

@@ -20,7 +20,7 @@
          <right>
               <AnchorPane prefHeight="667.0" prefWidth="412.0" BorderPane.alignment="CENTER">
                   <children>
-                      <Accordion prefHeight="600.0" prefWidth="410.0">
+                      <Accordion fx:id="accordion" prefHeight="600.0" prefWidth="410.0">
                           <panes>
                               <TitledPane text="Add entity">
                                   <content>
