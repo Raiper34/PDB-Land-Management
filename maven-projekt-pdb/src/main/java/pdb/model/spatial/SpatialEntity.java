@@ -55,7 +55,7 @@ public class SpatialEntity {
             }
             // entity is entity
             else {
-                improvedPolygon = new ImprovedPolygon(true, (Entity) spatialEntity, null);
+                improvedPolygon = new ImprovedPolygon(false, (Entity) spatialEntity, null);
             }
             
             // slice original polygon points (remove 2 last points which close polygon)

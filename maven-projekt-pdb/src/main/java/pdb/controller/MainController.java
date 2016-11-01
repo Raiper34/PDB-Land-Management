@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -118,15 +119,18 @@ public class MainController implements Initializable {
         this.mapPaneController.drawSpatialEntities();
     }
     
-    public void handleMouseEventForShape(MouseEvent t, Shape shape) {
+    public void handleInputEventForShape(InputEvent t, Shape shape) {
         switch (this.currentState) {
             case "DEFAULT":
                 if (shape instanceof ImprovedPolygon) {
                     ImprovedPolygon polygon = (ImprovedPolygon) shape;
                     if (!polygon.isEstate()) {
                         if (polygon.getEntityReference().getEntityType().equals("house")) {
-                            System.out.println("Clicked house");
+                            System.out.println("Event: " + t.getEventType() + " on house");
                         }
+                    }
+                    else {
+                        System.out.println("Clicked estate");
                     }
                 }
                 break;
