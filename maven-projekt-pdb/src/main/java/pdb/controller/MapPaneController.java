@@ -106,17 +106,8 @@ public class MapPaneController implements Initializable {
 
     @FXML
     void clicked(MouseEvent event) {
-        //this.cccc.test();
         System.out.println("Clicked to map!");
-        /*Polygon polygon = new Polygon();
-        polygon.getPoints().addAll(new Double[]{
-            0.0, 0.0,
-            20.0, 10.0,
-            10.0, 20.0});
-        mapa.getChildren().add(polygon);
-        polygon.setRotate(50.0);
-        polygon.setScaleX(5);
-        polygon.setScaleY(5);*/
+        mainController.mapClickedEventHandler(event);
     }
     
     public void drawMap() {
@@ -160,7 +151,7 @@ public class MapPaneController implements Initializable {
             @Override
             public void handle(InputEvent t) {
                 mainController.handleInputEventForShape(t, shape);
-                System.out.println( t.getEventType());
+                //System.out.println( t.getEventType());
             }
         });
         
@@ -440,5 +431,6 @@ public class MapPaneController implements Initializable {
             }
         }
     }
-
+    
+    
 }

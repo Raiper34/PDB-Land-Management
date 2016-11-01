@@ -102,5 +102,32 @@ public class SpatialEntitiesModel {
 
         return estates;
     }
+    
+    public int getMaxId(String table) {
+        if (!"related_spatial_entities".equals(table) && !"estates".equals(table)){
+            System.err.println("ERROR bad TABLE NAME");
+            return -10;
+        }
+        
+        int maxId = 0;
+        try {
+            try (Statement stmt = conn.createStatement()) {
+                System.err.println("select MAX(id) as max from " + table);
+                try (ResultSet rset = stmt.executeQuery("select MAX(id) as max from " + table)) {
+                    if (rset.next()) {
+                        maxId = rset.getInt("max");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SpatialEntitiesModel.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+
+        return maxId;
+    }
 
 }

@@ -7,6 +7,7 @@ package pdb.controller;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -27,7 +28,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import oracle.spatial.geometry.JGeometry;
+import static oracle.spatial.geometry.JGeometry.GTYPE_POINT;
 import pdb.model.DatabaseModel;
+import pdb.model.spatial.Entity;
 import pdb.model.spatial.ImprovedPolygon;
 
 
@@ -143,11 +146,11 @@ public class MainController implements Initializable {
                     ImprovedPolygon polygon = (ImprovedPolygon) shape;
                     if (!polygon.isEstate()) {
                         if (polygon.getEntityReference().getEntityType().equals("house")) {
-                            System.out.println("Event: " + t.getEventType() + " on house");
+                            //System.out.println("Event: " + t.getEventType() + " on house");
                         }
                     }
                     else {
-                        System.out.println("Clicked estate");
+                        //System.out.println("Clicked estate");
                     }
                 }
                 break;
@@ -159,6 +162,17 @@ public class MainController implements Initializable {
     {
         this.mapPaneController.clearMap();
         this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
+    }
+    
+    
+    void mapClickedEventHandler(MouseEvent event) {
+        
+        //Get the x and y of the click and create there a new circle
+        this.addEntityPaneController.addNewSpatialEntity(event);      
+    }
+    
+    public void setCurrentState(String state) {
+        this.currentState = state;
     }
 
 }
