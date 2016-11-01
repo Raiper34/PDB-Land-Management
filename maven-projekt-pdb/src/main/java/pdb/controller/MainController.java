@@ -69,6 +69,12 @@ public class MainController implements Initializable {
     public MapPaneController mapPaneController;
     
     @FXML 
+    public AddEntityPaneController addEntityPaneController;
+    
+    @FXML 
+    public EntityModificationPaneController entityModificationPaneController;
+    
+    @FXML 
     public DatabaseSettingsController databaseSettingsController;
 
     /**
@@ -86,6 +92,8 @@ public class MainController implements Initializable {
     {
         this.databaseSettingsController.injectMainController(this);
         this.mapPaneController.addParent(this);
+        this.addEntityPaneController.addParent(this);
+        this.entityModificationPaneController.addParent(this);
     }
     
     /**
