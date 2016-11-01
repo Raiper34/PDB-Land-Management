@@ -9,89 +9,67 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<Group xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" fx:id="addEntityAnchorPane" prefHeight="300.0" 
+            prefWidth="325.0" xmlns="http://javafx.com/javafx/8.0.65" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="pdb.controller.AddEntityPaneController"
+            
+>
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="325.0">
+      <Button layoutX="136.0" layoutY="294.0" mnemonicParsing="false" text="Save" />
+      <Group layoutX="6.0" layoutY="39.0">
          <children>
-            <Button layoutX="136.0" layoutY="294.0" mnemonicParsing="false" text="Save" />
-            <Group layoutX="6.0" layoutY="39.0">
-               <children>
-                  <Label layoutX="17.0" text="House" />
-                  <RadioButton layoutX="74.0" mnemonicParsing="false" text="Rectangle">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="toggleNewObject" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject" />
-                  <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
-               </children>
-            </Group>
-            <Group layoutX="6.0" layoutY="14.0">
-               <children>
-                  <Label layoutX="17.0" text="Estate:" />
-                  <RadioButton layoutX="74.0" mnemonicParsing="false" text="Rectangle">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="toggleNewObject1" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject1" />
-                  <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
-               </children>
-            </Group>
-            <Group layoutX="6.0" layoutY="63.0">
-               <children>
-                  <Label layoutX="17.0" text="Lake" />
-                  <RadioButton layoutX="74.0" mnemonicParsing="false" text="Circle">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="toggleNewObject2" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject2" />
-                  <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
-               </children>
-            </Group>
-            <Group layoutX="6.0" layoutY="135.0">
-               <children>
-                  <Label layoutX="3.0" text="Waterpipe" />
-                  <RadioButton layoutX="74.0" mnemonicParsing="false" text="Point">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="toggleNewObject21" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton layoutX="143.0" mnemonicParsing="false" text="Line" toggleGroup="$toggleNewObject21" />
-                  <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
-                  <RadioButton layoutX="210.0" mnemonicParsing="false" text="Multiline">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="toggleNewObject211" />
-                     </toggleGroup>
-                  </RadioButton>
-               </children>
-            </Group>
-            <Group layoutX="6.0" layoutY="111.0">
-               <children>
-                  <Label layoutX="17.0" text="Bushes" />
-                  <RadioButton layoutX="74.0" mnemonicParsing="false" text="Point">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="toggleNewObject22" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton layoutX="186.0" mnemonicParsing="false" text="Multipoint" toggleGroup="$toggleNewObject22" />
-                  <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
-               </children>
-            </Group>
-            <Group layoutX="6.0" layoutY="87.0">
-               <children>
-                  <Label layoutX="17.0" text="Road" />
-                  <RadioButton layoutX="74.0" mnemonicParsing="false" text="Line">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="toggleNewObject23" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton layoutX="186.0" mnemonicParsing="false" text="Multiline" toggleGroup="$toggleNewObject23" />
-                  <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
-               </children>
-            </Group>
+            <Label layoutX="17.0" text="House" />
+            <RadioButton layoutX="74.0" mnemonicParsing="false" selected="true" text="Rectangle">
+               <toggleGroup>
+                  <ToggleGroup fx:id="toggleNewObject"/>
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject" />
+            <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
          </children>
-      </AnchorPane>
+      </Group>
+      <Group layoutX="6.0" layoutY="14.0">
+         <children>
+            <Label layoutX="17.0" text="Estate:" />
+            <RadioButton layoutX="74.0" mnemonicParsing="false" text="Rectangle" toggleGroup="$toggleNewObject" />
+            <RadioButton layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject" />
+            <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
+         </children>
+      </Group>
+      <Group layoutX="6.0" layoutY="63.0">
+         <children>
+            <Label layoutX="17.0" text="Lake" />
+            <RadioButton layoutX="74.0" mnemonicParsing="false" text="Circle" toggleGroup="$toggleNewObject" />
+            <RadioButton layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject" />
+            <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
+         </children>
+      </Group>
+      <Group layoutX="6.0" layoutY="135.0">
+         <children>
+            <Label layoutX="3.0" text="Waterpipe" />
+            <RadioButton layoutX="74.0" mnemonicParsing="false" text="Point" toggleGroup="$toggleNewObject" />
+            <RadioButton layoutX="143.0" mnemonicParsing="false" text="Line" toggleGroup="$toggleNewObject" />
+            <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
+            <RadioButton layoutX="210.0" mnemonicParsing="false" text="Multiline" toggleGroup="$toggleNewObject" />
+         </children>
+      </Group>
+      <Group layoutX="6.0" layoutY="111.0">
+         <children>
+            <Label layoutX="17.0" text="Bushes" />
+            <RadioButton layoutX="74.0" mnemonicParsing="false" text="Point" toggleGroup="$toggleNewObject" />
+            <RadioButton layoutX="186.0" mnemonicParsing="false" text="Multipoint" toggleGroup="$toggleNewObject" />
+            <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
+         </children>
+      </Group>
+      <Group layoutX="6.0" layoutY="87.0">
+         <children>
+            <Label layoutX="17.0" text="Road" />
+            <RadioButton layoutX="74.0" mnemonicParsing="false" text="Line" toggleGroup="$toggleNewObject" />
+            <RadioButton layoutX="186.0" mnemonicParsing="false" text="Multiline" toggleGroup="$toggleNewObject" />
+            <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
+         </children>
+      </Group>
    </children>
-</Group>
+</AnchorPane>
+
