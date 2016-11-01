@@ -15,6 +15,9 @@ import javafx.fxml.Initializable;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pdb.model.multimedial.Photo;
@@ -30,6 +33,9 @@ public class MultimediaPaneController implements Initializable {
     
     @FXML
     public Button selectImageButton; 
+    
+    @FXML
+    public AnchorPane imageLayout;
 
     /**
      * Initializes the controller class.
@@ -50,12 +56,17 @@ public class MultimediaPaneController implements Initializable {
                 new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png")
         );
         File imageFile = fileChooser.showOpenDialog(stage);
+        Photo photoModel = new Photo();
         if(imageFile != null)
         {
-            Photo photoModel = new Photo();
             System.out.println(imageFile.getAbsolutePath());
             photoModel.insertPhotoFromFile(imageFile.getAbsolutePath());
         }
+        Image img = photoModel.getPhotoFromDatabase(21);
+        ImageView imgView = new ImageView(img);
+        imgView.fitWidthProperty().bind(this.imageLayout.widthProperty());
+        imgView.fitHeightProperty().bind(this.imageLayout.heightProperty());
+        this.imageLayout.getChildren().add(imgView);
     }
 
 }
