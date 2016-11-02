@@ -25,19 +25,23 @@ import javafx.scene.layout.VBox;
 import pdb.model.Freeholder;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 
 import pdb.model.FreeholderModel;
 
 /**
  * FXML Controller class
  *
- * @author raiper34
+ * @author gulan
  */
 public class FreeholdersPaneController implements Initializable {
 
     @FXML
-    public TableView freeholdersTable;
+    public TableView<Freeholder> freeholdersTable;
     
     @FXML
     public DatePicker dateBirth;
@@ -50,12 +54,19 @@ public class FreeholdersPaneController implements Initializable {
     
     public ObservableList<Freeholder> freeholders;
     
+    @FXML 
+    public AnchorPane detailPanel;
+     
+    public Freeholder selectedFreeholder;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.freeholders = FXCollections.observableArrayList();
+        this.detailPanel.setVisible(false);
+        this.selectedFreeholder = null;
     }    
     
     @FXML
@@ -69,6 +80,20 @@ public class FreeholdersPaneController implements Initializable {
         
         freeholdersModel.getFreeHoldersFromDatabase();
         this.freeholdersTable.setItems(freeholdersModel.getListAllFreeHolders());
+    }
+    
+    @FXML
+    public void tableClick(MouseEvent event)
+    {
+        Freeholder person = this.freeholdersTable.getSelectionModel().getSelectedItem();
+        this.selectedFreeholder = person;
+        this.detailPanel.setVisible(true);
+    }
+    
+    @FXML
+    public void backClick(ActionEvent event)
+    {
+        this.detailPanel.setVisible(false);
     }
     
     public void initList() throws SQLException

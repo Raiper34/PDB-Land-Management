@@ -73,10 +73,11 @@ public class FreeholderModel {
             {
                 while (rset.next()) 
                 {
+                    int id = (int) rset.getInt("id");
                     String name = (String) rset.getString("first_name");
                     String surname = (String) rset.getString("surname");
                     String birthDate = (String) rset.getString("birth_date");
-                    freeholder = new Freeholder(name, surname, birthDate);
+                    freeholder = new Freeholder(id, name, surname, birthDate);
                     this.freeholders.add(freeholder);
                 }
             } 
@@ -104,10 +105,11 @@ public class FreeholderModel {
             {
                 if (rset.next()) 
                 {
+                    int id = (int) rset.getInt("id");
                     String name = (String) rset.getString("first_name");
                     String surname = (String) rset.getString("surname");
                     String birthDate = (String) rset.getString("birth_date");
-                    freeholder = new Freeholder(name, surname, birthDate);
+                    freeholder = new Freeholder(id, name, surname, birthDate);
                 }
             } 
             finally 

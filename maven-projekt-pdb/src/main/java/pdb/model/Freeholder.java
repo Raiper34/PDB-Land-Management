@@ -18,9 +18,11 @@ public class Freeholder
     public String first_name;
     public String surname;
     public String birthDate;
+    public int id;
     
-    Freeholder(String first_name, String surname, String birthDate)
+    Freeholder(int id, String first_name, String surname, String birthDate)
     {
+        this.id = id;
         this.first_name = first_name;
         this.surname = surname;
         this.birthDate = birthDate;
