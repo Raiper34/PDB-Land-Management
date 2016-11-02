@@ -39,7 +39,7 @@ public class SpatialEntitiesModel {
         try {
             try (Statement stmt = conn.createStatement()) {
                 try (ResultSet rset = stmt.executeQuery("select * from "
-                        + "related_spatial_entities")) {
+                        + "related_spatial_entities WHERE valid_to = TO_DATE('27-10-2116', 'dd-mm-yyyy')")) {
                     while (rset.next()) {
                         byte[] image = rset.getBytes("geometry");
                         JGeometry jGeometry = JGeometry.load(image);
@@ -102,7 +102,7 @@ public class SpatialEntitiesModel {
 
         try {
             try (Statement stmt = conn.createStatement()) {
-                try (ResultSet rset = stmt.executeQuery("select * from estates")) {
+                try (ResultSet rset = stmt.executeQuery("select * from estates WHERE valid_to = TO_DATE('27-10-2116', 'dd-mm-yyyy')")) {
                     while (rset.next()) {
                         
                         byte[] image = rset.getBytes("geometry");

@@ -179,8 +179,8 @@ public class MapPaneController implements Initializable {
                         }
                     }
                     else {
-                        shape.setFill(Color.TRANSPARENT);
-                        shape.setStroke(ShapesColorsDefinition.estateStroke.brighter());
+                        shape.setFill(ShapesColorsDefinition.estateFill);
+                        shape.setStroke(ShapesColorsDefinition.estateStroke.darker().darker().darker());
                     }
                 }
                 else if (shape instanceof ImprovedCircle) {
