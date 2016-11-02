@@ -202,16 +202,14 @@ public class AddEntityPaneController implements Initializable {
         }
     }
     
-    
     public void addNewSpatialEntity(InputEvent event) {
         //"point", "multipoint", "line", "multiline",  "rectangle", "polygon", "circle" 
         switch (shapeOfNewSpatialEntity) {
             case "point":
-                if ( newPoints.size() == 0 ){
+                if ( newPoints.isEmpty() ){
                     addPointOnClick(event);   
                 }
                 return;
-//                break;
             case "multipoint":
                 addPointOnClick(event);
                 break;
@@ -235,33 +233,124 @@ public class AddEntityPaneController implements Initializable {
                 addCircleEventHandler(event);
                 break;
         }
+    }
+    
+    public JGeometry createJGeometry(){
+        JGeometry geometry = null;
+        double valuesOfPoints[];
+        switch (shapeOfNewSpatialEntity) {
+            case "point":
+                geometry = new JGeometry(
+                    newPoints.get(0).getCenterX(),
+                    newPoints.get(0).getCenterY(),
+                    SRID
+                );
+                break;
+            case "multipoint":
+                int index = 1;
+                int sdoElemInfo[] = new int[newPoints.size()*3];                
+                valuesOfPoints = new double[newPoints.size()*2];
+                for ( int i = 0; i < newPoints.size(); i++) {
+                    sdoElemInfo[i*3] = index;
+                    sdoElemInfo[i*3+1] = 1;
+                    sdoElemInfo[i*3+2] = 1;
+                    index += 2;
+                    valuesOfPoints[i*2] = newPoints.get(i).getCenterX();
+                    valuesOfPoints[i*2+1] = newPoints.get(i).getCenterY();
+                }
+                geometry = new JGeometry(
+                        5, SRID, 
+                        sdoElemInfo, // exterior polygon
+                        valuesOfPoints
+                );
+                break;
+            case "line":
+            case "multiline":
+                valuesOfPoints = new double[newPoints.size()*2];
+                for ( int i = 0; i < newPoints.size(); i++) {
+                    valuesOfPoints[i*2] = newPoints.get(i).getCenterX();
+                    valuesOfPoints[i*2+1] = newPoints.get(i).getCenterY();
+                }
+                geometry = new JGeometry(
+                        2, SRID, 
+                        new int[]{1, 2, 1}, // exterior polygon
+                        valuesOfPoints
+                );
+                break;
+            case "rectangle":
+                geometry = new JGeometry(
+                    3, SRID, 
+                    new int[]{1, 1003, 1}, // exterior polygon
+                    new double[]{
+                        newRectangle.getX(), newRectangle.getY(), //Start point
+                        newRectangle.getX()+newRectangle.getWidth(),newRectangle.getY(), 
+                        newRectangle.getX()+newRectangle.getWidth(),newRectangle.getY()+newRectangle.getHeight(), 
+                        newRectangle.getX(), newRectangle.getY()+newRectangle.getHeight(),                            
+                        newRectangle.getX(), newRectangle.getY() //Start point
+                    }
+                );
+                break;
+            case "polygon":
+                valuesOfPoints = newPolygon.getPoints().stream().mapToDouble(d -> d).toArray();
+                geometry = new JGeometry(
+                        3, SRID, 
+                        new int[]{1, 1003, 1}, // exterior polygon
+                        valuesOfPoints
+                );
+                break;
+            case "circle":
+                geometry = new JGeometry(
+                        3, SRID, 
+                        new int[]{1, 1003, 4}, // exterior polygon
+                        new double[]{
+                            newCircle.getCenterX(), newCircle.getCenterY()-newCircle.getRadius(),
+                            newCircle.getCenterX(), newCircle.getCenterY()+newCircle.getRadius(),
+                            newCircle.getCenterX()+newCircle.getRadius(), newCircle.getCenterY()
+                        }
+                );
+                break;
+        }
         
+        return geometry;
     }
     
     public void saveNewSpatialEntity() {
         //Create the new entity and jgeometry from the points I have got
+        JGeometry geometry = createJGeometry();
         
-        //JGeometry geometry = new JGeometry();
-        
-//        //getLastID of entities
-//        int id = mainController.mapPaneController.spatialEntitiesModel.getMaxId("related_spatial_entities") + 1;
-//        
-//        JGeometry geometry = new JGeometry(x, y, GTYPE_POINT);
-//        Date validFrom =  new Date();
-//        Date validTo = new Date();
-//        
-//        //int id, String name, String description, JGeometry geometry, Date valid_from, Date valid_to, String entityType,String layer
-//        Entity newEntity = new Entity(id , "NewBushesPoint", "NewBushesPoint", geometry, validFrom, validTo, "bushes", "overground");
-//        mainController.mapPaneController.entities.add(newEntity);
-//        mainController.mapPaneController.drawSpatialEntities();
-
-
-//RECTANGLE
-//JGeometry(double minX,
-//         double minY,
-//         double maxX,
-//         double maxY,
-//         int srid)
+        if ( typeOfNewSpatialEntity.equals("estate")){
+            //getLastID of estate
+            int id = mainController.mapPaneController.spatialEntitiesModel.getMaxId("estates") + 1;  
+            newEstate = new Estate(
+                    id,
+                    typeOfNewSpatialEntity + id,
+                    typeOfNewSpatialEntity + id,
+                    geometry,
+                    new Date(),
+                    new Date(),
+                    null
+            );
+            
+            deleteNewEntity();        
+            mainController.mapPaneController.estates.add(newEstate);
+            mainController.mapPaneController.drawSpatialEntities();
+        } else {
+            int id = mainController.mapPaneController.spatialEntitiesModel.getMaxId("related_spatial_entities") + 1;  
+            newEntity = new Entity(
+                    id,
+                    typeOfNewSpatialEntity + id,
+                    typeOfNewSpatialEntity + id,
+                    geometry,
+                    new Date(),
+                    new Date(),
+                    typeOfNewSpatialEntity,
+                    layerOfNewSpatialEntity
+            );
+            
+            deleteNewEntity();        
+            mainController.mapPaneController.entities.add(newEntity);
+            mainController.mapPaneController.drawSpatialEntities();
+        }
     }
     
     public void deleteNewEntity() {
