@@ -5,7 +5,7 @@
  */
 package pdb.model;
 
-import pdb.model.Freeholder;
+import pdb.model.FreeholderModel;
 import pdb.model.DatabaseModel;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
@@ -111,7 +111,7 @@ public class SpatialEntitiesModel {
                         Date validto = rset.getDate("valid_to");
                         //rset.getInt("freeholders_id");
                         //rset.getInt("photos_id");
-                        Freeholder freeholder = new Freeholder();
+                        FreeholderModel freeholder = new FreeholderModel();
                         Estate newEstate = new Estate(rset.getInt("id"),
                                 rset.getString("name"),
                                 rset.getString("description"),
@@ -148,7 +148,7 @@ public class SpatialEntitiesModel {
                         Date validto = rset.getDate("valid_to");
                         //rset.getInt("freeholders_id");
                         //rset.getInt("photos_id");
-                        Freeholder freeholder = new Freeholder();
+                        FreeholderModel freeholder = new FreeholderModel();
                         Estate newEstate = new Estate(rset.getInt("id"),
                                 rset.getString("name"),
                                 rset.getString("description"),
