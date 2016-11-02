@@ -30,6 +30,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import oracle.spatial.geometry.JGeometry;
 import static oracle.spatial.geometry.JGeometry.GTYPE_POINT;
 import pdb.model.SpatialEntitiesModel;
@@ -67,6 +68,7 @@ public class AddEntityPaneController implements Initializable {
     private List<Circle> newPoints;
     private Rectangle newRectangle;
     private Circle newCircle;
+    private Polygon newPolygon;
     
     public void addPointOnClick(InputEvent event) {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
@@ -182,6 +184,24 @@ public class AddEntityPaneController implements Initializable {
         } 
     }
     
+    private void addPolygonEventHandler(InputEvent event) {
+        MouseEvent mouseEvent = (MouseEvent) event;
+        if(event.getEventType() == MouseEvent.MOUSE_CLICKED){
+            if ( newPoints.isEmpty()) {
+                addPointOnClick(event);
+                newPolygon = new Polygon(mouseEvent.getX(), mouseEvent.getY());
+            }
+            else {
+                addPointOnClick(event);
+                mainController.mapPaneController.mapa.getChildren().remove(newPolygon);
+                newPolygon.getPoints().add(mouseEvent.getX());
+                newPolygon.getPoints().add(mouseEvent.getY());
+                System.out.println(newPolygon.getPoints().toString());
+                mainController.mapPaneController.mapa.getChildren().add(newPolygon);
+            }
+        }
+    }
+    
     
     public void addNewSpatialEntity(InputEvent event) {
         //"point", "multipoint", "line", "multiline",  "rectangle", "polygon", "circle" 
@@ -209,6 +229,7 @@ public class AddEntityPaneController implements Initializable {
                 addRectangleEventHandler(event);
                 break;
             case "polygon":
+                addPolygonEventHandler(event);
                 break;
             case "circle":
                 addCircleEventHandler(event);
@@ -255,6 +276,8 @@ public class AddEntityPaneController implements Initializable {
         newRectangle = null;
         mainController.mapPaneController.mapa.getChildren().remove(newCircle);
         newCircle = null;
+        mainController.mapPaneController.mapa.getChildren().remove(newPolygon);
+        newPolygon = null;
         newLines.clear();
         newPoints.clear();
     }
@@ -302,5 +325,6 @@ public class AddEntityPaneController implements Initializable {
     public void handleInputEventForMap(InputEvent event) {
         this.addNewSpatialEntity(event); 
     }
+
     
 }
