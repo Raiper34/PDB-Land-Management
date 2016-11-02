@@ -88,6 +88,9 @@ public class MainController implements Initializable {
     @FXML 
     public DatabaseSettingsController databaseSettingsController;
     
+    @FXML 
+    public TimePaneController timePaneController;
+    
     @FXML
     public CheckBox undergroundCheckbox;
     
@@ -121,7 +124,7 @@ public class MainController implements Initializable {
                         currentTitledPane = "Multimedia";
                         break;
                     case "Time":
-                        // timePaneController.resetState();
+                        timePaneController.resetState();
                         currentTitledPane = "Time";
                         break;
                     case "Spatial":
@@ -147,6 +150,7 @@ public class MainController implements Initializable {
         this.mapPaneController.addParent(this);
         this.addEntityPaneController.addParent(this);
         this.entityModificationPaneController.addParent(this);
+        this.timePaneController.addParent(this);
     }
     
     /**
@@ -204,7 +208,7 @@ public class MainController implements Initializable {
                 // multimediaPaneController.handleInputEventForShape(InputEvent t, Shape shape);
                 break;
             case "Time":
-                // timePaneController.handleInputEventForShape(InputEvent t, Shape shape);
+                timePaneController.handleInputEventForShape(t, shape);
                 break;
             case "Spatial":
                 // spatialPaneController.handleInputEventForShape(InputEvent t, Shape shape);
@@ -221,6 +225,7 @@ public class MainController implements Initializable {
     {
         this.mapPaneController.clearMap();
         this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
+        this.timePaneController.reloadComboBox();
     }
     
     public void handleInputEventForMap(InputEvent event) {

@@ -141,8 +141,16 @@ public class MapPaneController implements Initializable {
         estates = spatialEntitiesModel.getEstates();
     }
     
+    public void loadEstates(String dateSnapshot) {
+        estates = spatialEntitiesModel.getEstates(dateSnapshot);
+    }
+
     public void loadEntities() {
         entities = spatialEntitiesModel.getEntities();
+    }
+    
+    public void loadEntities(String dateSnapshot) {
+        entities = spatialEntitiesModel.getEntities(dateSnapshot);
     }
     
     public void addShapeToMapAndSetListeners(Shape shape) {

@@ -33,7 +33,6 @@ public class SpatialEntitiesModel {
         DB = DatabaseModel.getInstance();
         conn = DB.getConnection();
     }
-    
     public List<Entity> getEntities() {
         List<Entity> entities = new ArrayList<>();
         
@@ -65,6 +64,38 @@ public class SpatialEntitiesModel {
         
         return entities;
     }
+    
+    public List<Entity> getEntities(String dateSnapshot) {
+        List<Entity> entities = new ArrayList<>();
+        
+        try {
+            try (Statement stmt = conn.createStatement()) {
+                try (ResultSet rset = stmt.executeQuery("select * from "
+                        + "related_spatial_entities WHERE valid_from <= TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy') and valid_to >= TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy')")) {
+                    while (rset.next()) {
+                        byte[] image = rset.getBytes("geometry");
+                        JGeometry jGeometry = JGeometry.load(image);
+                        Entity newEntity = new Entity(rset.getInt("id"),
+                                rset.getString("name"),
+                                rset.getString("description"),
+                                jGeometry, rset.getDate("valid_from"),
+                                rset.getDate("valid_to"),
+                                rset.getString("entity_type"),
+                                rset.getString("layer"));
+                        entities.add(newEntity);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SpatialEntitiesModel.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        
+        return entities;
+    }
 
     public List<Estate> getEstates() {
         List<Estate> estates = new ArrayList<>();
@@ -72,6 +103,43 @@ public class SpatialEntitiesModel {
         try {
             try (Statement stmt = conn.createStatement()) {
                 try (ResultSet rset = stmt.executeQuery("select * from estates")) {
+                    while (rset.next()) {
+                        
+                        byte[] image = rset.getBytes("geometry");
+                        JGeometry jGeometry = JGeometry.load(image);
+                        Date validFrom = rset.getDate("valid_from");
+                        Date validto = rset.getDate("valid_to");
+                        //rset.getInt("freeholders_id");
+                        //rset.getInt("photos_id");
+                        Freeholder freeholder = new Freeholder();
+                        Estate newEstate = new Estate(rset.getInt("id"),
+                                rset.getString("name"),
+                                rset.getString("description"),
+                                jGeometry,
+                                rset.getDate("valid_from"),
+                                rset.getDate("valid_to"),
+                                freeholder);
+                        estates.add(newEstate);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SpatialEntitiesModel.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+
+        return estates;
+    }
+    
+    public List<Estate> getEstates(String dateSnapshot) {
+        List<Estate> estates = new ArrayList<>();
+
+        try {
+            try (Statement stmt = conn.createStatement()) {
+                try (ResultSet rset = stmt.executeQuery("select * from estates WHERE valid_from <= TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy') and valid_to >= TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy')")) {
                     while (rset.next()) {
                         
                         byte[] image = rset.getBytes("geometry");
