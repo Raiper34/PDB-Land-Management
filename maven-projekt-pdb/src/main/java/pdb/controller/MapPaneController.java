@@ -324,6 +324,7 @@ public class MapPaneController implements Initializable {
     
     public void drawSpatialEntitiesByLayer(boolean underground, boolean ground, boolean overground)
     {
+        clearMap();
         // first print underground object
         for (Entity entity : entities){
             // underground circle type objects

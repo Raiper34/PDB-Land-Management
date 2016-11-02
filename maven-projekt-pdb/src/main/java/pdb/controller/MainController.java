@@ -96,6 +96,9 @@ public class MainController implements Initializable {
     @FXML 
     public TimePaneController timePaneController;
     
+    @FXML 
+    public SpatialPaneController spatialPaneController;
+    
     @FXML
     public CheckBox undergroundCheckbox;
     
@@ -156,6 +159,7 @@ public class MainController implements Initializable {
         this.addEntityPaneController.addParent(this);
         this.entityModificationPaneController.addParent(this);
         this.timePaneController.addParent(this);
+        this.spatialPaneController.addParent(this);
     }
     
     /**
