@@ -54,13 +54,15 @@ public class TimeModel {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd. MM. yyyy");
                 
                 if (considerGroundLayer) {
-                    query += "Select valid_from from estates  Where ID in(Select Distinct Min(ID) from estates Group By valid_from)" +
-                               " union " +
-                              "Select valid_from from related_spatial_entities Where ID in(Select Distinct Min(ID) from related_spatial_entities WHERE layer in ("+ layers +") Group By valid_from)";
+                    query += "SELECT valid_from from (" +
+                                "Select valid_from from estates  Where ID in(Select Distinct Min(ID) from estates Group By valid_from)" +
+                                " union " +
+                                "Select valid_from from related_spatial_entities Where ID in(Select Distinct Min(ID) from related_spatial_entities WHERE layer in ("+ layers +") Group By valid_from)" +
+                             ") ORDER BY valid_from ASC";
                     //System.out.println(query);
                 }
                 else {
-                    query += "Select valid_from from related_spatial_entities Where ID in(Select Distinct Min(ID) from related_spatial_entities WHERE layer in ("+ layers +") Group By valid_from)";
+                    query += "Select valid_from from related_spatial_entities Where ID in(Select Distinct Min(ID) from related_spatial_entities WHERE layer in ("+ layers +") Group By valid_from) ORDER BY valid_from ASC";
                     //System.out.println(query);
                 }
                 

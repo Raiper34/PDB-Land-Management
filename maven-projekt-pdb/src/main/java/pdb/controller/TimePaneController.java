@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -19,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
@@ -43,6 +46,24 @@ public class TimePaneController implements Initializable {
     
     @FXML
     public AnchorPane timeAnchorPane;
+    
+    @FXML
+    private DatePicker datePicker;
+
+    @FXML
+    void datePickerOnAction(ActionEvent event) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MM. yyyy");
+        LocalDate date = datePicker.getValue();
+        String pickedDate = formatter.format(date);
+        if (pickedDate != null) {
+            this.mainController.mapPaneController.clearMap();
+            this.mainController.mapPaneController.initializeSpatialEntitiesModel();
+            this.mainController.mapPaneController.loadEntities(pickedDate);
+            this.mainController.mapPaneController.loadEstates(pickedDate);
+            this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
+
+       }
+    }
     
     public MainController mainController;
 

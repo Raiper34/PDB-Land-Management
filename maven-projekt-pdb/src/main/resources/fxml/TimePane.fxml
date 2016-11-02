@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" fx:id="timeAnchorPane" prefHeight="430.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.TimePaneController">
    <children>
       <ComboBox fx:id="comboBox" layoutX="27.0" layoutY="71.0" onAction="#comboBoxOnAction" prefHeight="26.0" prefWidth="343.0" promptText="Pick date to show snapshot of spatial objects" />
-      <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="35.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dates in which changes in spatial objects have occurred in showed layers:" wrappingWidth="334.99999821186066" />
+      <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="35.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dates in which changes in spatial objects have occurred in showed layers, you can pick one:" wrappingWidth="334.99999821186066" />
+      <DatePicker fx:id="datePicker" layoutX="28.0" layoutY="158.0" onAction="#datePickerOnAction" />
+      <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="34.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Or choose your own date when you want to see snapshot of spatial objects:" wrappingWidth="334.99999821186066" />
    </children>
 </AnchorPane>
