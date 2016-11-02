@@ -7,8 +7,20 @@ package pdb.model;
 
 /**
  *
- * @author jan
+ * @author gulan
  */
-public class Freeholder {
+public class Freeholder 
+{
+
+    public String name;
+    public String surname;
+    public String birthDate;
+    
+    Freeholder(String name, String surname, String birthDate)
+    {
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+    }
     
 }

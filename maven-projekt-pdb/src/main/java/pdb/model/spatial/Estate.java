@@ -5,7 +5,7 @@
  */
 package pdb.model.spatial;
 
-import pdb.model.Freeholder;
+import pdb.model.FreeholderModel;
 import java.util.Date;
 import oracle.spatial.geometry.JGeometry;
 
@@ -14,7 +14,7 @@ import oracle.spatial.geometry.JGeometry;
  * @author archie
  */
 public class Estate extends SpatialEntity{
-    private Freeholder freeholder;
+    private FreeholderModel freeholder;
     
         
         public Estate(
@@ -24,7 +24,7 @@ public class Estate extends SpatialEntity{
             JGeometry geometry,
             Date validFrom,
             Date validTo,
-            Freeholder freeholder
+            FreeholderModel freeholder
             ) 
     {
         super(id, name, description, geometry, validFrom, validTo);
