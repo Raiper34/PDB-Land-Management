@@ -5,6 +5,7 @@
  */
 package pdb.controller;
 
+import java.awt.Dimension;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,10 +18,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.InputEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
@@ -55,49 +58,163 @@ public class AddEntityPaneController implements Initializable {
     private Estate newEstate;
     
     private String typeOfNewSpatialEntity;
+    private String shapeOfNewSpatialEntity;
+    private String layerOfNewSpatialEntity;
+    private final int SRID = 0;
     
-    //private SpatialEntitiesModel spatialEntitiesModel;
-    
-    public int countOfAddedPoints = 0;
-    
+    //private SpatialEntitiesModel spatialEntitiesModel; 
     private List<Line> newLines;
     private List<Circle> newPoints;
+    private Rectangle newRectangle;
+    private Circle newCircle;
+    
+    public void addPointOnClick(InputEvent event) {
+        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+            //Get the x and y of the click and create there a new circle
+            MouseEvent mouseEvent = (MouseEvent) event; 
+            if(mouseEvent.getButton() == MouseButton.SECONDARY)
+                return;
+            addPoint(mouseEvent);
+        }
+    }
     
     public void addPoint(MouseEvent event) {
-        Circle point = new Circle(event.getX(), event.getY(), 5.0f, Paint.valueOf("Black") );
+        Circle point = new Circle(event.getX(), event.getY(), 2.0f, Paint.valueOf("Black") );
         newPoints.add(point);
         mainController.mapPaneController.mapa.getChildren().add(point);
     }
     
-    public void addLine(MouseEvent event) {
-        Circle point = new Circle(event.getX(), event.getY(), 5.0f, Paint.valueOf("Black") );
-        newPoints.add(point);
+    public void removePoint(int index) {
+        mainController.mapPaneController.mapa.getChildren().remove(newPoints.get(index));
+        newPoints.remove(index);
     }
     
-    public void addNewSpatialEntity(MouseEvent event) {
-        
-        String shapeType = "Multiline";
-        
-        if ( shapeType == "Point" && countOfAddedPoints > 0 )
-            return;
-
-        addPoint(event);
-        
-        if(shapeType == "Multiline" || shapeType == "Line") {
-            if (newPoints != null && newPoints.size() > 1 ) {
-                
-                Line newLine = new Line(
-                        newPoints.get(newPoints.size()-1).getCenterX(), 
-                        newPoints.get(newPoints.size()-1).getCenterY(), 
-                        newPoints.get(newPoints.size()-2).getCenterX(), 
-                        newPoints.get(newPoints.size()-2).getCenterY() 
-                );
-                newLines.add(newLine);
-                mainController.mapPaneController.mapa.getChildren().add(newLine);
-            }
+    public void addLine() {
+        if (newPoints != null && newPoints.size() > 1 ) {    
+            Line newLine = new Line(
+                    newPoints.get(newPoints.size()-1).getCenterX(), 
+                    newPoints.get(newPoints.size()-1).getCenterY(), 
+                    newPoints.get(newPoints.size()-2).getCenterX(), 
+                    newPoints.get(newPoints.size()-2).getCenterY() 
+            );
+            newLines.add(newLine);
+            mainController.mapPaneController.mapa.getChildren().add(newLine);
         }
+    }
+    
+    public void addRectangle() {
+        double width = Math.abs(newPoints.get(0).getCenterX()-newPoints.get(1).getCenterX());
+        double height = Math.abs(newPoints.get(0).getCenterY()-newPoints.get(1).getCenterY());
+        double x = Math.min(newPoints.get(0).getCenterX(), newPoints.get(1).getCenterX());
+        double y = Math.min(newPoints.get(0).getCenterY(), newPoints.get(1).getCenterY());
 
-        countOfAddedPoints++;
+        newRectangle = new Rectangle(x, y, width, height);
+        mainController.mapPaneController.mapa.getChildren().add(newRectangle);
+    }
+    
+    public void addRectangleEventHandler(InputEvent event) {        
+        MouseEvent mouseEvent = (MouseEvent) event;
+        
+        if(event.getEventType() == MouseEvent.MOUSE_PRESSED){
+            if( newRectangle != null) {
+                mainController.mapPaneController.mapa.getChildren().remove(newRectangle);
+                newRectangle = null;
+            }
+            //Create starting point
+            addPoint(mouseEvent);
+            //Create ending point
+            addPoint(mouseEvent);
+            addRectangle();
+        }
+        else if(event.getEventType() == MouseEvent.MOUSE_DRAGGED){
+            //remove old point from map and list
+            removePoint(1);
+            //remove newRectangle from map and clear it
+            mainController.mapPaneController.mapa.getChildren().remove(newRectangle);
+            //create new point
+            addPoint(mouseEvent);
+            addRectangle();
+        }
+        else if(event.getEventType() == MouseEvent.MOUSE_RELEASED){
+            //Remove the points
+            removePoint(1);
+            removePoint(0);
+            newPoints.clear();
+        } 
+    }
+    
+    public void addCircle() {
+        Point2D start = new Point2D(newPoints.get(0).getCenterX(), newPoints.get(0).getCenterY());
+        Point2D end = new Point2D(newPoints.get(1).getCenterX(), newPoints.get(1).getCenterY());
+        double radius = start.distance(end);
+        newCircle = new Circle(newPoints.get(0).getCenterX(), newPoints.get(0).getCenterY(), radius);
+        mainController.mapPaneController.mapa.getChildren().add(newCircle);
+    }
+    
+    public void addCircleEventHandler(InputEvent event) {        
+        MouseEvent mouseEvent = (MouseEvent) event;
+        
+        if(event.getEventType() == MouseEvent.MOUSE_PRESSED){
+            if( newCircle != null) {
+                mainController.mapPaneController.mapa.getChildren().remove(newCircle);
+                newCircle = null;
+            }
+            //Create starting point
+            addPoint(mouseEvent);
+            //Create ending point
+            addPoint(mouseEvent);
+            addCircle();
+        }
+        else if(event.getEventType() == MouseEvent.MOUSE_DRAGGED){
+            //remove old point from map and list
+            removePoint(1);
+            //remove newRectangle from map and clear it
+            mainController.mapPaneController.mapa.getChildren().remove(newCircle);
+            //create new point
+            addPoint(mouseEvent);
+            addCircle();
+        }
+        else if(event.getEventType() == MouseEvent.MOUSE_RELEASED){
+            //Remove the points
+            removePoint(1);
+            removePoint(0);
+            newPoints.clear();
+        } 
+    }
+    
+    
+    public void addNewSpatialEntity(InputEvent event) {
+        //"point", "multipoint", "line", "multiline",  "rectangle", "polygon", "circle" 
+        switch (shapeOfNewSpatialEntity) {
+            case "point":
+                if ( newPoints.size() == 0 ){
+                    addPointOnClick(event);   
+                }
+                return;
+//                break;
+            case "multipoint":
+                addPointOnClick(event);
+                break;
+            case "line":
+                if ( newPoints.size() < 2 ){
+                    addPointOnClick(event);
+                    addLine();
+                }
+                break;
+            case "multiline":
+                addPointOnClick(event);
+                addLine();
+                break;
+            case "rectangle":
+                addRectangleEventHandler(event);
+                break;
+            case "polygon":
+                break;
+            case "circle":
+                addCircleEventHandler(event);
+                break;
+        }
+        
     }
     
     public void saveNewSpatialEntity() {
@@ -116,6 +233,14 @@ public class AddEntityPaneController implements Initializable {
 //        Entity newEntity = new Entity(id , "NewBushesPoint", "NewBushesPoint", geometry, validFrom, validTo, "bushes", "overground");
 //        mainController.mapPaneController.entities.add(newEntity);
 //        mainController.mapPaneController.drawSpatialEntities();
+
+
+//RECTANGLE
+//JGeometry(double minX,
+//         double minY,
+//         double maxX,
+//         double maxY,
+//         int srid)
     }
     
     public void deleteNewEntity() {
@@ -126,9 +251,12 @@ public class AddEntityPaneController implements Initializable {
         for (Line shape : newLines){
             mainController.mapPaneController.mapa.getChildren().remove(shape);
         }
+        mainController.mapPaneController.mapa.getChildren().remove(newRectangle);
+        newRectangle = null;
+        mainController.mapPaneController.mapa.getChildren().remove(newCircle);
+        newCircle = null;
         newLines.clear();
         newPoints.clear();
-        countOfAddedPoints = 0;
     }
     
     /**
@@ -139,17 +267,24 @@ public class AddEntityPaneController implements Initializable {
         newPoints = new ArrayList<>();
         newLines = new ArrayList<>();
         
-        //drawTest();
-        System.out.println("Hello from addentity");
+        typeOfNewSpatialEntity = "house";
+        shapeOfNewSpatialEntity = "rectangle";
+        layerOfNewSpatialEntity = "overground";
+        //Toggle the shape and type of the entity
         toggleNewObject.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1){
                 RadioButton chk = (RadioButton)t1.getToggleGroup().getSelectedToggle(); // Cast object to radio button
-                
-                System.out.println("Selected Radio Button - "+chk.getId());
-                if(chk.getId() == "BushesPoint") {
-                    mainController.setCurrentTitledPane("AddEntity");
-                }
+//                System.out.println(chk.getId());
+                String[] parts = chk.getId().split("-");
+                typeOfNewSpatialEntity = parts[0];
+                shapeOfNewSpatialEntity = parts[1];
+                layerOfNewSpatialEntity = parts[2];
+                deleteNewEntity();
+                System.out.println(typeOfNewSpatialEntity);
+                System.out.println(shapeOfNewSpatialEntity);
+                System.out.println(layerOfNewSpatialEntity);
+                System.out.println("---------");
             }
         });
     }
@@ -163,35 +298,9 @@ public class AddEntityPaneController implements Initializable {
     {
       System.out.println("Toggled: " + toggleNewObject.getSelectedToggle().getUserData().toString());
     }
-    
-    
-    public void drawTest(){
-        Rectangle r = new Rectangle();
-        r.setX(50);
-        r.setY(50);
-        r.setWidth(200);
-        r.setHeight(100);
-        r.setArcWidth(20);
-        r.setArcHeight(20);
-                 
-        Rectangle r1 = new Rectangle();
-
-        r.setX(50);
-        r.setY(50);
-        r.setWidth(200);
-        r.setHeight(100);
-        r.setArcWidth(20);
-        r.setArcHeight(20);
-        r.fillProperty();
-        addEntityAnchorPane.getChildren().add(r);
-        addEntityAnchorPane.getChildren().add(r1);
-    }
 
     public void handleInputEventForMap(InputEvent event) {
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            //Get the x and y of the click and create there a new circle
-            this.addNewSpatialEntity((MouseEvent) event); 
-        }
+        this.addNewSpatialEntity(event); 
     }
     
 }

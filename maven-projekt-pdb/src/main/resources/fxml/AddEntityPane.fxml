@@ -15,53 +15,71 @@
       <Group layoutX="6.0" layoutY="39.0">
          <children>
             <Label layoutX="17.0" text="House" />
-            <RadioButton id="HouseRectangle" layoutX="74.0" mnemonicParsing="false" selected="true" text="Rectangle">
+            <RadioButton id="house-rectangle-overground" layoutX="74.0" mnemonicParsing="false" selected="true" text="Rectangle">
                <toggleGroup>
                   <ToggleGroup fx:id="toggleNewObject" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton id="HousePolygon" layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject" />
+            <RadioButton id="house-polygon-overground" layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject" />
             <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
          </children>
       </Group>
       <Group layoutX="6.0" layoutY="14.0">
          <children>
             <Label layoutX="17.0" text="Estate:" />
-            <RadioButton id="EstateRectangle" layoutX="74.0" mnemonicParsing="false" text="Rectangle" toggleGroup="$toggleNewObject" />
-            <RadioButton id="EstatePolygon" layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject" />
+            <RadioButton id="estate-rectangle-ground" layoutX="74.0" mnemonicParsing="false" text="Rectangle" toggleGroup="$toggleNewObject" />
+            <RadioButton id="estate-polygon-ground" layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject" />
             <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
          </children>
       </Group>
       <Group layoutX="6.0" layoutY="63.0">
          <children>
             <Label layoutX="17.0" text="Lake" />
-            <RadioButton id="LakeCircle" layoutX="74.0" mnemonicParsing="false" text="Circle" toggleGroup="$toggleNewObject" />
-            <RadioButton id="LakePolygon" layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject" />
+            <RadioButton id="water area-circle-overground" layoutX="74.0" mnemonicParsing="false" text="Circle" toggleGroup="$toggleNewObject" />
+            <!--<RadioButton id="Lake polygon" layoutX="186.0" mnemonicParsing="false" text="Polygon" toggleGroup="$toggleNewObject" />-->
             <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
          </children>
       </Group>
       <Group layoutX="6.0" layoutY="135.0">
          <children>
             <Label layoutX="3.0" text="Waterpipe" />
-            <RadioButton id="WaterpipePoint" layoutX="74.0" mnemonicParsing="false" text="Point" toggleGroup="$toggleNewObject" />
-            <RadioButton id="WaterpipeLine" layoutX="143.0" mnemonicParsing="false" text="Line" toggleGroup="$toggleNewObject" />
-            <RadioButton id="WaterpipeMultiline" layoutX="210.0" mnemonicParsing="false" text="Multiline" toggleGroup="$toggleNewObject" />
+            <RadioButton id="water connection-point-underground" layoutX="74.0" mnemonicParsing="false" text="Point" toggleGroup="$toggleNewObject" />
+            <RadioButton id="water pipes-line-underground" layoutX="143.0" mnemonicParsing="false" text="Line" toggleGroup="$toggleNewObject" />
+            <RadioButton id="water pipes-multiline-underground" layoutX="210.0" mnemonicParsing="false" text="Multiline" toggleGroup="$toggleNewObject" />
             <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
          </children>
       </Group>
       <Group layoutX="6.0" layoutY="111.0">
          <children>
             <Label layoutX="17.0" text="Bushes" />
-            <RadioButton id="BushesPoint" layoutX="74.0" mnemonicParsing="false" text="Point" toggleGroup="$toggleNewObject" />
-            <RadioButton id="BushesMultipoint" layoutX="186.0" mnemonicParsing="false" text="Multipoint" toggleGroup="$toggleNewObject" />
+            <RadioButton id="bushes-point-overground" layoutX="74.0" mnemonicParsing="false" text="Point" toggleGroup="$toggleNewObject" />
+            <RadioButton id="bushes-multipoint-overground" layoutX="186.0" mnemonicParsing="false" text="Multipoint" toggleGroup="$toggleNewObject" />
             <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
          </children>
       </Group>
       <Group layoutX="6.0" layoutY="87.0">
          <children>
             <Label layoutX="17.0" text="Road" />
-            <RadioButton id="RoadLine" layoutX="74.0" mnemonicParsing="false" text="Line" toggleGroup="$toggleNewObject" />
-            <RadioButton id="RoadMultiline" layoutX="186.0" mnemonicParsing="false" text="Multiline" toggleGroup="$toggleNewObject" />
+            <RadioButton id="path-line-overground" layoutX="74.0" mnemonicParsing="false" text="Line" toggleGroup="$toggleNewObject" />
+            <RadioButton id="path-multiline-overground" layoutX="186.0" mnemonicParsing="false" text="Multiline" toggleGroup="$toggleNewObject" />
+            <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
+         </children>
+      </Group>
+      <Group layoutX="6.0" layoutY="160.0">
+         <children>
+            <Label layoutX="3.0" text="Electricity" />
+            <RadioButton id="connection to electricity-point-overground" layoutX="74.0" mnemonicParsing="false" text="Point" toggleGroup="$toggleNewObject" />
+            <RadioButton id="power lines-line-overground" layoutX="143.0" mnemonicParsing="false" text="Line" toggleGroup="$toggleNewObject" />
+            <RadioButton id="water pipes-multiline-overground" layoutX="210.0" mnemonicParsing="false" text="Multiline" toggleGroup="$toggleNewObject" />
+            <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
+         </children>
+      </Group>
+      <Group layoutX="6.0" layoutY="184.0">
+         <children>
+            <Label layoutX="17.0" text="Gas" />
+            <RadioButton id="connection to gas-point-underground" layoutX="74.0" mnemonicParsing="false" text="Point" toggleGroup="$toggleNewObject" />
+            <RadioButton id="gas pipes-line-underground" layoutX="143.0" mnemonicParsing="false" text="Line" toggleGroup="$toggleNewObject" />
+            <RadioButton id="gas pipes-multiline-underground" layoutX="210.0" mnemonicParsing="false" text="Multiline" toggleGroup="$toggleNewObject" />
             <Separator layoutY="21.0" prefHeight="0.0" prefWidth="325.0" />
          </children>
       </Group>
