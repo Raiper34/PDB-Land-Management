@@ -9,6 +9,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -87,6 +89,9 @@ public class MainController implements Initializable {
     
     @FXML 
     public DatabaseSettingsController databaseSettingsController;
+    
+    @FXML 
+    public FreeholdersPaneController freeholdersPaneController;
     
     @FXML 
     public TimePaneController timePaneController;
@@ -181,6 +186,11 @@ public class MainController implements Initializable {
         this.mapPaneController.loadEntities();
         this.mapPaneController.loadEstates();
         this.mapPaneController.drawSpatialEntities();
+        try {
+            this.freeholdersPaneController.initList();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void handleInputEventForShape(InputEvent t, Shape shape) {

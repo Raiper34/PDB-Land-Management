@@ -5,6 +5,8 @@
  */
 package pdb.model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  *
  * @author gulan
@@ -12,15 +14,26 @@ package pdb.model;
 public class Freeholder 
 {
 
-    public String name;
+    private final SimpleStringProperty name;
+    public String first_name;
     public String surname;
     public String birthDate;
     
-    Freeholder(String name, String surname, String birthDate)
+    Freeholder(String first_name, String surname, String birthDate)
     {
-        this.name = name;
+        this.first_name = first_name;
         this.surname = surname;
         this.birthDate = birthDate;
+        name = new SimpleStringProperty(first_name + " " + surname + " (" + birthDate + ")"); 
     }
     
+    public String getName() 
+    {
+        return name.get();
+    }
+    
+    public void setName(String fName) 
+    {
+        name.set(fName);
+    }
 }

@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 
@@ -26,12 +28,13 @@ public class FreeholderModel {
     DatabaseModel database;
     Connection connection;
     
-    public List<Freeholder> freeholders;
+    public ObservableList<Freeholder> freeholders;
     
-    public void Freeholder()
+    public FreeholderModel()
     {
         this.database = DatabaseModel.getInstance();
         this.connection = this.database.getConnection();
+        this.freeholders = FXCollections.observableArrayList();
     }
     
     public void createNewFreeholder(String name, String surname, String birthDate)
@@ -52,7 +55,7 @@ public class FreeholderModel {
         }
     }
     
-    public List<Freeholder> getListAllFreeHolders()
+    public ObservableList<Freeholder> getListAllFreeHolders()
     {
         return this.freeholders;
     }
@@ -68,11 +71,11 @@ public class FreeholderModel {
             OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
             try 
             {
-                if (rset.next()) 
+                while (rset.next()) 
                 {
-                    String name = (String) rset.getString("name");
+                    String name = (String) rset.getString("first_name");
                     String surname = (String) rset.getString("surname");
-                    String birthDate = (String) rset.getString("birthDate");
+                    String birthDate = (String) rset.getString("birth_date");
                     freeholder = new Freeholder(name, surname, birthDate);
                     this.freeholders.add(freeholder);
                 }
@@ -101,9 +104,9 @@ public class FreeholderModel {
             {
                 if (rset.next()) 
                 {
-                    String name = (String) rset.getString("name");
+                    String name = (String) rset.getString("first_name");
                     String surname = (String) rset.getString("surname");
-                    String birthDate = (String) rset.getString("birthDate");
+                    String birthDate = (String) rset.getString("birth_date");
                     freeholder = new Freeholder(name, surname, birthDate);
                 }
             } 

@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.FreeholdersPaneController">
-    
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.FreeholdersPaneController">
+   <children>
+      <TextField layoutX="165.0" layoutY="23.0" fx:id="name" />
+      <TextField layoutX="164.0" layoutY="77.0" fx:id="surname" />
+      <DatePicker layoutX="165.0" layoutY="126.0" fx:id="dateBirth"/>
+      <Label layoutX="73.0" layoutY="28.0" text="Name" />
+      <Label layoutX="73.0" layoutY="82.0" text="Surname" />
+      <Label layoutX="73.0" layoutY="131.0" text="Birth date" />
+      <Button onAction="#addFreeholderClick" layoutX="246.0" layoutY="168.0" mnemonicParsing="false" text="Add Freeholder" />
+      <TableView fx:id="freeholdersTable" layoutX="17.0" layoutY="206.0" prefHeight="175.0" prefWidth="370.0">
+        
+      </TableView>
+   </children>
 </AnchorPane>
