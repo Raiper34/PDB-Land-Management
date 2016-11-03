@@ -37,7 +37,11 @@ import oracle.spatial.geometry.JGeometry;
 import static oracle.spatial.geometry.JGeometry.GTYPE_POINT;
 import pdb.model.DatabaseModel;
 import pdb.model.spatial.Entity;
+import pdb.model.spatial.Estate;
+import pdb.model.spatial.ImprovedCircle;
+import pdb.model.spatial.ImprovedPath;
 import pdb.model.spatial.ImprovedPolygon;
+import pdb.model.spatial.SpatialEntity;
 
 
 
@@ -111,6 +115,8 @@ public class MainController implements Initializable {
     @FXML
     public MultimediaPaneController multimediaPaneController;
 
+    public SpatialEntity selectedSpatialEntity; 
+    
     /**
      * Initializes the controller class.
      */
@@ -202,6 +208,18 @@ public class MainController implements Initializable {
     }
     
     public void handleInputEventForShape(InputEvent t, Shape shape) {
+        if (shape instanceof ImprovedPolygon) {
+            ImprovedPolygon improvedShape = (ImprovedPolygon) shape;
+            setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
+        } else if ( shape instanceof ImprovedCircle) {
+            ImprovedCircle improvedShape = (ImprovedCircle) shape;
+            setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
+        } else if ( shape instanceof ImprovedPath) {
+            ImprovedPath improvedShape = (ImprovedPath) shape;
+            setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
+        }
+        
+        //setSelectedSpatialEntity();
         switch (this.currentTitledPane) {
             case "DEFAULT":
                 if (shape instanceof ImprovedPolygon) {
@@ -282,5 +300,9 @@ public class MainController implements Initializable {
         this.mapPaneController.clearMemoryAndMap();
         this.databaseSettingsModal.setVisible(true);
 
+    }
+    
+    public void setSelectedSpatialEntity(SpatialEntity spatialEntity) {
+        spatialEntity = selectedSpatialEntity;
     }
 }

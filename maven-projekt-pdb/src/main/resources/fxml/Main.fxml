@@ -29,6 +29,13 @@
                                       </AnchorPane>
                                   </content>
                               </TitledPane>
+                              <TitledPane text="Test">
+                                  <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                          <fx:include fx:id="multiPane" source="Multi.fxml" />
+                                      </AnchorPane>
+                                  </content>
+                              </TitledPane>
                               <TitledPane expanded="false" text="Entity modification">
                                   <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
