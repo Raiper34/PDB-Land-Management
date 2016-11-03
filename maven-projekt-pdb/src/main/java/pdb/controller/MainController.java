@@ -70,9 +70,6 @@ public class MainController implements Initializable {
     private GraphicsContext gc;
     
     private String currentTitledPane = "DEFAULT"; // default 
-    
-    @FXML
-    private Button wer;
 
     private int clickedCount = 2;
     
@@ -164,12 +161,12 @@ public class MainController implements Initializable {
     private void injects()
     {
         this.databaseSettingsController.injectMainController(this);
+        this.multimediaPaneController.injectMainController(this);
         this.mapPaneController.addParent(this);
         this.addEntityPaneController.addParent(this);
         this.entityModificationPaneController.addParent(this);
         this.timePaneController.addParent(this);
         this.spatialPaneController.addParent(this);
-        //this.multimediaPaneController.toString();
     }
     
     /**

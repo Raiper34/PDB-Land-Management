@@ -36,6 +36,8 @@ public class MultimediaPaneController implements Initializable {
     
     @FXML
     public AnchorPane imageLayout;
+    
+    public MainController mainController;
 
     /**
      * Initializes the controller class.
@@ -67,6 +69,11 @@ public class MultimediaPaneController implements Initializable {
         imgView.fitWidthProperty().bind(this.imageLayout.widthProperty());
         imgView.fitHeightProperty().bind(this.imageLayout.heightProperty());
         this.imageLayout.getChildren().add(imgView);*/
+    }
+    
+    public void injectMainController(MainController mainController)
+    {
+        this.mainController = mainController;
     }
 
 }
