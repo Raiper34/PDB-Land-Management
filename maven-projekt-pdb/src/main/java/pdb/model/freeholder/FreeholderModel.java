@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pdb.model;
+package pdb.model.freeholder;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 
+import pdb.model.DatabaseModel;
 import pdb.model.DatabaseModel;
 import pdb.model.spatial.ImprovedCircle;
 

@@ -24,7 +24,7 @@
       <AnchorPane fx:id="detailPanel" layoutX="8.0" layoutY="4.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button layoutX="338.0" layoutY="16.0" mnemonicParsing="false" onAction="#backClick" text="Back" />
-            <TableView layoutX="11.0" layoutY="53.0" prefHeight="333.0" prefWidth="380.0">
+            <TableView fx:id="estatesTable" layoutX="11.0" layoutY="53.0" prefHeight="333.0" prefWidth="380.0">
               <columns>
                 <TableColumn minWidth="0.0" prefWidth="0.0" text="C2" />
               </columns>

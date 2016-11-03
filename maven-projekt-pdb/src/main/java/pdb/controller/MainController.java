@@ -107,6 +107,9 @@ public class MainController implements Initializable {
     
     @FXML
     public CheckBox overgroundCheckbox;
+    
+    @FXML
+    public MultimediaPaneController multimediaPaneController;
 
     /**
      * Initializes the controller class.
@@ -160,6 +163,7 @@ public class MainController implements Initializable {
         this.entityModificationPaneController.addParent(this);
         this.timePaneController.addParent(this);
         this.spatialPaneController.addParent(this);
+        //this.multimediaPaneController.toString();
     }
     
     /**

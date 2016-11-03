@@ -5,7 +5,7 @@
  */
 package pdb.model.spatial;
 
-import pdb.model.FreeholderModel;
+import pdb.model.freeholder.FreeholderModel;
 import java.util.Date;
 import oracle.spatial.geometry.JGeometry;
 
@@ -34,5 +34,16 @@ public class Estate extends SpatialEntity{
     public Shapes toShapes(){
         SpatialEntity spatialEntity = (SpatialEntity) this;
         return super.toShapes(spatialEntity, "Estate");
+    }
+    
+    public String getInfo() 
+    {
+        String name = (this.name == null)? "" : this.name;
+        return this.id + " " + name  + " from:" + this.validFrom.toString() + " to:" + this.validTo.toString();
+    }
+    
+    public void setInfo(String fName) 
+    {
+        //Todo
     }
 }

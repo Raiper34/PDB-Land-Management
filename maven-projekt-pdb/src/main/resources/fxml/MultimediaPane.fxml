@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.MultimediaPaneController">
+<AnchorPane fx:id="AnchorPane" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.MultimediaPaneController">
    <children>
       <Button fx:id="selectImageButton" layoutX="181.0" layoutY="78.0" mnemonicParsing="false" onAction="#selectImageClick" text="Select image" />
       <AnchorPane fx:id="imageLayout" layoutX="6.0" layoutY="6.0" prefHeight="171.0" prefWidth="164.0" />

@@ -5,7 +5,7 @@
  */
 package pdb.model.spatial;
 
-import pdb.model.FreeholderModel;
+import pdb.model.freeholder.FreeholderModel;
 import pdb.model.multimedial.Photo;
 import oracle.spatial.geometry.JGeometry;
 import java.util.Date;
@@ -18,12 +18,12 @@ import javafx.scene.paint.Color;
  * @author archie
  */
 public class SpatialEntity {
-    private int id;
-    private String name;
+    public int id;
+    public String name;
     private String description; 
     private JGeometry geometry;
-    private Date validFrom;
-    private Date validTo;
+    public Date validFrom;
+    public Date validTo;
     
     public SpatialEntity(
             int id, 

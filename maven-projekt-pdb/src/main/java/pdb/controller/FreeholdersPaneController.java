@@ -22,7 +22,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import pdb.model.Freeholder;
+import pdb.model.freeholder.Freeholder;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
@@ -31,7 +31,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
-import pdb.model.FreeholderModel;
+import pdb.model.freeholder.FreeholderModel;
+import pdb.model.spatial.Estate;
 
 /**
  * FXML Controller class
@@ -42,6 +43,9 @@ public class FreeholdersPaneController implements Initializable {
 
     @FXML
     public TableView<Freeholder> freeholdersTable;
+    
+    @FXML
+    public TableView<Estate> estatesTable;
     
     @FXML
     public DatePicker dateBirth;
@@ -83,11 +87,22 @@ public class FreeholdersPaneController implements Initializable {
     }
     
     @FXML
-    public void tableClick(MouseEvent event)
+    public void tableClick(MouseEvent event) throws SQLException
     {
         Freeholder person = this.freeholdersTable.getSelectionModel().getSelectedItem();
-        this.selectedFreeholder = person;
-        this.detailPanel.setVisible(true);
+        if(person != null)
+        {
+            this.selectedFreeholder = person;
+            this.detailPanel.setVisible(true);
+            
+            TableColumn firstNameCol = new TableColumn("Estate");
+            firstNameCol.setMinWidth(300);
+            firstNameCol.setCellValueFactory(
+                    new PropertyValueFactory<Estate, String>("info"));
+            this.estatesTable.getColumns().clear();
+            this.estatesTable.getColumns().addAll(firstNameCol);
+            this.estatesTable.setItems(person.ownedEstates());
+        }
     }
     
     @FXML
@@ -98,11 +113,10 @@ public class FreeholdersPaneController implements Initializable {
     
     public void initList() throws SQLException
     {
-        System.out.println("initialized");
         FreeholderModel freeholdersModel = new FreeholderModel();
         freeholdersModel.getFreeHoldersFromDatabase();
         
-        TableColumn firstNameCol = new TableColumn("First Name");
+        TableColumn firstNameCol = new TableColumn("Name");
         firstNameCol.setMinWidth(300);
         firstNameCol.setCellValueFactory(
                 new PropertyValueFactory<Freeholder, String>("name"));

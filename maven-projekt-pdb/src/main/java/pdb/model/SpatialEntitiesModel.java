@@ -5,7 +5,7 @@
  */
 package pdb.model;
 
-import pdb.model.FreeholderModel;
+import pdb.model.freeholder.FreeholderModel;
 import pdb.model.DatabaseModel;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;

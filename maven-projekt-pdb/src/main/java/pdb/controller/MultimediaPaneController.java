@@ -42,13 +42,13 @@ public class MultimediaPaneController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        //TODO
     }
     
     @FXML
     public void selectImageClick(ActionEvent event) throws SQLException, IOException
     {
-        final Stage stage = (Stage) this.selectImageButton.getScene().getWindow();
+        /*final Stage stage = (Stage) this.selectImageButton.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose image file");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));                 
@@ -66,7 +66,7 @@ public class MultimediaPaneController implements Initializable {
         ImageView imgView = new ImageView(img);
         imgView.fitWidthProperty().bind(this.imageLayout.widthProperty());
         imgView.fitHeightProperty().bind(this.imageLayout.heightProperty());
-        this.imageLayout.getChildren().add(imgView);
+        this.imageLayout.getChildren().add(imgView);*/
     }
 
 }
