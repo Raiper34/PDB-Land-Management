@@ -5,6 +5,7 @@
  */
 package pdb.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
@@ -204,7 +205,7 @@ public class MainController implements Initializable {
         }
     }
     
-    public void handleInputEventForShape(InputEvent t, Shape shape) {
+    public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException, IOException {
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED) {
             if (shape instanceof ImprovedPolygon) {
                 ImprovedPolygon improvedShape = (ImprovedPolygon) shape;
@@ -245,7 +246,7 @@ public class MainController implements Initializable {
                 // entityModificationPaneController.handleInputEventForShape(InputEvent t, Shape shape);
                 break;
             case "Multimedia":
-                // multimediaPaneController.handleInputEventForShape(InputEvent t, Shape shape);
+                multimediaPaneController.handleInputEventForShape(t, shape);
                 break;
             case "Time":
                 timePaneController.handleInputEventForShape(t, shape);

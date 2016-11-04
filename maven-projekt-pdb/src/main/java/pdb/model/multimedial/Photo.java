@@ -62,7 +62,7 @@ public class Photo {
         return imgProxy;
     }
     
-    public void insertPhotoFromFile(String filename) throws SQLException, IOException 
+    public void insertPhotoFromFile(String filename, int estate_id) throws SQLException, IOException 
     {
         int id = this.getMaxId() + 1;
         boolean autoCommit = this.connection.getAutoCommit();
@@ -76,6 +76,9 @@ public class Photo {
 
             pstmtInsert.executeUpdate();
             pstmtInsert.close();
+            
+            this.deleteEstatePhoto(estate_id);
+            this.assignPhotoToEstate(estate_id, id);
 
             OrdImage imgProxy = this.getProxy(id);
             
@@ -133,9 +136,39 @@ public class Photo {
     public Image getPhotoFromDatabase(int id) throws SQLException, IOException
     {
         OrdImage imgProxy = this.getProxy(id);
+        if(imgProxy == null)
+        {
+            return null;
+        }
         BufferedImage bufferedImg = ImageIO.read(new ByteArrayInputStream(imgProxy.getDataInByteArray()));
         Image image = SwingFXUtils.toFXImage(bufferedImg, null);
         return image;
+    }
+    
+    private void deleteByEntity(int entity_id) throws SQLException
+    {
+        OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
+            "select "
+        );
+        try 
+        {
+            OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
+            try 
+            {
+                if (rset.next()) 
+                {
+                     //max = (int) rset.getInt("max");
+                }
+            } 
+            finally 
+            {
+                rset.close();
+            }
+        } 
+        finally 
+        {
+            pstmtSelect.close();
+        }
     }
     
     private int getMaxId() throws SQLException
@@ -164,6 +197,68 @@ public class Photo {
             pstmtSelect.close();
         }
         return max;
+    }
+    
+    public int estatesPhotoId(int estate_id) throws SQLException
+    {
+        int id = 0;
+        OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
+            "select photos_id from estates where id = " + estate_id
+        );
+        try 
+        {
+            OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
+            try 
+            {
+                if (rset.next()) 
+                {
+                     id = (int) rset.getInt("photos_id");
+                }
+            } 
+            finally 
+            {
+                rset.close();
+            }
+            } 
+        finally 
+        {
+            pstmtSelect.close();
+        }
+        return id;
+    }
+    
+    public void deleteEstatePhoto(int estate_id) throws SQLException
+    {
+        int photo_id = this.estatesPhotoId(estate_id);
+        this.setEstatePhotoToNull(estate_id);
+        this.deletePhotoById(photo_id);
+    }
+    
+    private void deletePhotoById(int id) throws SQLException
+    {
+        OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
+            "delete from photos where id = " + id
+        );
+        pstmtSelect.executeQuery();
+        pstmtSelect.close();
+    }
+    
+    private void setEstatePhotoToNull(int id) throws SQLException
+    {
+        OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
+            "update estates set photos_id=null where id = " + id
+        );
+        pstmtSelect.executeQuery();
+        pstmtSelect.close();
+    }
+    
+    private void assignPhotoToEstate(int estate_id, int photo_id) throws SQLException
+    {
+        OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
+            "update estates set photos_id= " + photo_id + " where id = " + estate_id
+        );
+        pstmtSelect.executeQuery();
+        pstmtSelect.close();
     }
 
 }

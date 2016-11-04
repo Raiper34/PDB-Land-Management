@@ -5,6 +5,7 @@
  */
 package pdb.controller;
 
+import java.io.IOException;
 import pdb.controller.MainController;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
@@ -15,6 +16,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -159,8 +162,14 @@ public class MapPaneController implements Initializable {
         {
             @Override
             public void handle(InputEvent t) {
-                mainController.handleInputEventForShape(t, shape);
-                //System.out.println( t.getEventType());
+                try {
+                    mainController.handleInputEventForShape(t, shape);
+                    //System.out.println( t.getEventType());
+                } catch (SQLException ex) {
+                    Logger.getLogger(MapPaneController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(MapPaneController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         
