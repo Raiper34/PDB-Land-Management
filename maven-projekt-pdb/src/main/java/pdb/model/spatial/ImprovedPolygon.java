@@ -27,6 +27,10 @@ public class ImprovedPolygon extends Polygon {
         return this.entityReference;
     }
     
+    public Estate getEstateReference() {
+        return this.estateReference;
+    }
+    
     public boolean isEstate() {
         return isEstate;
     }

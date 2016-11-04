@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="spatialAnchorPane" prefHeight="430.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.SpatialPaneController">
    <children>
-      
+      <Label layoutX="31.0" layoutY="33.0" text="Length or perimeter of a geometry:" />
+      <Label fx:id="lengthOrPerimeter" layoutX="268.0" layoutY="33.0" textFill="#5b4848">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="31.0" layoutY="71.0" text="Area:" />
+      <Label fx:id="area" layoutX="68.0" layoutY="71.0" textFill="#5b4848">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
-

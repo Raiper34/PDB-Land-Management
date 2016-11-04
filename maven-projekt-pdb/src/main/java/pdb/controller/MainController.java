@@ -112,7 +112,7 @@ public class MainController implements Initializable {
     @FXML
     public MultimediaPaneController multimediaPaneController;
 
-    public SpatialEntity selectedSpatialEntity; 
+    public SpatialEntity selectedSpatialEntity = null; 
     
     /**
      * Initializes the controller class.
@@ -142,7 +142,7 @@ public class MainController implements Initializable {
                         currentTitledPane = "Time";
                         break;
                     case "Spatial":
-                        // spatialPaneController.resetState();
+                        spatialPaneController.resetState();
                         currentTitledPane = "Spatial";
                         break;
                     case "Freeholders":
@@ -205,15 +205,22 @@ public class MainController implements Initializable {
     }
     
     public void handleInputEventForShape(InputEvent t, Shape shape) {
-        if (shape instanceof ImprovedPolygon) {
-            ImprovedPolygon improvedShape = (ImprovedPolygon) shape;
-            setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
-        } else if ( shape instanceof ImprovedCircle) {
-            ImprovedCircle improvedShape = (ImprovedCircle) shape;
-            setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
-        } else if ( shape instanceof ImprovedPath) {
-            ImprovedPath improvedShape = (ImprovedPath) shape;
-            setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
+        if (t.getEventType() == MouseEvent.MOUSE_CLICKED) {
+            if (shape instanceof ImprovedPolygon) {
+                ImprovedPolygon improvedShape = (ImprovedPolygon) shape;
+                if (improvedShape.isEstate()) {
+                    setSelectedSpatialEntity((SpatialEntity) improvedShape.getEstateReference() );
+                }
+                else {
+                    setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
+                }
+            } else if ( shape instanceof ImprovedCircle) {
+                ImprovedCircle improvedShape = (ImprovedCircle) shape;
+                setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
+            } else if ( shape instanceof ImprovedPath) {
+                ImprovedPath improvedShape = (ImprovedPath) shape;
+                setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
+            }
         }
         
         //setSelectedSpatialEntity();
@@ -244,7 +251,7 @@ public class MainController implements Initializable {
                 timePaneController.handleInputEventForShape(t, shape);
                 break;
             case "Spatial":
-                // spatialPaneController.handleInputEventForShape(InputEvent t, Shape shape);
+                spatialPaneController.handleInputEventForShape(t, shape);
                 break;
             case "Freeholders":
                 // freeHoldersPaneController.handleInputEventForShape(InputEvent t, Shape shape);
@@ -300,6 +307,6 @@ public class MainController implements Initializable {
     }
     
     public void setSelectedSpatialEntity(SpatialEntity spatialEntity) {
-        spatialEntity = selectedSpatialEntity;
+        selectedSpatialEntity = spatialEntity;
     }
 }
