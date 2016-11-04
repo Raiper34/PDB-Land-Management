@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
@@ -44,13 +47,28 @@ public class MultimediaPaneController implements Initializable {
     public AnchorPane imageLayout;
     
     public MainController mainController;
+    
+    @FXML
+    public AnchorPane smiliarPanel;
+    
+    @FXML
+    public AnchorPane imageSmiliarLayout1;
+    
+    @FXML
+    public AnchorPane imageSmiliarLayout2;
+    
+    @FXML
+    public AnchorPane imageSmiliarLayout3;
+    
+    @FXML
+    public AnchorPane imageSmiliarLayout4;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO
+        this.smiliarPanel.setVisible(false);
     }
     
     @FXML
@@ -81,6 +99,65 @@ public class MultimediaPaneController implements Initializable {
         this.setImageById(this.mainController.selectedSpatialEntity.id);
     }
     
+    @FXML
+    public void findSmiliarClick(ActionEvent event) throws SQLException, IOException
+    {
+        this.imageSmiliarLayout1.getChildren().clear();
+        this.imageSmiliarLayout2.getChildren().clear();
+        this.imageSmiliarLayout3.getChildren().clear();
+        this.imageSmiliarLayout4.getChildren().clear();
+        this.smiliarPanel.setVisible(true);
+        Photo photoModel = new Photo();
+        int id = photoModel.estatesPhotoId(this.mainController.selectedSpatialEntity.id);
+        ObservableList<Image> images = FXCollections.observableArrayList();
+        images = photoModel.findSmiliar(id);
+        final AtomicInteger indexHolder = new AtomicInteger();
+        images.forEach((image) -> 
+            {
+                final int count = indexHolder.getAndIncrement();
+                System.out.println(count);
+                if(count > 3)
+                {
+                    return;
+                }
+                else 
+                {
+                    ImageView imgView = new ImageView(image);
+                    if(count == 0)
+                    {
+                        imgView.fitWidthProperty().bind(this.imageSmiliarLayout1.widthProperty());
+                        imgView.fitHeightProperty().bind(this.imageSmiliarLayout1.heightProperty());
+                        this.imageSmiliarLayout1.getChildren().add(imgView);
+                    }
+                    else if(count == 1)
+                    {
+                        imgView.fitWidthProperty().bind(this.imageSmiliarLayout2.widthProperty());
+                        imgView.fitHeightProperty().bind(this.imageSmiliarLayout2.heightProperty());
+                        this.imageSmiliarLayout2.getChildren().add(imgView);
+                    }
+                    else if(count == 2)
+                    {
+                        imgView.fitWidthProperty().bind(this.imageSmiliarLayout3.widthProperty());
+                        imgView.fitHeightProperty().bind(this.imageSmiliarLayout3.heightProperty());
+                        this.imageSmiliarLayout3.getChildren().add(imgView);
+                    }
+                    else if(count == 3)
+                    {
+                        imgView.fitWidthProperty().bind(this.imageSmiliarLayout4.widthProperty());
+                        imgView.fitHeightProperty().bind(this.imageSmiliarLayout4.heightProperty());
+                        this.imageSmiliarLayout4.getChildren().add(imgView);
+                    }
+                }
+            }
+        );
+    }
+    
+    @FXML
+    public void backClick(ActionEvent event)
+    {
+        this.smiliarPanel.setVisible(false);
+    }
+    
     public void setImageById(int id) throws SQLException, IOException
     {
         this.imageLayout.getChildren().clear();
@@ -109,7 +186,6 @@ public class MultimediaPaneController implements Initializable {
     {
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
-            System.out.println("MULTIMEDIA PANE");
             this.setImageById(this.mainController.selectedSpatialEntity.id);
         }
     }

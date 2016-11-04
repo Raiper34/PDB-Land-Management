@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="multimediaAnchorPane" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.MultimediaPaneController">
    <children>
-      <Button fx:id="selectImageButton" layoutX="279.0" layoutY="89.0" mnemonicParsing="false" onAction="#selectImageClick" text="Select image" />
-      <AnchorPane fx:id="imageLayout" layoutX="37.0" layoutY="17.0" prefHeight="216.0" prefWidth="225.0" />
-      <Button fx:id="deleteImageButton" layoutX="278.0" layoutY="136.0" mnemonicParsing="false" onAction="#deleteImageClick" text="Delete Image" />
+      <Button fx:id="selectImageButton" layoutX="18.0" layoutY="12.0" mnemonicParsing="false" onAction="#selectImageClick" text="Select image" />
+      <AnchorPane fx:id="imageLayout" layoutX="20.0" layoutY="86.0" prefHeight="298.0" prefWidth="359.0" />
+      <Button fx:id="deleteImageButton" layoutX="18.0" layoutY="44.0" mnemonicParsing="false" onAction="#deleteImageClick" text="Delete Image" />
+      <Button onAction="#findSmiliarClick"  fx:id="selectImageButton1" layoutX="261.0" layoutY="12.0" mnemonicParsing="false" text="Find Smiliar" />
+      <Button fx:id="selectImageButton11" layoutX="136.0" layoutY="12.0" mnemonicParsing="false"  text="Rotation Left" />
+      <Button fx:id="selectImageButton111" layoutX="135.0" layoutY="44.0" mnemonicParsing="false" text="Rotation Right" />
+      <AnchorPane fx:id="smiliarPanel" prefHeight="298.0" prefWidth="359.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button onAction="#backClick"  layoutX="339.0" layoutY="10.0" mnemonicParsing="false" text="Back" />
+            <AnchorPane fx:id="imageSmiliarLayout1" layoutX="23.0" layoutY="39.0" prefHeight="170.0" prefWidth="170.0" />
+            <AnchorPane fx:id="imageSmiliarLayout2" layoutX="203.0" layoutY="40.0" prefHeight="170.0" prefWidth="170.0" />
+            <AnchorPane fx:id="imageSmiliarLayout3" layoutX="24.0" layoutY="217.0" prefHeight="170.0" prefWidth="170.0" />
+            <AnchorPane fx:id="imageSmiliarLayout4" layoutX="204.0" layoutY="216.0" prefHeight="170.0" prefWidth="170.0" />
+            <Label layoutX="24.0" layoutY="15.0" text="Smiliar Photos:" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

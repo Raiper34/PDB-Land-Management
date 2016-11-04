@@ -13,11 +13,14 @@ import java.sql.SQLException;
 import oracle.ord.im.OrdImage;
 import oracle.jdbc.OraclePreparedStatement;
 import java.sql.PreparedStatement;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 import oracle.jdbc.OracleResultSet;
 import pdb.model.DatabaseModel;
+import pdb.model.freeholder.Freeholder;
 
 /**
  *
@@ -145,57 +148,19 @@ public class Photo {
         return image;
     }
     
-    private void deleteByEntity(int entity_id) throws SQLException
-    {
-        OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
-            "select "
-        );
-        try 
-        {
-            OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
-            try 
-            {
-                if (rset.next()) 
-                {
-                     //max = (int) rset.getInt("max");
-                }
-            } 
-            finally 
-            {
-                rset.close();
-            }
-        } 
-        finally 
-        {
-            pstmtSelect.close();
-        }
-    }
-    
     private int getMaxId() throws SQLException
     {
         int max = 0;
         OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
             "select MAX(id) as max from photos"
         );
-        try 
+        OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
+        if (rset.next()) 
         {
-            OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
-            try 
-            {
-                if (rset.next()) 
-                {
-                     max = (int) rset.getInt("max");
-                }
-            } 
-            finally 
-            {
-                rset.close();
-            }
-            } 
-        finally 
-        {
-            pstmtSelect.close();
+            max = (int) rset.getInt("max");
         }
+        rset.close();
+        pstmtSelect.close();
         return max;
     }
     
@@ -205,25 +170,13 @@ public class Photo {
         OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
             "select photos_id from estates where id = " + estate_id
         );
-        try 
+        OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
+        if (rset.next()) 
         {
-            OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
-            try 
-            {
-                if (rset.next()) 
-                {
-                     id = (int) rset.getInt("photos_id");
-                }
-            } 
-            finally 
-            {
-                rset.close();
-            }
-            } 
-        finally 
-        {
-            pstmtSelect.close();
+            id = (int) rset.getInt("photos_id");
         }
+        rset.close();
+        pstmtSelect.close();
         return id;
     }
     
@@ -259,6 +212,35 @@ public class Photo {
         );
         pstmtSelect.executeQuery();
         pstmtSelect.close();
+    }
+    
+    public ObservableList<Image> findSmiliar(int id) throws SQLException, IOException
+    {
+        ObservableList<Image> images = FXCollections.observableArrayList();
+        OrdImage imgProxy = null;
+        PreparedStatement pstmtSelect = connection.prepareStatement(
+                "SELECT dst.*, SI_ScoreByFtrList(" +
+                "new SI_FeatureList(src.photo_ac,0.7,src.photo_ch,0.1,src.photo_pc,0.1,src.photo_tx,0.1),dst.photo_si)" + 
+                " as similarity FROM photos src, photos dst " + 
+                "WHERE (src.id <> dst.id) AND src.id = " + id + 
+                " ORDER BY similarity ASC"
+        );
+        OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
+        while (rset.next()) 
+        {
+            imgProxy = (OrdImage) rset.getORAData("photo", OrdImage.getORADataFactory());
+            if(imgProxy != null)
+            {
+                if(imgProxy.getDataInByteArray() != null)
+                {
+                    BufferedImage bufferedImg = ImageIO.read(new ByteArrayInputStream(imgProxy.getDataInByteArray()));
+                    images.add(SwingFXUtils.toFXImage(bufferedImg, null));
+                }
+            }
+        }
+        rset.close();
+        pstmtSelect.close();
+        return images;
     }
 
 }
