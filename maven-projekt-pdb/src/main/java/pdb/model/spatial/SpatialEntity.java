@@ -12,12 +12,19 @@ import java.util.Date;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import java.util.Arrays;
+import java.util.List;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 /**
  *
  * @author archie
  */
 public class SpatialEntity {
+    private static final int SRID = 0;
+    private static final int DIMENSION = 2;
     public int id;
     public String name;
     public String description; 
@@ -165,4 +172,81 @@ public class SpatialEntity {
         
         return shapes;
     }
+    
+    public static JGeometry createJGeometryFromShapes(List<Circle> newPoints, String linesOrPoints) {
+        double valuesOfPoints[] = new double[newPoints.size()*DIMENSION];
+        JGeometry newJgeometry;
+        
+        if ( linesOrPoints.equals("points") ) {
+            int index = 1;
+            int sdoElemInfo[] = new int[newPoints.size()*3];                
+            for ( int i = 0; i < newPoints.size(); i++) {
+                sdoElemInfo[i*3] = index;
+                sdoElemInfo[i*3+1] = 1;
+                sdoElemInfo[i*3+2] = 1;
+                index += 2;
+                valuesOfPoints[i*DIMENSION] = newPoints.get(i).getCenterX();
+                valuesOfPoints[i*DIMENSION+1] = newPoints.get(i).getCenterY();
+            }
+            newJgeometry = new JGeometry(
+                5, SRID, 
+                sdoElemInfo, 
+                valuesOfPoints
+            );
+        }
+        else {
+            for ( int i = 0; i < newPoints.size(); i++) {
+                valuesOfPoints[i*DIMENSION] = newPoints.get(i).getCenterX();
+                valuesOfPoints[i*DIMENSION+1] = newPoints.get(i).getCenterY();
+            }
+            newJgeometry = new JGeometry(
+                    2, SRID, 
+                    new int[]{1, 2, 1}, // exterior polygon
+                    valuesOfPoints
+            );
+        }
+        
+        return newJgeometry;
+    }
+    
+    public static JGeometry createJGeometryFromShapes(Rectangle newRectangle) {
+        JGeometry newJgeometry = new JGeometry(
+            3, SRID, 
+            new int[]{1, 1003, 1},
+            new double[]{
+                newRectangle.getX(), newRectangle.getY(), //Start point
+                newRectangle.getX()+newRectangle.getWidth(),newRectangle.getY(), 
+                newRectangle.getX()+newRectangle.getWidth(),newRectangle.getY()+newRectangle.getHeight(), 
+                newRectangle.getX(), newRectangle.getY()+newRectangle.getHeight(),                            
+                newRectangle.getX(), newRectangle.getY() //Start point again
+            }
+        );
+        return newJgeometry;
+    }
+    
+    public static JGeometry createJGeometryFromShapes(Polygon newPolygon) {
+        double valuesOfPoints[] = newPolygon.getPoints().stream().mapToDouble(d -> d).toArray();
+        JGeometry newJgeometry = new JGeometry(
+            3, SRID, 
+            new int[]{1, 1003, 1}, // exterior polygon
+            valuesOfPoints
+        );
+        return newJgeometry;
+    }
+    
+    public static JGeometry createJGeometryFromShapes(Circle newCircle) {
+        JGeometry newJgeometry = new JGeometry(
+            3, SRID, 
+            new int[]{1, 1003, 4}, // exterior polygon
+            new double[]{
+                newCircle.getCenterX(), newCircle.getCenterY()-newCircle.getRadius(),
+                newCircle.getCenterX(), newCircle.getCenterY()+newCircle.getRadius(),
+                newCircle.getCenterX()+newCircle.getRadius(), newCircle.getCenterY()
+            }
+        );
+        return newJgeometry;
+    }
+            
+            
+    
 }

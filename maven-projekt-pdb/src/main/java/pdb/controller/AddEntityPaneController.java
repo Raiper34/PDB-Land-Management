@@ -32,6 +32,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 import oracle.spatial.geometry.JGeometry;
 import static oracle.spatial.geometry.JGeometry.GTYPE_POINT;
 import pdb.model.SpatialEntitiesModel;
@@ -64,9 +65,37 @@ public class AddEntityPaneController implements Initializable {
     //private SpatialEntitiesModel spatialEntitiesModel; 
     private List<Line> newLines;
     private List<Circle> newPoints;
+    
+    private Shape newShape;
     private Rectangle newRectangle;
     private Circle newCircle;
     private Polygon newPolygon;
+    
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        newPoints = new ArrayList<>();
+        newLines = new ArrayList<>();
+        
+        typeOfNewSpatialEntity = "house";
+        shapeOfNewSpatialEntity = "rectangle";
+        layerOfNewSpatialEntity = "overground";
+        //Toggle the shape and type of the entity
+        toggleNewObject.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1){
+                RadioButton chk = (RadioButton)t1.getToggleGroup().getSelectedToggle(); // Cast object to radio button
+//                System.out.println(chk.getId());
+                String[] parts = chk.getId().split("-");
+                typeOfNewSpatialEntity = parts[0];
+                shapeOfNewSpatialEntity = parts[1];
+                layerOfNewSpatialEntity = parts[2];
+                deleteNewEntity();
+            }
+        });
+    }
     
     public void addPointOnClick(InputEvent event) {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
@@ -201,7 +230,6 @@ public class AddEntityPaneController implements Initializable {
     }
     
     public void addNewSpatialEntity(InputEvent event) {
-        //"point", "multipoint", "line", "multiline",  "rectangle", "polygon", "circle" 
         switch (shapeOfNewSpatialEntity) {
             case "point":
                 if ( newPoints.isEmpty() ){
@@ -231,85 +259,26 @@ public class AddEntityPaneController implements Initializable {
                 addCircleEventHandler(event);
                 break;
         }
-    }
+    }  
     
     public JGeometry createJGeometry(){
-        JGeometry geometry = null;
-        double valuesOfPoints[];
         switch (shapeOfNewSpatialEntity) {
             case "point":
-                geometry = new JGeometry(
-                    newPoints.get(0).getCenterX(),
-                    newPoints.get(0).getCenterY(),
-                    SRID
-                );
-                break;
             case "multipoint":
-                int index = 1;
-                int sdoElemInfo[] = new int[newPoints.size()*3];                
-                valuesOfPoints = new double[newPoints.size()*2];
-                for ( int i = 0; i < newPoints.size(); i++) {
-                    sdoElemInfo[i*3] = index;
-                    sdoElemInfo[i*3+1] = 1;
-                    sdoElemInfo[i*3+2] = 1;
-                    index += 2;
-                    valuesOfPoints[i*2] = newPoints.get(i).getCenterX();
-                    valuesOfPoints[i*2+1] = newPoints.get(i).getCenterY();
-                }
-                geometry = new JGeometry(
-                        5, SRID, 
-                        sdoElemInfo, // exterior polygon
-                        valuesOfPoints
-                );
-                break;
+                return SpatialEntity.createJGeometryFromShapes(newPoints, "points");
             case "line":
             case "multiline":
-                valuesOfPoints = new double[newPoints.size()*2];
-                for ( int i = 0; i < newPoints.size(); i++) {
-                    valuesOfPoints[i*2] = newPoints.get(i).getCenterX();
-                    valuesOfPoints[i*2+1] = newPoints.get(i).getCenterY();
-                }
-                geometry = new JGeometry(
-                        2, SRID, 
-                        new int[]{1, 2, 1}, // exterior polygon
-                        valuesOfPoints
-                );
-                break;
+                return SpatialEntity.createJGeometryFromShapes(newPoints, "lines");
             case "rectangle":
-                geometry = new JGeometry(
-                    3, SRID, 
-                    new int[]{1, 1003, 1}, // exterior polygon
-                    new double[]{
-                        newRectangle.getX(), newRectangle.getY(), //Start point
-                        newRectangle.getX()+newRectangle.getWidth(),newRectangle.getY(), 
-                        newRectangle.getX()+newRectangle.getWidth(),newRectangle.getY()+newRectangle.getHeight(), 
-                        newRectangle.getX(), newRectangle.getY()+newRectangle.getHeight(),                            
-                        newRectangle.getX(), newRectangle.getY() //Start point
-                    }
-                );
-                break;
+                return SpatialEntity.createJGeometryFromShapes(newRectangle);
             case "polygon":
-                valuesOfPoints = newPolygon.getPoints().stream().mapToDouble(d -> d).toArray();
-                geometry = new JGeometry(
-                        3, SRID, 
-                        new int[]{1, 1003, 1}, // exterior polygon
-                        valuesOfPoints
-                );
-                break;
+                return SpatialEntity.createJGeometryFromShapes(newPolygon);
             case "circle":
-                geometry = new JGeometry(
-                        3, SRID, 
-                        new int[]{1, 1003, 4}, // exterior polygon
-                        new double[]{
-                            newCircle.getCenterX(), newCircle.getCenterY()-newCircle.getRadius(),
-                            newCircle.getCenterX(), newCircle.getCenterY()+newCircle.getRadius(),
-                            newCircle.getCenterX()+newCircle.getRadius(), newCircle.getCenterY()
-                        }
-                );
-                break;
+                return SpatialEntity.createJGeometryFromShapes(newCircle);
+            default:
+                System.err.println("There is no such shape of new spatial entity: " + shapeOfNewSpatialEntity);
+                return null;
         }
-        
-        return geometry;
     }
     
     public void saveNewSpatialEntity() {
@@ -374,47 +343,11 @@ public class AddEntityPaneController implements Initializable {
         newLines.clear();
         newPoints.clear();
     }
-    
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        newPoints = new ArrayList<>();
-        newLines = new ArrayList<>();
         
-        typeOfNewSpatialEntity = "house";
-        shapeOfNewSpatialEntity = "rectangle";
-        layerOfNewSpatialEntity = "overground";
-        //Toggle the shape and type of the entity
-        toggleNewObject.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
-            @Override
-            public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1){
-                RadioButton chk = (RadioButton)t1.getToggleGroup().getSelectedToggle(); // Cast object to radio button
-//                System.out.println(chk.getId());
-                String[] parts = chk.getId().split("-");
-                typeOfNewSpatialEntity = parts[0];
-                shapeOfNewSpatialEntity = parts[1];
-                layerOfNewSpatialEntity = parts[2];
-                deleteNewEntity();
-                System.out.println(typeOfNewSpatialEntity);
-                System.out.println(shapeOfNewSpatialEntity);
-                System.out.println(layerOfNewSpatialEntity);
-                System.out.println("---------");
-            }
-        });
-    }
-    
     public void addParent(MainController c1) {
         this.mainController = c1;
     }
     
-    @FXML
-    public void toggleNewObjectAction(ActionEvent action)
-    {
-      System.out.println("Toggled: " + toggleNewObject.getSelectedToggle().getUserData().toString());
-    }
-
     public void handleInputEventForMap(InputEvent event) {
         this.addNewSpatialEntity(event); 
     }
