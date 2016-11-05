@@ -8,6 +8,7 @@ package pdb.controller;
 import java.awt.Dimension;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -36,12 +37,14 @@ import static oracle.spatial.geometry.JGeometry.GTYPE_POINT;
 import pdb.model.SpatialEntitiesModel;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
+import pdb.model.spatial.SpatialEntity;
 
 /**
  *
  * @author archie
  */
 public class AddEntityPaneController implements Initializable {
+    private final int SRID = 0;
     
     @FXML
     public AnchorPane addEntityAnchorPane;
@@ -54,14 +57,9 @@ public class AddEntityPaneController implements Initializable {
     @FXML
     private MainController fXMLController;
     
-    private Entity newEntity;
-    
-    private Estate newEstate;
-    
     private String typeOfNewSpatialEntity;
     private String shapeOfNewSpatialEntity;
     private String layerOfNewSpatialEntity;
-    private final int SRID = 0;
     
     //private SpatialEntitiesModel spatialEntitiesModel; 
     private List<Line> newLines;
@@ -87,7 +85,7 @@ public class AddEntityPaneController implements Initializable {
     }
     
     public void removePoint(int index) {
-        mainController.mapPaneController.mapa.getChildren().remove(newPoints.get(index));
+        mainController.mapPaneController.removeShapeFromMap(newPoints.get(index));
         newPoints.remove(index);
     }
     
@@ -119,7 +117,7 @@ public class AddEntityPaneController implements Initializable {
         
         if(event.getEventType() == MouseEvent.MOUSE_PRESSED){
             if( newRectangle != null) {
-                mainController.mapPaneController.mapa.getChildren().remove(newRectangle);
+                mainController.mapPaneController.removeShapeFromMap(newRectangle);
                 newRectangle = null;
             }
             //Create starting point
@@ -132,7 +130,7 @@ public class AddEntityPaneController implements Initializable {
             //remove old point from map and list
             removePoint(1);
             //remove newRectangle from map and clear it
-            mainController.mapPaneController.mapa.getChildren().remove(newRectangle);
+            mainController.mapPaneController.removeShapeFromMap(newRectangle);
             //create new point
             addPoint(mouseEvent);
             addRectangle();
@@ -158,7 +156,7 @@ public class AddEntityPaneController implements Initializable {
         
         if(event.getEventType() == MouseEvent.MOUSE_PRESSED){
             if( newCircle != null) {
-                mainController.mapPaneController.mapa.getChildren().remove(newCircle);
+                mainController.mapPaneController.removeShapeFromMap(newCircle);
                 newCircle = null;
             }
             //Create starting point
@@ -171,7 +169,7 @@ public class AddEntityPaneController implements Initializable {
             //remove old point from map and list
             removePoint(1);
             //remove newRectangle from map and clear it
-            mainController.mapPaneController.mapa.getChildren().remove(newCircle);
+            mainController.mapPaneController.removeShapeFromMap(newCircle);
             //create new point
             addPoint(mouseEvent);
             addCircle();
@@ -193,7 +191,7 @@ public class AddEntityPaneController implements Initializable {
             }
             else {
                 addPointOnClick(event);
-                mainController.mapPaneController.mapa.getChildren().remove(newPolygon);
+                mainController.mapPaneController.removeShapeFromMap(newPolygon);
                 newPolygon.getPoints().add(mouseEvent.getX());
                 newPolygon.getPoints().add(mouseEvent.getY());
                 System.out.println(newPolygon.getPoints().toString());
@@ -315,57 +313,63 @@ public class AddEntityPaneController implements Initializable {
     }
     
     public void saveNewSpatialEntity() {
+        SpatialEntitiesModel spatialEntitiesModel = mainController.mapPaneController.spatialEntitiesModel;
+        SpatialEntity newSpatialEntity = null;
         //Create the new entity and jgeometry from the points I have got
         JGeometry geometry = createJGeometry();
-        
+        Calendar cal = Calendar.getInstance();
+        Date validFromDate = cal.getTime();
+        cal.add(Calendar.YEAR, 1);
+        Date validToDate = cal.getTime();
         if ( typeOfNewSpatialEntity.equals("estate")){
             //getLastID of estate
-            int id = mainController.mapPaneController.spatialEntitiesModel.getMaxId("estates") + 1;  
-            newEstate = new Estate(
+            int id = spatialEntitiesModel.getNewIdForEstate();  
+            newSpatialEntity = new Estate(
                     id,
                     typeOfNewSpatialEntity + id,
                     typeOfNewSpatialEntity + id,
                     geometry,
-                    new Date(),
-                    new Date(),
+                    validFromDate,
+                    validToDate,
                     null
             );
-            
-            deleteNewEntity();        
-            mainController.mapPaneController.estates.add(newEstate);
-            mainController.mapPaneController.drawSpatialEntities();
+          
+            mainController.mapPaneController.addSpatialEntityToMap((Estate) newSpatialEntity);
+            spatialEntitiesModel.saveSpatialEntityToDB((Estate) newSpatialEntity);
         } else {
-            int id = mainController.mapPaneController.spatialEntitiesModel.getMaxId("related_spatial_entities") + 1;  
-            newEntity = new Entity(
+            int id = spatialEntitiesModel.getNewIdForEntity();  
+            newSpatialEntity = new Entity(
                     id,
                     typeOfNewSpatialEntity + id,
                     typeOfNewSpatialEntity + id,
                     geometry,
-                    new Date(),
-                    new Date(),
+                    validFromDate,
+                    validToDate,
                     typeOfNewSpatialEntity,
                     layerOfNewSpatialEntity
             );
-            
-            deleteNewEntity();        
-            mainController.mapPaneController.entities.add(newEntity);
-            mainController.mapPaneController.drawSpatialEntities();
+    
+            mainController.mapPaneController.addSpatialEntityToMap((Entity) newSpatialEntity); 
+//            spatialEntitiesModel.saveSpatialEntityToDB((Entity) newSpatialEntity);
         }
+        
+        
+        deleteNewEntity();
     }
     
     public void deleteNewEntity() {
         //Remove all the new shapes from map
         for (Circle shape : newPoints){
-            mainController.mapPaneController.mapa.getChildren().remove(shape);
+            mainController.mapPaneController.removeShapeFromMap(shape);
         }
         for (Line shape : newLines){
-            mainController.mapPaneController.mapa.getChildren().remove(shape);
+            mainController.mapPaneController.removeShapeFromMap(shape);
         }
-        mainController.mapPaneController.mapa.getChildren().remove(newRectangle);
+        mainController.mapPaneController.removeShapeFromMap(newRectangle);
+        mainController.mapPaneController.removeShapeFromMap(newCircle);
+        mainController.mapPaneController.removeShapeFromMap(newPolygon);
         newRectangle = null;
-        mainController.mapPaneController.mapa.getChildren().remove(newCircle);
         newCircle = null;
-        mainController.mapPaneController.mapa.getChildren().remove(newPolygon);
         newPolygon = null;
         newLines.clear();
         newPoints.clear();

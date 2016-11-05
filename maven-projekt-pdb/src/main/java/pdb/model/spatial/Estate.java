@@ -5,16 +5,16 @@
  */
 package pdb.model.spatial;
 
-import pdb.model.freeholder.FreeholderModel;
 import java.util.Date;
 import oracle.spatial.geometry.JGeometry;
+import pdb.model.freeholder.Freeholder;
 
 /**
  *
  * @author archie
  */
 public class Estate extends SpatialEntity{
-    private FreeholderModel freeholder;
+    public Freeholder freeholder;
     
         
         public Estate(
@@ -24,11 +24,18 @@ public class Estate extends SpatialEntity{
             JGeometry geometry,
             Date validFrom,
             Date validTo,
-            FreeholderModel freeholder
+            Freeholder freeholder
             ) 
     {
         super(id, name, description, geometry, validFrom, validTo);
         this.freeholder = freeholder; 
+    }
+    
+    public int getFreeholderId() { 
+        if ( this.freeholder != null)
+            return this.freeholder.id;
+        else
+            return 1;
     }
         
     public Shapes toShapes(){

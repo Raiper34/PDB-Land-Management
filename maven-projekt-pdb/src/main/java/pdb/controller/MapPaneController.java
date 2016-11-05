@@ -24,6 +24,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -40,6 +41,7 @@ import javafx.scene.shape.Shape;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.SpatialEntitiesModel;
 import pdb.model.spatial.ShapesColorsDefinition;
+import pdb.model.spatial.SpatialEntity;
 
 /**
  * FXML Controller class
@@ -66,35 +68,6 @@ public class MapPaneController implements Initializable {
     @FXML
     private MainController fXMLController;
 
-    /*@FXML
-    void checked(ActionEvent event) throws SQLException {
-        DatabaseTest databaseTest = new DatabaseTest();
-        JGeometry geom = databaseTest.databaseOperation();
-
-        if (clickedCount % 2 != 0) {
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            label.setText("Klikni, pro vykresleni obdelniku z databaze!");
-        } else {
-            if (geom.isRectangle()) {
-                double x1 = geom.getOrdinatesArray()[0];
-                double y1 = geom.getOrdinatesArray()[1];
-
-                double x2 = geom.getOrdinatesArray()[2];
-                double y2 = geom.getOrdinatesArray()[3];
-
-                gc.setFill(Color.AQUA);
-                gc.setStroke(Color.BLACK);
-                gc.setLineWidth(10);
-
-                //gc.fill();
-                gc.strokeRect(x1, y2, x2 - x1, y2 - y1);
-                gc.fillRect(x1, y2, x2 - x1, y2 - y1);
-            }
-
-            label.setText("Obdelnik z databaze vykreslen!");
-        }
-        clickedCount++;
-    }*/
     /**
      * Initializes the controller class.
      */
@@ -459,5 +432,17 @@ public class MapPaneController implements Initializable {
         }
     }
     
+    public void addSpatialEntityToMap(Estate spatialEntityToAdd) {
+        estates.add(spatialEntityToAdd);
+        drawSpatialEntities();
+    }
     
+    public void addSpatialEntityToMap(Entity spatialEntityToAdd) {
+        entities.add(spatialEntityToAdd);
+        drawSpatialEntities();
+    }
+    
+    public void removeShapeFromMap(Node shapeToRemove) {
+        mapa.getChildren().remove(shapeToRemove);
+    }
 }

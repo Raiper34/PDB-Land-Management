@@ -20,8 +20,8 @@ import javafx.scene.paint.Color;
 public class SpatialEntity {
     public int id;
     public String name;
-    private String description; 
-    private JGeometry geometry;
+    public String description; 
+    public JGeometry geometry;
     public Date validFrom;
     public Date validTo;
     

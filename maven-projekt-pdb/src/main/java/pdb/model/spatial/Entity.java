@@ -40,9 +40,10 @@ public class Entity extends SpatialEntity{
         return this.layer;
     }
     
-    
     public Shapes toShapes(){
         SpatialEntity spatialEntity = (SpatialEntity) this;
         return super.toShapes(spatialEntity, "Entity");
     }
+    
+    
 }
