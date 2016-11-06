@@ -45,8 +45,6 @@ import pdb.model.spatial.SpatialEntity;
  * @author archie
  */
 public class AddEntityPaneController implements Initializable {
-    private final int SRID = 0;
-    
     @FXML
     public AnchorPane addEntityAnchorPane;
     
@@ -61,11 +59,8 @@ public class AddEntityPaneController implements Initializable {
     private String typeOfNewSpatialEntity;
     private String shapeOfNewSpatialEntity;
     private String layerOfNewSpatialEntity;
-    
-    //private SpatialEntitiesModel spatialEntitiesModel; 
     private List<Line> newLines;
     private List<Circle> newPoints;
-    
     private Shape newShape;
     private Rectangle newRectangle;
     private Circle newCircle;
@@ -86,9 +81,8 @@ public class AddEntityPaneController implements Initializable {
         toggleNewObject.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1){
-                RadioButton chk = (RadioButton)t1.getToggleGroup().getSelectedToggle(); // Cast object to radio button
-//                System.out.println(chk.getId());
-                String[] parts = chk.getId().split("-");
+                RadioButton checkedButton = (RadioButton)t1.getToggleGroup().getSelectedToggle();
+                String[] parts = checkedButton.getId().split("-");
                 typeOfNewSpatialEntity = parts[0];
                 shapeOfNewSpatialEntity = parts[1];
                 layerOfNewSpatialEntity = parts[2];
@@ -97,6 +91,9 @@ public class AddEntityPaneController implements Initializable {
         });
     }
     
+    /*
+    * @param InputEvent event
+    */
     public void addPointOnClick(InputEvent event) {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
             //Get the x and y of the click and create there a new circle
@@ -107,12 +104,18 @@ public class AddEntityPaneController implements Initializable {
         }
     }
     
+    /*
+    * @param MouseEvent event
+    */
     public void addPoint(MouseEvent event) {
         Circle point = new Circle(event.getX(), event.getY(), 2.0f, Paint.valueOf("Black") );
         newPoints.add(point);
         mainController.mapPaneController.mapa.getChildren().add(point);
     }
     
+    /*
+    * @param int index
+    */
     public void removePoint(int index) {
         mainController.mapPaneController.removeShapeFromMap(newPoints.get(index));
         newPoints.remove(index);
@@ -141,6 +144,9 @@ public class AddEntityPaneController implements Initializable {
         mainController.mapPaneController.mapa.getChildren().add(newRectangle);
     }
     
+    /*
+    * @param InputEvent event
+    */
     public void addRectangleEventHandler(InputEvent event) {        
         MouseEvent mouseEvent = (MouseEvent) event;
         
@@ -180,6 +186,9 @@ public class AddEntityPaneController implements Initializable {
         mainController.mapPaneController.mapa.getChildren().add(newCircle);
     }
     
+    /*
+    * @param InputEvent event
+    */
     public void addCircleEventHandler(InputEvent event) {        
         MouseEvent mouseEvent = (MouseEvent) event;
         
@@ -211,6 +220,9 @@ public class AddEntityPaneController implements Initializable {
         } 
     }
     
+    /*
+    * @param InputEvent event
+    */
     private void addPolygonEventHandler(InputEvent event) {
         MouseEvent mouseEvent = (MouseEvent) event;
         if(event.getEventType() == MouseEvent.MOUSE_CLICKED){
@@ -229,6 +241,9 @@ public class AddEntityPaneController implements Initializable {
         }
     }
     
+    /*
+    * @param InputEvent event
+    */
     public void addNewSpatialEntity(InputEvent event) {
         switch (shapeOfNewSpatialEntity) {
             case "point":
@@ -261,6 +276,9 @@ public class AddEntityPaneController implements Initializable {
         }
     }  
     
+    /*
+    * @return JGeometry
+    */
     public JGeometry createJGeometry(){
         switch (shapeOfNewSpatialEntity) {
             case "point":
@@ -344,10 +362,16 @@ public class AddEntityPaneController implements Initializable {
         newPoints.clear();
     }
         
-    public void addParent(MainController c1) {
-        this.mainController = c1;
+    /*
+    * @param MainController mainController
+    */
+    public void addParent(MainController mainController) {
+        this.mainController = mainController;
     }
     
+    /*
+    * @param InputEvent event
+    */
     public void handleInputEventForMap(InputEvent event) {
         this.addNewSpatialEntity(event); 
     }

@@ -83,8 +83,34 @@ public class MapPaneController implements Initializable {
         drawMap();
     }
 
-    public void addParent(MainController c1) {
-        this.mainController = c1;
+    /*
+    * @param Estate spatialEntityToAdd
+    */
+    public void addSpatialEntityToMap(Estate spatialEntityToAdd) {
+        estates.add(spatialEntityToAdd);
+        drawSpatialEntities();
+    }
+    
+    /*
+    * @param Entity spatialEntityToAdd
+    */
+    public void addSpatialEntityToMap(Entity spatialEntityToAdd) {
+        entities.add(spatialEntityToAdd);
+        drawSpatialEntities();
+    }
+    
+    /*
+    * @param Node shapeToRemove
+    */
+    public void removeShapeFromMap(Node shapeToRemove) {
+        mapa.getChildren().remove(shapeToRemove);
+    }
+    
+    /*
+    * @param MainController mainController
+    */
+    public void addParent(MainController mainController) {
+        this.mainController = mainController;
     }
     
     public void drawMap() {
@@ -430,19 +456,5 @@ public class MapPaneController implements Initializable {
                 }
             }
         }
-    }
-    
-    public void addSpatialEntityToMap(Estate spatialEntityToAdd) {
-        estates.add(spatialEntityToAdd);
-        drawSpatialEntities();
-    }
-    
-    public void addSpatialEntityToMap(Entity spatialEntityToAdd) {
-        entities.add(spatialEntityToAdd);
-        drawSpatialEntities();
-    }
-    
-    public void removeShapeFromMap(Node shapeToRemove) {
-        mapa.getChildren().remove(shapeToRemove);
     }
 }

@@ -32,8 +32,11 @@ public class EntityModificationPaneController implements Initializable {
         System.out.println("Hello from EntityModificationPane");
     }
     
-    public void addParent(MainController c1) {
-        this.mainController = c1;
+    /*
+    * @param MainController mainController
+    */
+    public void addParent(MainController mainController) {
+        this.mainController = mainController;
     }
 
 }

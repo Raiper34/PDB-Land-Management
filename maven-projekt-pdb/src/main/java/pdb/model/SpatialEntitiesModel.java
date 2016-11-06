@@ -40,26 +40,23 @@ public class SpatialEntitiesModel {
         freeholdersModel = new FreeholderModel();
     }
 
+    /*
+    * @param Estate spatialEntityToSave
+    */
     public void saveSpatialEntityToDB(Estate spatialEntityToSave) {
         try{
             PreparedStatement statementInsertSpatialEntity = conn.prepareStatement("INSERT INTO estates "
-                    + "(id, geometry, valid_from, valid_to, freeholders_id, photos_id) "
+                    + "(id, name, description, geometry, valid_from, valid_to) "
                     + "VALUES( ?, ?, ?, ?, ?, ?)"
             );
             try {
-                // convert the JGeometry instance to a Struct
                 statementInsertSpatialEntity.setInt(1, spatialEntityToSave.id);
-                Struct obj = JGeometry.storeJS(conn, spatialEntityToSave.geometry);
-                statementInsertSpatialEntity.setObject(2, obj);
-                java.sql.Date sqlDate = new java.sql.Date( spatialEntityToSave.validFrom.getTime() );
-                statementInsertSpatialEntity.setDate(3, sqlDate);
-                sqlDate = new java.sql.Date( spatialEntityToSave.validTo.getTime() );
-                statementInsertSpatialEntity.setDate(4, sqlDate);
-                System.out.println(spatialEntityToSave.getFreeholderId());
-                statementInsertSpatialEntity.setInt(5, spatialEntityToSave.getFreeholderId());
-                
-                //TODO: this field is reserved for Photo_id
-                statementInsertSpatialEntity.setInt(6, 8);
+                statementInsertSpatialEntity.setString(2, spatialEntityToSave.name);
+                statementInsertSpatialEntity.setString(3, spatialEntityToSave.description);
+                // convert the JGeometry instance to a Struct
+                statementInsertSpatialEntity.setObject(4, JGeometry.storeJS(conn, spatialEntityToSave.geometry));
+                statementInsertSpatialEntity.setDate(5, new java.sql.Date(spatialEntityToSave.validFrom.getTime()));
+                statementInsertSpatialEntity.setDate(6, new java.sql.Date(spatialEntityToSave.validTo.getTime()));
                 statementInsertSpatialEntity.executeUpdate();
             } finally {
                 statementInsertSpatialEntity.close();
@@ -72,6 +69,9 @@ public class SpatialEntitiesModel {
         }
     }
     
+    /*
+    * @return List<Entity>
+    */
     public List<Entity> getEntities() {
         List<Entity> entities = new ArrayList<>();
         
@@ -104,6 +104,10 @@ public class SpatialEntitiesModel {
         return entities;
     }
     
+    /*
+    * @param String dateSnapshot
+    * @return List<Entity>
+    */
     public List<Entity> getEntities(String dateSnapshot) {
         List<Entity> entities = new ArrayList<>();
         
@@ -136,6 +140,9 @@ public class SpatialEntitiesModel {
         return entities;
     }
 
+    /*
+    * @return List<Estate>
+    */
     public List<Estate> getEstates() {
         List<Estate> estates = new ArrayList<>();
 
@@ -170,6 +177,10 @@ public class SpatialEntitiesModel {
         return estates;
     }
     
+    /*
+    * @param String dateSnapshot
+    * @return List<Estate>
+    */
     public List<Estate> getEstates(String dateSnapshot) {
         List<Estate> estates = new ArrayList<>();
 
@@ -211,6 +222,10 @@ public class SpatialEntitiesModel {
         return getMaxIdFromTable("estates") + 1;
     }
     
+    /*
+    * @param String table
+    * @return int
+    */
     private int getMaxIdFromTable(String table) {
         if (!"related_spatial_entities".equals(table) && !"estates".equals(table)){
             System.err.println("ERROR bad TABLE NAME");
