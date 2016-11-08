@@ -30,13 +30,6 @@ public class Estate extends SpatialEntity{
         super(id, name, description, geometry, validFrom, validTo);
         this.freeholder = freeholder; 
     }
-    
-    public int getFreeholderId() { 
-        if ( this.freeholder != null)
-            return this.freeholder.id;
-        else
-            return 1;
-    }
         
     public Shapes toShapes(){
         SpatialEntity spatialEntity = (SpatialEntity) this;

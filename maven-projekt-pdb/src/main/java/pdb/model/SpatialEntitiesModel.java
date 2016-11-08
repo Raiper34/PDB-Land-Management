@@ -67,6 +67,35 @@ public class SpatialEntitiesModel {
         } catch (Exception ex) {
             System.err.println("Exception: " + ex.getMessage());
         }
+    } 
+    
+    /*
+    * @param Estate spatialEntityToSave
+    */
+    public void saveSpatialEntityToDB(Entity spatialEntityToSave) {
+        try{
+            PreparedStatement statementInsertSpatialEntity = conn.prepareStatement(""
+                    + "INSERT INTO related_spatial_entities"
+                    + "(id, name, geometry, layer, entity_type, valid_from, valid_to)"
+                    + "VALUES( ?, ?, ?, ?, ?, ?, ?)");
+            try {
+                statementInsertSpatialEntity.setInt(1, spatialEntityToSave.id);
+                statementInsertSpatialEntity.setString(2, spatialEntityToSave.name);
+                statementInsertSpatialEntity.setObject(3, JGeometry.storeJS(conn, spatialEntityToSave.geometry));
+                statementInsertSpatialEntity.setString(4, spatialEntityToSave.getLayer());
+                statementInsertSpatialEntity.setString(5, spatialEntityToSave.getEntityType());
+                statementInsertSpatialEntity.setDate(6, new java.sql.Date(spatialEntityToSave.validFrom.getTime()));
+                statementInsertSpatialEntity.setDate(7, new java.sql.Date(spatialEntityToSave.validTo.getTime()));
+                statementInsertSpatialEntity.executeUpdate();
+            } finally {
+                statementInsertSpatialEntity.close();
+            }
+        } 
+         catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Exception: " + ex.getMessage());
+        }
     }
     
     /*
@@ -76,9 +105,11 @@ public class SpatialEntitiesModel {
         List<Entity> entities = new ArrayList<>();
         
         try {
-            try (Statement stmt = conn.createStatement()) {
-                try (ResultSet rset = stmt.executeQuery("select * from "
-                        + "related_spatial_entities WHERE valid_to = TO_DATE('27-10-2116', 'dd-mm-yyyy')")) {
+            try (PreparedStatement stmt = conn.prepareStatement(""
+                    + "select * from related_spatial_entities WHERE "
+                    + "valid_to >= ?")) {
+                stmt.setDate(1, new java.sql.Date(new Date().getTime()));
+                try (ResultSet rset = stmt.executeQuery()) {
                     while (rset.next()) {
                         byte[] image = rset.getBytes("geometry");
                         JGeometry jGeometry = JGeometry.load(image);
@@ -147,8 +178,11 @@ public class SpatialEntitiesModel {
         List<Estate> estates = new ArrayList<>();
 
         try {
-            try (Statement stmt = conn.createStatement()) {
-                try (ResultSet rset = stmt.executeQuery("select * from estates WHERE valid_to = TO_DATE('27-10-2116', 'dd-mm-yyyy')")) {
+            try (PreparedStatement stmt = conn.prepareStatement(""
+                    + "select * from estates WHERE "
+                    + "valid_to >= ?")) {
+                stmt.setDate(1, new java.sql.Date(new Date().getTime()));
+                try (ResultSet rset = stmt.executeQuery()) {
                     while (rset.next()) {
                         
                         byte[] image = rset.getBytes("geometry");
@@ -214,10 +248,16 @@ public class SpatialEntitiesModel {
         return estates;
     }
     
+    /*
+    * @return List<Estate>
+    */
     public int getNewIdForEntity() {
         return getMaxIdFromTable("related_spatial_entities") + 1;
     }
     
+    /*
+    * @return List<Estate>
+    */
     public int getNewIdForEstate() {
         return getMaxIdFromTable("estates") + 1;
     }

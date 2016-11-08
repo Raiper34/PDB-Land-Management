@@ -54,6 +54,8 @@ public class SpatialEntity {
     * @param List<Circle> newPoints, String linesOrPoints
     */
     public static JGeometry createJGeometryFromShapes(List<Circle> newPoints, String linesOrPoints) {
+        if( newPoints.size() < 1)
+            return null;
         double valuesOfPoints[] = new double[newPoints.size()*DIMENSION];
         JGeometry newJgeometry;
         
@@ -93,6 +95,8 @@ public class SpatialEntity {
     * @param Rectangle newRectangle
     */
     public static JGeometry createJGeometryFromShapes(Rectangle newRectangle) {
+        if( newRectangle == null)
+            return null;
         JGeometry newJgeometry = new JGeometry(
             3, SRID, 
             new int[]{1, 1003, 1},
@@ -111,6 +115,8 @@ public class SpatialEntity {
     * @param Polygon newPolygon
     */
     public static JGeometry createJGeometryFromShapes(Polygon newPolygon) {
+        if( newPolygon == null)
+            return null;
         double valuesOfPoints[] = newPolygon.getPoints().stream().mapToDouble(d -> d).toArray();
         JGeometry newJgeometry = new JGeometry(
             3, SRID, 
@@ -124,6 +130,8 @@ public class SpatialEntity {
     * @param Circle newCircle
     */
     public static JGeometry createJGeometryFromShapes(Circle newCircle) {
+        if( newCircle == null)
+            return null;
         JGeometry newJgeometry = new JGeometry(
             3, SRID, 
             new int[]{1, 1003, 4}, // exterior polygon
@@ -258,5 +266,4 @@ public class SpatialEntity {
         
         return shapes;
     }        
-    
 }
