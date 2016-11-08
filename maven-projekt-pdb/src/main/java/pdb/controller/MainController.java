@@ -267,6 +267,8 @@ public class MainController implements Initializable {
         this.mapPaneController.clearMap();
         this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
         this.timePaneController.reloadComboBox();
+        this.selectedSpatialEntity = null;
+        this.spatialPaneController.resetState(); // must be after this.selectedSpatialEntity = null
     }
     
     public void handleInputEventForMap(InputEvent event) {

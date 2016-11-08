@@ -137,4 +137,98 @@ public class SpatialModel {
         
         return area;
     }
+
+    public double getDistance(SpatialEntity previousSelectedSpatialEntity, SpatialEntity selectedSpatialEntity) {
+        
+        String sqlQuery = "";
+        double distance = 0.0;
+
+        String previousSelectedSpatialEntityValidFromFormatted;
+        String previousSelectedSpatialEntityValidToFormatted;
+        
+        String selectedSpatialEntityValidFromFormatted;
+        String selectedSpatialEntityValidToFormatted;
+        
+        int previousSelectedSpatialEntityId;
+        int selectedSpatialEntityId;
+        
+        String firstTableName;
+        String firstTableUpperCaseName;
+        
+        String secondTableName;
+        String secondTableUpperCaseName;
+        
+        // previousSelectedSpatialEntity is instance of Entity
+        if (previousSelectedSpatialEntity instanceof Entity) {
+            previousSelectedSpatialEntityId = ((Entity) previousSelectedSpatialEntity).id;
+            firstTableName = "related_spatial_entities";
+            firstTableUpperCaseName = "RELATED_SPATIAL_ENTITIES";
+            previousSelectedSpatialEntityValidFromFormatted = new SimpleDateFormat("dd-MM-yyyy").format(((Entity) previousSelectedSpatialEntity).validFrom);
+            previousSelectedSpatialEntityValidToFormatted = new SimpleDateFormat("dd-MM-yyyy").format(((Entity) previousSelectedSpatialEntity).validTo);
+      
+        }
+        // previousSelectedSpatialEntity is instance of Estate
+        else {
+            previousSelectedSpatialEntityId = ((Estate) previousSelectedSpatialEntity).id;
+            firstTableName = "estates";
+            firstTableUpperCaseName = "ESTATES";
+            previousSelectedSpatialEntityValidFromFormatted = new SimpleDateFormat("dd-MM-yyyy").format(((Estate) previousSelectedSpatialEntity).validFrom);
+            previousSelectedSpatialEntityValidToFormatted = new SimpleDateFormat("dd-MM-yyyy").format(((Estate) previousSelectedSpatialEntity).validTo);
+        }
+        
+        // selectedSpatialEntity is instance of Entity
+        if (selectedSpatialEntity instanceof Entity) {
+            selectedSpatialEntityId = ((Entity) selectedSpatialEntity).id;
+            secondTableName = "related_spatial_entities";
+            secondTableUpperCaseName = "RELATED_SPATIAL_ENTITIES";   
+            selectedSpatialEntityValidFromFormatted = new SimpleDateFormat("dd-MM-yyyy").format(((Entity) selectedSpatialEntity).validFrom);
+            selectedSpatialEntityValidToFormatted = new SimpleDateFormat("dd-MM-yyyy").format(((Entity) selectedSpatialEntity).validTo);
+        }
+        // selectedSpatialEntity is instance of Estate
+        else {
+            selectedSpatialEntityId = ((Estate) selectedSpatialEntity).id;
+            secondTableName = "estates";
+            secondTableUpperCaseName = "ESTATES";
+            selectedSpatialEntityValidFromFormatted = new SimpleDateFormat("dd-MM-yyyy").format(((Estate) selectedSpatialEntity).validFrom);
+            selectedSpatialEntityValidToFormatted = new SimpleDateFormat("dd-MM-yyyy").format(((Estate) selectedSpatialEntity).validTo);
+        }
+            
+            
+            sqlQuery += "SELECT SDO_GEOM.SDO_DISTANCE(t1.geometry, m1.diminfo, t2.geometry, m2.diminfo) as distance" +
+                        "  FROM "+ firstTableName +" t1, "+ secondTableName +" t2, user_sdo_geom_metadata m1, user_sdo_geom_metadata m2" +
+                        "  WHERE m1.table_name = '"+ firstTableUpperCaseName +"' " +
+                        "    AND m2.table_name = '"+ secondTableUpperCaseName +"' " +
+                        "    AND m1.column_name = 'GEOMETRY' " +
+                        "    AND m2.column_name = 'GEOMETRY' " +
+                        "    AND t1.id = "+ previousSelectedSpatialEntityId +"" +
+                        "    AND t2.id = "+ selectedSpatialEntityId +"" +
+                        "    AND t1.valid_from = TO_DATE('"+ previousSelectedSpatialEntityValidFromFormatted +"', 'dd-mm-yyyy') " +
+                        "    AND t1.valid_to = TO_DATE('"+ previousSelectedSpatialEntityValidToFormatted +"', 'dd-mm-yyyy')" +
+                        "    AND t2.valid_from = TO_DATE('"+ selectedSpatialEntityValidFromFormatted +"', 'dd-mm-yyyy') " +
+                        "    AND t2.valid_to = TO_DATE('"+ selectedSpatialEntityValidToFormatted +"', 'dd-mm-yyyy')";
+            
+        try {
+
+            try (Statement stmt = DatabaseModel.getInstance().getConnection().createStatement()) {
+                
+                try (ResultSet rset = stmt.executeQuery(sqlQuery)) {
+                    if (rset.next()) {
+                        distance = rset.getDouble("distance");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SpatialEntitiesModel.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        catch (Exception ex) {
+            System.err.println("Exception: " + ex.getMessage());
+        }
+        
+        return distance;
+    }
+    
 }
