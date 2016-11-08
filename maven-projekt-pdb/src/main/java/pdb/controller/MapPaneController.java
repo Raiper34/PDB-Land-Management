@@ -80,7 +80,6 @@ public class MapPaneController implements Initializable {
                 mainController.handleInputEventForMap(t);
             }
         });
-        drawMap();
     }
 
     /*
@@ -111,28 +110,6 @@ public class MapPaneController implements Initializable {
     */
     public void addParent(MainController mainController) {
         this.mainController = mainController;
-    }
-    
-    public void drawMap() {
-        /*Rectangle r = new Rectangle();
-        r.setX(50);
-        r.setY(50);
-        r.setWidth(200);
-        r.setHeight(100);
-        r.setArcWidth(20);
-        r.setArcHeight(20);
-                 
-        Rectangle r1 = new Rectangle();
-
-        r.setX(50);
-        r.setY(50);
-        r.setWidth(200);
-        r.setHeight(100);
-        r.setArcWidth(20);
-        r.setArcHeight(20);
-        r.fillProperty();
-        mapa.getChildren().add(r);
-        mapa.getChildren().add(r1);*/
     }
     
     public void initializeSpatialEntitiesModel(){
