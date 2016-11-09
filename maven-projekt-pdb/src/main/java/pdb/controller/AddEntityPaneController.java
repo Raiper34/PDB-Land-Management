@@ -162,6 +162,8 @@ public class AddEntityPaneController implements Initializable {
             addPoint(mouseEvent);
             addRectangle();
         } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+            if ( mouseEvent.getX() > 650 || mouseEvent.getY() > 650)
+                return;
             //remove old point from map and list
             removePoint(1);
             //remove newRectangle from map and clear it
