@@ -231,4 +231,8 @@ public class SpatialModel {
         return distance;
     }
     
+    public ArrayList<String> createSqlQueriesToGetObjectsInSpecifiedDistance(SpatialEntity selectedSpatialEntity, String whichObjectsInclude, double distance) {
+        return new ArrayList<String>();
+    }
+    
 }

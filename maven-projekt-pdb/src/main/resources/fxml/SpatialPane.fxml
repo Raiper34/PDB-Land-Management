@@ -1,28 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="spatialAnchorPane" prefHeight="430.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.SpatialPaneController">
    <children>
-      <Label layoutX="31.0" layoutY="33.0" text="Length or perimeter of a geometry:" />
-      <Label fx:id="lengthOrPerimeter" layoutX="268.0" layoutY="33.0" textFill="#5b4848">
+      <Label layoutX="23.0" layoutY="19.0" text="Length or perimeter of a geometry:" />
+      <Label fx:id="lengthOrPerimeter" layoutX="259.0" layoutY="19.0" textFill="#5b4848">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="31.0" layoutY="71.0" text="Area:" />
-      <Label fx:id="area" layoutX="68.0" layoutY="71.0" textFill="#5b4848">
+      <Label layoutX="23.0" layoutY="46.0" text="Area:" />
+      <Label fx:id="area" layoutX="61.0" layoutY="46.0" textFill="#5b4848">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Button fx:id="calculateDistance" disable="true" layoutX="31.0" layoutY="127.0" mnemonicParsing="false" onMouseClicked="#calculateDistanceButtonClicked" text="Calculate distance to other geometry" />
-      <Label layoutX="33.0" layoutY="173.0" text="Distance: " />
-      <Separator layoutX="31.0" layoutY="107.0" prefHeight="3.0" prefWidth="345.0" />
-      <Label fx:id="labelDistance" layoutX="99.0" layoutY="173.0" />
+      <Button fx:id="calculateDistance" disable="true" layoutX="25.0" layoutY="90.0" mnemonicParsing="false" onMouseClicked="#calculateDistanceButtonClicked" text="Calculate distance to other geometry" />
+      <Label layoutX="25.0" layoutY="128.0" text="Distance: " />
+      <Separator layoutX="23.0" layoutY="75.0" prefHeight="3.0" prefWidth="365.0" />
+      <Label fx:id="labelDistance" layoutX="90.0" layoutY="129.0" textFill="#5b4848">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <Separator layoutX="23.0" layoutY="155.0" prefHeight="3.0" prefWidth="365.0" />
+      <Label layoutX="84.0" layoutY="234.0" text="estates which" />
+      <CheckBox layoutX="23.0" layoutY="270.0" mnemonicParsing="false" text="water connection" />
+      <CheckBox layoutX="175.0" layoutY="270.0" mnemonicParsing="false" text="connection to electricity" />
+      <CheckBox layoutX="23.0" layoutY="299.0" mnemonicParsing="false" text="connection to gas" />
+      <CheckBox layoutX="175.0" layoutY="299.0" mnemonicParsing="false" text="house" />
+      <CheckBox layoutX="260.0" layoutY="299.0" mnemonicParsing="false" text="water area" />
+      <Button layoutX="22.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#calculateDistanceButtonClicked" text="Show" />
+      <ChoiceBox layoutX="181.0" layoutY="230.0" prefWidth="150.0" />
+      <Label layoutX="335.0" layoutY="233.0" text=":" />
+      <Separator layoutX="21.0" layoutY="332.0" prefHeight="3.0" prefWidth="365.0" />
+      <Label layoutX="83.0" layoutY="351.0" text="estates over which" />
+      <CheckBox layoutX="22.0" layoutY="387.0" mnemonicParsing="false" text="water pipe" />
+      <CheckBox layoutX="122.0" layoutY="389.0" mnemonicParsing="false" text="power line" />
+      <CheckBox layoutX="219.0" layoutY="389.0" mnemonicParsing="false" text="gas pipe" />
+      <CheckBox layoutX="309.0" layoutY="389.0" mnemonicParsing="false" text="path" />
+      <Button layoutX="21.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#calculateDistanceButtonClicked" text="Show" />
+      <ChoiceBox layoutX="219.0" layoutY="346.0" prefHeight="26.0" prefWidth="137.0" />
+      <Label layoutX="361.0" layoutY="350.0" text=":" />
+      <Button fx:id="buttonShowObjectsToCertainDistance" disable="true" layoutX="22.0" layoutY="169.0" mnemonicParsing="false" onMouseClicked="#showDistanceButtonClicked" text="Show" />
+      <ChoiceBox fx:id="choiceBoxShowObjectsToCertainDistance" layoutX="86.0" layoutY="170.0" prefHeight="26.0" prefWidth="102.0" />
+      <Label layoutX="201.0" layoutY="175.0" text="to a distance of" />
+      <TextField fx:id="distanceTextField" layoutX="306.0" layoutY="170.0" prefHeight="26.0" prefWidth="54.0" text="0" />
+      <Label layoutX="363.0" layoutY="175.0" text="m" />
+      <Separator layoutX="23.0" layoutY="210.0" prefHeight="3.0" prefWidth="365.0" />
    </children>
 </AnchorPane>
