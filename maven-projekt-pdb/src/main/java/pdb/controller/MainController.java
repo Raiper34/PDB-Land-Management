@@ -8,6 +8,8 @@ package pdb.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -64,6 +66,8 @@ public class MainController implements Initializable {
     @FXML
     private Canvas canvas;
     
+    // showed object on map in this date, Date si in format "dd. MM. yyyy"
+    public String dateOfCurrentlyShowedDatabaseSnapshot;
     
     @FXML
     private AnchorPane mapa;
@@ -154,6 +158,10 @@ public class MainController implements Initializable {
             }
           });
         this.injects();
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MM. yyyy");
+        LocalDate date = LocalDate.now();
+        this.dateOfCurrentlyShowedDatabaseSnapshot = formatter.format(date);
     }
     
     /**

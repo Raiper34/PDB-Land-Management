@@ -171,6 +171,38 @@ public class SpatialEntitiesModel {
         return entities;
     }
 
+   /*
+    * @param String dateSnapshot
+    * @return List<Entity>
+    */
+    public List<Entity> getEntities(PreparedStatement preparedSQLToGetEntitiesFromDB) {
+        List<Entity> entities = new ArrayList<>();
+        
+        try {
+            ResultSet rset = preparedSQLToGetEntitiesFromDB.executeQuery();
+                    while (rset.next()) {
+                        byte[] image = rset.getBytes("geometry");
+                        JGeometry jGeometry = JGeometry.load(image);
+                        Entity newEntity = new Entity(rset.getInt("id"),
+                                rset.getString("name"),
+                                rset.getString("description"),
+                                jGeometry, rset.getDate("valid_from"),
+                                rset.getDate("valid_to"),
+                                rset.getString("entity_type"),
+                                rset.getString("layer"));
+                        entities.add(newEntity);
+                    }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        catch (Exception ex) {
+            System.err.println("Exception: " + ex.getMessage());
+        }
+        
+        return entities;
+    }
+    
     /*
     * @return List<Estate>
     */
@@ -245,6 +277,39 @@ public class SpatialEntitiesModel {
             System.err.println("SQLException: " + sqlEx.getMessage());
         }
 
+        return estates;
+    }
+    
+            /*
+    * @param String dateSnapshot
+    * @return List<Estate>
+    */
+    public List<Estate> getEstates(PreparedStatement preparedSQLToGetEstatesFromDB) {
+        List<Estate> estates = new ArrayList<>();
+        
+        try {
+            ResultSet rset = preparedSQLToGetEstatesFromDB.executeQuery();
+                    while (rset.next()) {
+                        byte[] image = rset.getBytes("geometry");
+                        JGeometry jGeometry = JGeometry.load(image);
+                        Freeholder freeholder = freeholdersModel.getFreeholderById(rset.getInt("freeholders_id"));
+                        Estate newEstate = new Estate(rset.getInt("id"),
+                                rset.getString("name"),
+                                rset.getString("description"),
+                                jGeometry,
+                                rset.getDate("valid_from"),
+                                rset.getDate("valid_to"),
+                                freeholder);
+                        estates.add(newEstate);
+                    }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        catch (Exception ex) {
+            System.err.println("Exception: " + ex.getMessage());
+        }
+        
         return estates;
     }
     

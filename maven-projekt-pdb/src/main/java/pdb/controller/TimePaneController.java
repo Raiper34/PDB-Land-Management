@@ -58,6 +58,7 @@ public class TimePaneController implements Initializable {
         if (pickedDate != null) {
             this.mainController.mapPaneController.clearMap();
             this.mainController.mapPaneController.initializeSpatialEntitiesModel();
+            this.mainController.dateOfCurrentlyShowedDatabaseSnapshot = pickedDate;
             this.mainController.mapPaneController.loadEntities(pickedDate);
             this.mainController.mapPaneController.loadEstates(pickedDate);
             this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
@@ -89,6 +90,7 @@ public class TimePaneController implements Initializable {
        if (pickedDate != null) {
             this.mainController.mapPaneController.clearMap();
             this.mainController.mapPaneController.initializeSpatialEntitiesModel();
+            this.mainController.dateOfCurrentlyShowedDatabaseSnapshot = pickedDate;
             this.mainController.mapPaneController.loadEntities(pickedDate);
             this.mainController.mapPaneController.loadEstates(pickedDate);
             this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());

@@ -6,6 +6,7 @@
 package pdb.controller;
 
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -138,10 +139,21 @@ public class SpatialPaneController implements Initializable {
         try {
             double distance = Double.parseDouble(distanceTextField.textProperty().getValue());
 
-            ArrayList<String> sqlQueriesToGetObjectsInSpecifiedDistance = this.spatialModel.createSqlQueriesToGetObjectsInSpecifiedDistance(
+            ArrayList<PreparedStatement> sqlQueriesToGetObjectsInSpecifiedDistance = 
+                this.spatialModel.createSqlQueriesToGetObjectsInSpecifiedDistance
+                (
                     this.mainController.selectedSpatialEntity,
                     choiceBoxShowObjectsToCertainDistance.getValue().toString(), 
-                    distance);
+                    distance,
+                    this.mainController.dateOfCurrentlyShowedDatabaseSnapshot
+                );
+            
+            this.mainController.mapPaneController.clearMap();
+            this.mainController.mapPaneController.initializeSpatialEntitiesModel();
+            this.mainController.mapPaneController.loadEntities(sqlQueriesToGetObjectsInSpecifiedDistance.get(0));
+            this.mainController.mapPaneController.loadEstates(sqlQueriesToGetObjectsInSpecifiedDistance.get(1));
+            this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
+
         }
         catch(NumberFormatException e) {
             System.err.println("NumberFormatException: " + e.getMessage());

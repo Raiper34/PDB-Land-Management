@@ -13,6 +13,7 @@ import pdb.model.spatial.ImprovedCircle;
 import pdb.model.spatial.ImprovedPath;
 import pdb.model.spatial.ImprovedPolygon;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -123,6 +124,10 @@ public class MapPaneController implements Initializable {
     public void loadEstates(String dateSnapshot) {
         estates = spatialEntitiesModel.getEstates(dateSnapshot);
     }
+    
+    public void loadEstates(PreparedStatement preparedSQLToGetEstatesFromDB) {
+        estates = spatialEntitiesModel.getEstates(preparedSQLToGetEstatesFromDB);
+    }
 
     public void loadEntities() {
         entities = spatialEntitiesModel.getEntities();
@@ -130,6 +135,10 @@ public class MapPaneController implements Initializable {
     
     public void loadEntities(String dateSnapshot) {
         entities = spatialEntitiesModel.getEntities(dateSnapshot);
+    }
+    
+    public void loadEntities(PreparedStatement preparedSQLToGetEntitiesFromDB) {
+        entities = spatialEntitiesModel.getEntities(preparedSQLToGetEntitiesFromDB);
     }
     
     public void addShapeToMapAndSetListeners(Shape shape) {

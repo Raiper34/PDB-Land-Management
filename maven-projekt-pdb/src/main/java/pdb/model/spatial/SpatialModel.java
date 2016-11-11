@@ -6,14 +6,20 @@
 package pdb.model.spatial;
 
 import java.sql.Connection;
+import static java.sql.JDBCType.STRUCT;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import oracle.spatial.geometry.JGeometry;
 import pdb.model.DatabaseModel;
 import pdb.model.SpatialEntitiesModel;
 
@@ -231,8 +237,100 @@ public class SpatialModel {
         return distance;
     }
     
-    public ArrayList<String> createSqlQueriesToGetObjectsInSpecifiedDistance(SpatialEntity selectedSpatialEntity, String whichObjectsInclude, double distance) {
-        return new ArrayList<String>();
+    public ArrayList<PreparedStatement> createSqlQueriesToGetObjectsInSpecifiedDistance(SpatialEntity selectedSpatialEntity, String whichObjectsInclude, double distance, String dateOfCurrentlyShowedDatabaseSnapshot) {
+
+        ArrayList<PreparedStatement> sqlQueriesToGetObjectsInSpecifiedDistance = new ArrayList<PreparedStatement>();
+        
+        String entityCondition = "";
+        String estateCondition = "";
+        
+        String sqlQueryEntities = "SELECT * from related_spatial_entities WHERE id IS NULL"; // get empty result set
+        String sqlQueryEstates = "SELECT * from estates WHERE id IS NULL"; // get empty result set
+        
+        JGeometry jgeometry;
+        String sqlQuery = "";
+        
+        boolean doNotSetEntities = false;
+        boolean doNotSetEstates = false;
+        
+        // selectedSpatialEntity is instance of Entity
+        if (selectedSpatialEntity instanceof Entity) {
+            entityCondition += " or (id = "+ ((Entity) selectedSpatialEntity).id +" AND valid_from = TO_DATE('"+ new SimpleDateFormat("dd. MM. yyyy").format(((Entity) selectedSpatialEntity).validFrom) +"', 'dd. mm. yyyy') AND valid_to = TO_DATE('"+ new SimpleDateFormat("dd. MM. yyyy").format(((Entity) selectedSpatialEntity).validTo) +"', 'dd. mm. yyyy'))";
+            jgeometry = ((Entity) selectedSpatialEntity).geometry;
+      
+        }
+        // selectedSpatialEntity is instance of Estate
+        else {
+            estateCondition += " or (id = "+ ((Estate) selectedSpatialEntity).id +" AND valid_from = TO_DATE('"+ new SimpleDateFormat("dd. MM. yyyy").format(((Estate) selectedSpatialEntity).validFrom) +"', 'dd. mm. yyyy') AND valid_to = TO_DATE('"+ new SimpleDateFormat("dd. MM. yyyy").format(((Estate) selectedSpatialEntity).validTo) +"', 'dd. mm. yyyy'))";
+            jgeometry = ((Estate) selectedSpatialEntity).geometry;
+        
+        }
+        
+        switch(whichObjectsInclude) {
+            case "all":
+                sqlQueryEstates = "select * from estates " +
+                "WHERE (SDO_WITHIN_DISTANCE(geometry, ?, 'distance="+ distance +"') = 'TRUE' " +
+                    "AND valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                    "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
+                    estateCondition;
+                
+                sqlQueryEntities = "select * from related_spatial_entities " +
+                "WHERE (SDO_WITHIN_DISTANCE(geometry, ?, 'distance="+ distance +"') = 'TRUE' " +
+                    "AND valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                    "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
+                    entityCondition;
+                break;
+            case "entities":
+                sqlQueryEntities = "select * from related_spatial_entities " +
+                "WHERE (SDO_WITHIN_DISTANCE(geometry, ?, 'distance="+ distance +"') = 'TRUE' " +
+                    "AND valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                    "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
+                    entityCondition;
+                
+                if (!estateCondition.isEmpty()) {
+                    sqlQueryEstates = "select * from estates " +
+                    "WHERE " + estateCondition.substring(4); // without or keyword
+                }
+                doNotSetEstates = true;
+                break;
+                
+            case "estates":
+                sqlQueryEstates = "select * from estates " +
+                "WHERE (SDO_WITHIN_DISTANCE(geometry, ?, 'distance="+ distance +"') = 'TRUE' " +
+                    "AND valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                    "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
+                    estateCondition;
+                
+                if (!entityCondition.isEmpty()) {
+                    sqlQueryEntities = "select * from related_spatial_entities " +
+                    "WHERE " + entityCondition.substring(4); // without or keyword
+                }
+                doNotSetEntities = true;
+                break;
+        }
+                
+        try {
+            PreparedStatement psSelectEntities = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEntities);
+            PreparedStatement psSelectEstates = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEstates);
+
+            if (doNotSetEntities == false) {
+                psSelectEntities.setObject(1, JGeometry.storeJS(DatabaseModel.getInstance().getConnection(), jgeometry));
+            }
+            if (doNotSetEstates == false) {
+                psSelectEstates.setObject(1, JGeometry.storeJS(DatabaseModel.getInstance().getConnection(), jgeometry));
+            }
+
+            sqlQueriesToGetObjectsInSpecifiedDistance.add(psSelectEntities);
+            sqlQueriesToGetObjectsInSpecifiedDistance.add(psSelectEstates);
+        }
+        catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        catch (Exception ex) {
+            System.err.println("Exception: " + ex.getMessage());
+        }
+
+        return sqlQueriesToGetObjectsInSpecifiedDistance;
     }
     
 }
