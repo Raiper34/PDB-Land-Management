@@ -41,6 +41,7 @@ import javafx.scene.shape.Shape;
 //import javafx.stage.Window;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.SpatialEntitiesModel;
+import pdb.model.spatial.Shapes;
 import pdb.model.spatial.ShapesColorsDefinition;
 import pdb.model.spatial.SpatialEntity;
 
@@ -104,6 +105,15 @@ public class MapPaneController implements Initializable {
     */
     public void removeShapeFromMap(Node shapeToRemove) {
         mapa.getChildren().remove(shapeToRemove);
+    }
+    
+    public void removeShapesFromMap(Shapes shapesToRemove) {
+        for (ImprovedCircle shape : shapesToRemove.circles)
+            removeShapeFromMap(shape);
+        for (ImprovedPath shape : shapesToRemove.paths)
+            removeShapeFromMap(shape);
+        for (ImprovedPolygon shape : shapesToRemove.polygons)
+            removeShapeFromMap(shape);
     }
     
     /*

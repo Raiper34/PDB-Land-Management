@@ -31,12 +31,15 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.SpatialEntitiesModel;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
+import pdb.model.spatial.Shapes;
 import pdb.model.spatial.SpatialEntity;
 
 /**
@@ -61,10 +64,11 @@ public class AddEntityPaneController implements Initializable {
     private String layerOfNewSpatialEntity;
     private List<Line> newLines;
     private List<Circle> newPoints;
-    private Shape newShape;
+    private Shapes newShapes;
     private Rectangle newRectangle;
     private Circle newCircle;
     private Polygon newPolygon;
+    private SpatialEntity newSpatialEntity;
 
     /**
      * Initializes the controller class.
@@ -73,6 +77,7 @@ public class AddEntityPaneController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         newPoints = new ArrayList<>();
         newLines = new ArrayList<>();
+        newShapes = new Shapes();
 
         typeOfNewSpatialEntity = "house";
         shapeOfNewSpatialEntity = "rectangle";
@@ -98,7 +103,10 @@ public class AddEntityPaneController implements Initializable {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
             //Get the x and y of the click and create there a new circle
             MouseEvent mouseEvent = (MouseEvent) event;
+            
+            /*The ending point of multiline*/
             if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                
                 return;
             }
             addPoint(mouseEvent);
@@ -253,14 +261,10 @@ public class AddEntityPaneController implements Initializable {
                 addPointOnClick(event);
                 break;
             case "line":
-                if (newPoints.size() < 2) {
-                    addPointOnClick(event);
-                    addLine();
-                }
+                addLineToPath(event);
                 break;
             case "multiline":
-                addPointOnClick(event);
-                addLine();
+                addLineToPaths(event);
                 break;
             case "rectangle":
                 addRectangleEventHandler(event);
@@ -284,7 +288,7 @@ public class AddEntityPaneController implements Initializable {
                 return SpatialEntity.createJGeometryFromShapes(newPoints, "points");
             case "line":
             case "multiline":
-                return SpatialEntity.createJGeometryFromShapes(newPoints, "lines");
+                return SpatialEntity.createJGeometryFromShapes(newShapes);
             case "rectangle":
                 return SpatialEntity.createJGeometryFromShapes(newRectangle);
             case "polygon":
@@ -354,9 +358,11 @@ public class AddEntityPaneController implements Initializable {
         for (Line shape : newLines) {
             mainController.mapPaneController.removeShapeFromMap(shape);
         }
+        mainController.mapPaneController.removeShapesFromMap(newShapes);
         mainController.mapPaneController.removeShapeFromMap(newRectangle);
         mainController.mapPaneController.removeShapeFromMap(newCircle);
         mainController.mapPaneController.removeShapeFromMap(newPolygon);
+        newShapes = new Shapes();
         newRectangle = null;
         newCircle = null;
         newPolygon = null;
@@ -378,4 +384,35 @@ public class AddEntityPaneController implements Initializable {
         this.addNewSpatialEntity(event);
     }
 
+    private void addLineToPaths(InputEvent event) {
+        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+            MouseEvent mouseEvent = (MouseEvent) event;
+                
+            
+            /*The ending point of multiline*/
+            if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                if ( !newShapes.paths.isEmpty() && newShapes.getLastPath().getElements().isEmpty())
+                    return;
+                newShapes.addNewPath((Entity) newSpatialEntity);
+            } else {
+                addPoint(mouseEvent);
+                if (newShapes.paths.isEmpty()) {
+                    newShapes.addNewPath((Entity) newSpatialEntity);
+                } 
+                mainController.mapPaneController.mapa.getChildren().remove(newShapes.getLastPath());
+                newShapes.addElementToLastPath(mouseEvent.getX(), mouseEvent.getY());
+                mainController.mapPaneController.mapa.getChildren().add(newShapes.getLastPath());
+            }
+        }
+    }
+
+    private void addLineToPath(InputEvent event) {
+        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+            if (((MouseEvent) event).getButton() == MouseButton.SECONDARY) {
+                return;
+            } else {
+                addLineToPaths(event);
+            }
+        }
+    }
 }

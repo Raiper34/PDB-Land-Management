@@ -5,6 +5,7 @@
  */
 package pdb.model.spatial;
 
+import java.util.ArrayList;
 import pdb.model.freeholder.FreeholderModel;
 import pdb.model.multimedial.Photo;
 import oracle.spatial.geometry.JGeometry;
@@ -16,6 +17,7 @@ import java.util.List;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.PathElement;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 /**
@@ -48,6 +50,56 @@ public class SpatialEntity {
         this.validFrom = validFrom;
         this.validTo = validTo;
         
+    }
+    
+    /*
+    * @param Rectangle newRectangle
+    */
+    public static JGeometry createJGeometryFromShapes(Shapes newShapes) {
+        if( newShapes == null)
+            return null;
+        
+        int startingOffset = 1;
+        
+        List<Double> points = new ArrayList<>();
+        List<Integer> sdoElemInfo = new ArrayList<>();
+        
+        if (!newShapes.paths.isEmpty()) {
+            for (ImprovedPath newShape : newShapes.paths) {
+                if( newShape.getElements().size() > 1) {
+                    sdoElemInfo.add(startingOffset);
+                    sdoElemInfo.add(2);
+                    sdoElemInfo.add(1);
+
+                    for (PathElement element : newShape.getElements()) {
+                        if (element instanceof MoveTo) {
+                            points.add(((MoveTo) element).getX());
+                            points.add(((MoveTo) element).getY());
+                        } else if (element instanceof LineTo) {
+                            points.add(((LineTo) element).getX());
+                            points.add(((LineTo) element).getY());
+                        }   
+                        startingOffset++;
+                    }
+                }
+            }
+            if(points.isEmpty() || sdoElemInfo.isEmpty())
+                return null;
+
+            int valuesOfSdoElemInfo[] = sdoElemInfo.stream().mapToInt(d -> d).toArray();
+            double valuesOfPoints[] = points.stream().mapToDouble(d -> d).toArray();
+
+            JGeometry newJgeometry = new JGeometry(
+                2, SRID, valuesOfSdoElemInfo, valuesOfPoints
+            );
+            
+            System.out.println(Arrays.toString(valuesOfSdoElemInfo));
+            System.out.println(sdoElemInfo.size());
+            System.out.println(Arrays.toString(valuesOfPoints));
+            System.out.println(points.size());
+            return newJgeometry;
+        }
+        return null;
     }
 
     /*
