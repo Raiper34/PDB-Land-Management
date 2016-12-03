@@ -32,13 +32,13 @@
          </font></Label>
       <Separator layoutX="23.0" layoutY="155.0" prefHeight="3.0" prefWidth="365.0" />
       <Label layoutX="84.0" layoutY="234.0" text="estates which" />
-      <CheckBox layoutX="23.0" layoutY="270.0" mnemonicParsing="false" text="water connection" />
-      <CheckBox layoutX="175.0" layoutY="270.0" mnemonicParsing="false" text="connection to electricity" />
-      <CheckBox layoutX="23.0" layoutY="299.0" mnemonicParsing="false" text="connection to gas" />
-      <CheckBox layoutX="175.0" layoutY="299.0" mnemonicParsing="false" text="house" />
-      <CheckBox layoutX="260.0" layoutY="299.0" mnemonicParsing="false" text="water area" />
-      <Button layoutX="22.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#calculateDistanceButtonClicked" text="Show" />
-      <ChoiceBox layoutX="181.0" layoutY="230.0" prefWidth="150.0" />
+      <CheckBox fx:id="checkBoxWaterConnection" layoutX="23.0" layoutY="270.0" mnemonicParsing="false" text="water connection" />
+      <CheckBox fx:id="checkBoxConnectionToElectricity" layoutX="175.0" layoutY="270.0" mnemonicParsing="false" text="connection to electricity" />
+      <CheckBox fx:id="checkBoxConnectionToGas" layoutX="23.0" layoutY="299.0" mnemonicParsing="false" text="connection to gas" />
+      <CheckBox fx:id="checkBoxHouse" layoutX="175.0" layoutY="299.0" mnemonicParsing="false" text="house" />
+      <CheckBox fx:id="checkBoxWaterArea" layoutX="260.0" layoutY="299.0" mnemonicParsing="false" text="water area" />
+      <Button fx:id="buttonShowEstatesWhich" layoutX="22.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#buttonShowEstatesWhichClicked" text="Show" />
+      <ChoiceBox fx:id="choiceBoxShowEstatesWhich" layoutX="181.0" layoutY="230.0" prefWidth="150.0" />
       <Label layoutX="335.0" layoutY="233.0" text=":" />
       <Separator layoutX="21.0" layoutY="332.0" prefHeight="3.0" prefWidth="365.0" />
       <Label layoutX="83.0" layoutY="351.0" text="estates over which" />

@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -46,13 +47,17 @@ public class SpatialPaneController implements Initializable {
     private Label lengthOrPerimeter;
     
     @FXML
-    private Button calculateDistance;
-
-    @FXML
     private Label area;
+    
+    // -------------
+    
+    @FXML
+    private Button calculateDistance;
     
     @FXML
     private Label labelDistance;
+    
+    // -------------
     
     @FXML
     private TextField distanceTextField;
@@ -62,6 +67,29 @@ public class SpatialPaneController implements Initializable {
     
     @FXML
     private ChoiceBox choiceBoxShowObjectsToCertainDistance;
+    
+    // -------------
+    
+    @FXML
+    private ChoiceBox choiceBoxShowEstatesWhich;
+    
+    @FXML
+    private Button buttonShowEstatesWhich;
+    
+    @FXML
+    private CheckBox checkBoxWaterConnection;
+    
+    @FXML
+    private CheckBox checkBoxConnectionToElectricity;
+    
+    @FXML
+    private CheckBox checkBoxConnectionToGas;
+    
+    @FXML
+    private CheckBox checkBoxHouse;
+    
+    @FXML 
+    private CheckBox checkBoxWaterArea;
     
     private SpatialModel spatialModel;
     
@@ -79,6 +107,9 @@ public class SpatialPaneController implements Initializable {
         this.spatialModel = new SpatialModel();
         choiceBoxShowObjectsToCertainDistance.setValue("all");
         choiceBoxShowObjectsToCertainDistance.setItems(FXCollections.observableList(Arrays.asList("all", "entities", "estates")));
+        
+        choiceBoxShowEstatesWhich.setValue("contain");
+        choiceBoxShowEstatesWhich.setItems(FXCollections.observableList(Arrays.asList("contain", "not contain")));
     }
     
     public void addParent(MainController c1) {
@@ -159,6 +190,28 @@ public class SpatialPaneController implements Initializable {
             System.err.println("NumberFormatException: " + e.getMessage());
         }
     }
+    
+    @FXML
+    void buttonShowEstatesWhichClicked(MouseEvent event) {
+        
+        PreparedStatement sqlQueryToGetEstatesWhichContainOrNotContainSpecifiedObjects = 
+            this.spatialModel.createSqlQueryToGetEstatesWhichContainOrNotContainSpecifiedObjects(
+                this.checkBoxWaterConnection.isSelected(),
+                this.checkBoxConnectionToElectricity.isSelected(),
+                this.checkBoxConnectionToGas.isSelected(),
+                this.checkBoxHouse.isSelected(),
+                this.checkBoxWaterArea.isSelected(),
+                choiceBoxShowEstatesWhich.getValue().toString(), 
+                this.mainController.dateOfCurrentlyShowedDatabaseSnapshot
+            );
+            
+            this.mainController.mapPaneController.clearMap();
+            this.mainController.mapPaneController.initializeSpatialEntitiesModel();
+            this.mainController.mapPaneController.loadEstates(sqlQueryToGetEstatesWhichContainOrNotContainSpecifiedObjects);
+            this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
+
+    }
+    
  //\u33A1
 }
 

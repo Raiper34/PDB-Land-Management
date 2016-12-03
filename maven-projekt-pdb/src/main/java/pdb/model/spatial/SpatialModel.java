@@ -333,4 +333,105 @@ public class SpatialModel {
         return sqlQueriesToGetObjectsInSpecifiedDistance;
     }
     
+    
+    public PreparedStatement createSqlQueryToGetEstatesWhichContainOrNotContainSpecifiedObjects(
+            boolean checkBoxWaterConnectionIsSelected,
+            boolean checkBoxConnectionToElectricityIsSelected,
+            boolean checkBoxConnectionToGasIsSelected,
+            boolean checkBoxHouseIsSelected,
+            boolean checkBoxWaterAreaIsSelected,
+            String containOrNotContain, 
+            String dateOfCurrentlyShowedDatabaseSnapshot) {
+                
+        String sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects = ""; 
+        PreparedStatement psEstatesWhichContainOrNotContainSpecifiedObjects = null;
+        
+        String entitiyTypes = "''";
+        if (checkBoxWaterConnectionIsSelected) {
+            entitiyTypes += ",'water connection'";
+        }
+        if (checkBoxConnectionToElectricityIsSelected) {
+            entitiyTypes += ",'connection to electricity'";
+        }
+        if (checkBoxConnectionToGasIsSelected) {
+            entitiyTypes += ",'connection to gas'";
+        }
+        if (checkBoxHouseIsSelected) {
+            entitiyTypes += ",'house'";
+        }
+        if (checkBoxWaterAreaIsSelected) {
+            entitiyTypes += ",'water area'";
+        }
+        //entity_type IN ('house','path','trees','bushes','water area','river','water connection','connection to electricity','connection to gas','power lines','gas pipes','water pipes'
+        
+        switch(containOrNotContain) {
+            case "contain":
+                sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects = 
+                "select * from estates where " + 
+                "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                "AND id IN "+
+                    "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
+                    "WHERE r.entity_type IN ("+ entitiyTypes +") " +
+                        "AND SDO_FILTER(r.geometry, e.geometry) = 'TRUE' " +
+                        "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                        "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                        "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                try {
+                    // check if is something is boundary box a if yes, then check it more in detail using SDO_ANYINTERACT
+                    psEstatesWhichContainOrNotContainSpecifiedObjects = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects);
+                    ResultSet rset = psEstatesWhichContainOrNotContainSpecifiedObjects.executeQuery();
+                    // something is here, use sdo_anyinteract just for certain (it could be false match, sdo_filter use boundary box, it is approxiamtion) 
+                    if (rset.isBeforeFirst() ) {    
+                        sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects = 
+                        "select * from estates where " + 
+                        "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                        "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND id IN "+
+                            "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
+                            "WHERE r.entity_type IN ("+ entitiyTypes +") " +
+                                "AND SDO_ANYINTERACT(r.geometry, e.geometry) = 'TRUE' " +
+                                "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                                "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                                "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                                "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                    }
+                }
+                catch (SQLException sqlEx) {
+                    Logger.getLogger(SpatialModel.class.getName()).log(Level.SEVERE, null, sqlEx);
+                }
+ 
+                break;
+            case "not contain":
+                sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects = 
+                "select * from estates where " + 
+                "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                "AND id NOT IN "+
+                    "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
+                    "WHERE r.entity_type IN ("+ entitiyTypes +") " +
+                        "AND SDO_ANYINTERACT(r.geometry, e.geometry) = 'TRUE' " +
+                        "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                        "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                        "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                break;
+        }
+        System.err.println(sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects);
+        try {
+            psEstatesWhichContainOrNotContainSpecifiedObjects = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects);
+
+        }
+        catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        catch (Exception ex) {
+            System.err.println("Exception: " + ex.getMessage());
+        }
+        
+        return psEstatesWhichContainOrNotContainSpecifiedObjects;
+
+    }
+    
 }
