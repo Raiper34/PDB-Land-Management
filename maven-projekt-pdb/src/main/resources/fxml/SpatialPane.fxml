@@ -42,12 +42,12 @@
       <Label layoutX="335.0" layoutY="233.0" text=":" />
       <Separator layoutX="21.0" layoutY="332.0" prefHeight="3.0" prefWidth="365.0" />
       <Label layoutX="83.0" layoutY="351.0" text="estates over which" />
-      <CheckBox layoutX="22.0" layoutY="387.0" mnemonicParsing="false" text="water pipe" />
-      <CheckBox layoutX="122.0" layoutY="389.0" mnemonicParsing="false" text="power line" />
-      <CheckBox layoutX="219.0" layoutY="389.0" mnemonicParsing="false" text="gas pipe" />
-      <CheckBox layoutX="309.0" layoutY="389.0" mnemonicParsing="false" text="path" />
-      <Button layoutX="21.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#calculateDistanceButtonClicked" text="Show" />
-      <ChoiceBox layoutX="219.0" layoutY="346.0" prefHeight="26.0" prefWidth="137.0" />
+      <CheckBox fx:id="checkBoxWaterPipe" layoutX="22.0" layoutY="387.0" mnemonicParsing="false" text="water pipe" />
+      <CheckBox fx:id="checkBoxPowerLine" layoutX="122.0" layoutY="389.0" mnemonicParsing="false" text="power line" />
+      <CheckBox fx:id="checkBoxGasPipe" layoutX="219.0" layoutY="389.0" mnemonicParsing="false" text="gas pipe" />
+      <CheckBox fx:id="checkBoxPath" layoutX="309.0" layoutY="389.0" mnemonicParsing="false" text="path" />
+      <Button fx:id="buttonShowEstatesOverWhich" layoutX="21.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#buttonShowEstatesOverWhichClicked" text="Show" />
+      <ChoiceBox fx:id="choiceBoxShowEstatesOverWhich" layoutX="219.0" layoutY="346.0" prefHeight="26.0" prefWidth="137.0" />
       <Label layoutX="361.0" layoutY="350.0" text=":" />
       <Button fx:id="buttonShowObjectsToCertainDistance" disable="true" layoutX="22.0" layoutY="169.0" mnemonicParsing="false" onMouseClicked="#showDistanceButtonClicked" text="Show" />
       <ChoiceBox fx:id="choiceBoxShowObjectsToCertainDistance" layoutX="86.0" layoutY="170.0" prefHeight="26.0" prefWidth="102.0" />

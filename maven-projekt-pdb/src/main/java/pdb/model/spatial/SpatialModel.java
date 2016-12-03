@@ -418,7 +418,7 @@ public class SpatialModel {
                         "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
                 break;
         }
-        System.err.println(sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects);
+        //System.err.println(sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects);
         try {
             psEstatesWhichContainOrNotContainSpecifiedObjects = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects);
 
@@ -431,6 +431,102 @@ public class SpatialModel {
         }
         
         return psEstatesWhichContainOrNotContainSpecifiedObjects;
+
+    }
+            
+    public PreparedStatement createSqlQueryToGetEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects(
+        boolean checkBoxWaterPipeIsSelected,
+        boolean checkBoxPowerLineIsSelected,
+        boolean checkBoxGasPipeIsSelected,
+        boolean checkBoxPathIsSelected,
+        String passesOrNotPassesThrough, 
+        String dateOfCurrentlyShowedDatabaseSnapshot) {
+                
+        String sqlQueryEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = ""; 
+        PreparedStatement psEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = null;
+        
+        String entitiyTypes = "''";
+        if (checkBoxWaterPipeIsSelected) {
+            entitiyTypes += ",'water pipes'";
+        }
+        if (checkBoxPowerLineIsSelected) {
+            entitiyTypes += ",'power lines'";
+        }
+        if (checkBoxGasPipeIsSelected) {
+            entitiyTypes += ",'gas pipes'";
+        }
+        if (checkBoxPathIsSelected) {
+            entitiyTypes += ",'path'";
+        }
+        //entity_type IN ('house','path','trees','bushes','water area','river','water connection','connection to electricity','connection to gas','power lines','gas pipes','water pipes'
+        
+        switch(passesOrNotPassesThrough) {
+            case "passes through":
+                sqlQueryEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = 
+                "select * from estates where " + 
+                "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                "AND id IN "+
+                    "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
+                    "WHERE r.entity_type IN ("+ entitiyTypes +") " +
+                        "AND SDO_FILTER(r.geometry, e.geometry) = 'TRUE' " +
+                        "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                        "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                        "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                try {
+                    // check if is something ns boundary box a if yes, then check it more in detail using SDO_ANYINTERACT
+                    psEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects);
+                    ResultSet rset = psEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects.executeQuery();
+                    // something is here, use sdo_anyinteract just for certain (it could be false match, sdo_filter use boundary box, it is approxiamtion) 
+                    if (rset.isBeforeFirst() ) {    
+                        sqlQueryEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = 
+                        "select * from estates where " + 
+                        "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                        "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND id IN "+
+                            "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
+                            "WHERE r.entity_type IN ("+ entitiyTypes +") " +
+                                "AND SDO_ANYINTERACT(r.geometry, e.geometry) = 'TRUE' " +
+                                "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                                "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                                "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                                "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                    }
+                }
+                catch (SQLException sqlEx) {
+                    Logger.getLogger(SpatialModel.class.getName()).log(Level.SEVERE, null, sqlEx);
+                }
+ 
+                break;
+            case "not passes through":
+                sqlQueryEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = 
+                "select * from estates where " + 
+                "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                "AND id NOT IN "+
+                    "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
+                    "WHERE r.entity_type IN ("+ entitiyTypes +") " +
+                        "AND SDO_ANYINTERACT(r.geometry, e.geometry) = 'TRUE' " +
+                        "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                        "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
+                        "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                break;
+        }
+        //System.err.println(sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects);
+        try {
+            psEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects);
+
+        }
+        catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        catch (Exception ex) {
+            System.err.println("Exception: " + ex.getMessage());
+        }
+        
+        return psEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects;
 
     }
     

@@ -91,6 +91,27 @@ public class SpatialPaneController implements Initializable {
     @FXML 
     private CheckBox checkBoxWaterArea;
     
+    // -----
+    
+    @FXML
+    private Button buttonShowEstatesOverWhich;
+    
+    @FXML
+    private ChoiceBox choiceBoxShowEstatesOverWhich;
+    
+    @FXML
+    private CheckBox checkBoxWaterPipe;
+    
+    @FXML
+    private CheckBox checkBoxPowerLine;
+    
+    @FXML
+    private CheckBox checkBoxGasPipe;
+    
+    @FXML
+    private CheckBox checkBoxPath;
+    
+    
     private SpatialModel spatialModel;
     
     public MainController mainController;
@@ -110,6 +131,9 @@ public class SpatialPaneController implements Initializable {
         
         choiceBoxShowEstatesWhich.setValue("contain");
         choiceBoxShowEstatesWhich.setItems(FXCollections.observableList(Arrays.asList("contain", "not contain")));
+        
+        choiceBoxShowEstatesOverWhich.setValue("passes through");
+        choiceBoxShowEstatesOverWhich.setItems(FXCollections.observableList(Arrays.asList("passes through", "not passes through")));
     }
     
     public void addParent(MainController c1) {
@@ -207,10 +231,33 @@ public class SpatialPaneController implements Initializable {
             
             this.mainController.mapPaneController.clearMap();
             this.mainController.mapPaneController.initializeSpatialEntitiesModel();
+            this.mainController.mapPaneController.loadEntities(this.mainController.dateOfCurrentlyShowedDatabaseSnapshot);
             this.mainController.mapPaneController.loadEstates(sqlQueryToGetEstatesWhichContainOrNotContainSpecifiedObjects);
             this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
 
     }
+    
+    @FXML
+    void buttonShowEstatesOverWhichClicked(MouseEvent event) {
+        
+        PreparedStatement sqlQueryToGetEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = 
+            this.spatialModel.createSqlQueryToGetEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects(                
+                this.checkBoxWaterPipe.isSelected(),
+                this.checkBoxPowerLine.isSelected(),
+                this.checkBoxGasPipe.isSelected(),
+                this.checkBoxPath.isSelected(),
+                choiceBoxShowEstatesOverWhich.getValue().toString(), 
+                this.mainController.dateOfCurrentlyShowedDatabaseSnapshot
+            );
+            
+            this.mainController.mapPaneController.clearMap();
+            this.mainController.mapPaneController.initializeSpatialEntitiesModel();
+            this.mainController.mapPaneController.loadEntities(this.mainController.dateOfCurrentlyShowedDatabaseSnapshot);
+            this.mainController.mapPaneController.loadEstates(sqlQueryToGetEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects);
+            this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
+
+    }
+    
     
  //\u33A1
 }
