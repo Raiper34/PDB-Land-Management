@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
@@ -65,6 +66,24 @@ public class MultimediaPaneController implements Initializable {
     
     @FXML
     public AnchorPane gamaContrastPanel;
+    
+    @FXML 
+    public Slider gamaRed;
+    
+    @FXML 
+    public Slider gamaGreen;
+    
+    @FXML 
+    public Slider gamaBlue;
+    
+    @FXML 
+    public Slider contrastRed;
+    
+    @FXML 
+    public Slider contrastGreen;
+    
+    @FXML 
+    public Slider contrastBlue;
 
     /**
      * Initializes the controller class.
@@ -72,6 +91,7 @@ public class MultimediaPaneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.smiliarPanel.setVisible(false);
+        this.gamaContrastPanel.setVisible(false);
     }
     
     @FXML
@@ -186,6 +206,27 @@ public class MultimediaPaneController implements Initializable {
         this.setProcessedImageById(this.mainController.selectedSpatialEntity.id, "flip");
     }
     
+    @FXML
+    public void gammaAplyClick(ActionEvent event) throws SQLException, IOException
+    {
+        double red = ((double)this.gamaRed.getValue()) / 100.0;
+        double green = ((double)this.gamaGreen.getValue()) / 100.0;
+        double blue = ((double)this.gamaBlue.getValue()) / 100.0;
+        this.setProcessedImageById(this.mainController.selectedSpatialEntity.id, "gamma " + red + " " + green + " " + blue);
+        this.smiliarPanel.setVisible(false);
+        this.gamaContrastPanel.setVisible(false);
+    }
+    
+    @FXML
+    public void contrastApplyClick(ActionEvent event) throws SQLException, IOException
+    {
+        double red = ((double)this.contrastRed.getValue());
+        double green = ((double)this.contrastGreen.getValue());
+        double blue = ((double)this.contrastBlue.getValue());
+        this.setProcessedImageById(this.mainController.selectedSpatialEntity.id, "contrast " + red + " " + green + " " + blue);
+        this.smiliarPanel.setVisible(false);
+        this.gamaContrastPanel.setVisible(false);
+    }
     
     public void setImageById(int id) throws SQLException, IOException
     {
