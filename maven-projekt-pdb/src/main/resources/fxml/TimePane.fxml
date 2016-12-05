@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" fx:id="timeAnchorPane" prefHeight="430.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.TimePaneController">
    <children>
-      <ComboBox fx:id="comboBox" layoutX="27.0" layoutY="71.0" onAction="#comboBoxOnAction" prefHeight="26.0" prefWidth="343.0" promptText="Pick date to show snapshot of spatial objects" />
-      <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="35.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dates in which changes in spatial objects have occurred in showed layers, you can pick one:" wrappingWidth="334.99999821186066" />
-      <DatePicker fx:id="datePicker" layoutX="28.0" layoutY="158.0" onAction="#datePickerOnAction" />
-      <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="34.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Or choose your own date when you want to see snapshot of spatial objects:" wrappingWidth="334.99999821186066" />
+      <ComboBox fx:id="comboBox" layoutX="22.0" layoutY="59.0" onAction="#comboBoxOnAction" prefHeight="26.0" prefWidth="365.0" promptText="Pick date to show snapshot of spatial objects" />
+      <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="22.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dates in which changes in spatial objects have occurred in showed layers, you can pick one:" wrappingWidth="365.00000262260437" />
+      <DatePicker fx:id="datePicker" layoutX="23.0" layoutY="135.0" onAction="#datePickerOnAction" prefHeight="26.0" prefWidth="206.0" />
+      <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="23.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Or choose your own date when you want to see snapshot of spatial objects:" wrappingWidth="349.9999961256981" />
+      <TableView fx:id="tableHistoryOfSelectedObject" layoutX="23.0" layoutY="212.0" prefHeight="93.0" prefWidth="365.0">
+        <columns>
+          <TableColumn fx:id="columnValidFrom" prefWidth="190.0" text="valid_from" />
+          <TableColumn fx:id="columnValidTo" prefWidth="180.0" text="valid_to" />
+        </columns>
+      </TableView>
+      <Separator layoutX="23.0" layoutY="173.0" prefHeight="1.0" prefWidth="365.0" />
+      <Label layoutX="23.0" layoutY="185.0" text="History of selected object:" />
+      <Button fx:id="buttonDeleteObjInInterval" disable="true" layoutX="21.0" layoutY="317.0" mnemonicParsing="false" text="Delete obj. in interval" />
+      <DatePicker layoutX="185.0" layoutY="317.0" prefHeight="26.0" prefWidth="95.0" />
+      <Label layoutX="285.0" layoutY="321.0" text="-">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <DatePicker layoutX="293.0" layoutY="317.0" prefHeight="26.0" prefWidth="95.0" />
    </children>
 </AnchorPane>

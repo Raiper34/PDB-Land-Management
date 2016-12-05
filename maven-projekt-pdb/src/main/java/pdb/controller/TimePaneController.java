@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
@@ -22,9 +24,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
@@ -32,6 +38,7 @@ import javafx.stage.Stage;
 import pdb.model.multimedial.Photo;
 import pdb.model.DatabaseModel;
 import pdb.model.TimeModel;
+import pdb.model.time.TableViewItem;
 
 
 
@@ -49,6 +56,18 @@ public class TimePaneController implements Initializable {
     
     @FXML
     private DatePicker datePicker;
+    
+    @FXML 
+    private Button buttonDeleteObjInInterval;
+    
+    @FXML 
+    private TableColumn columnValidFrom;
+    
+    @FXML 
+    private TableColumn columnValidTo;
+    
+    @FXML
+    private TableView tableHistoryOfSelectedObject;
 
     @FXML
     void datePickerOnAction(ActionEvent event) {
@@ -67,12 +86,28 @@ public class TimePaneController implements Initializable {
     }
     
     public MainController mainController;
+    
+    private TimeModel timeModel;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        this.timeModel = new TimeModel();
+        
+        this.columnValidFrom.setCellValueFactory(new PropertyValueFactory<TableViewItem, String>("validFrom"));
+        this.columnValidTo.setCellValueFactory(new PropertyValueFactory<TableViewItem, String>("validTo"));
+        
+        /* final ObservableList<Person> data =
+        FXCollections.observableArrayList(
+          new Person("Jacob", "Smith", "jacob.smith@example.com"),
+          new Person("Isabella", "Johnson", "isabella.johnson@example.com"),
+          new Person("Ethan", "Williams", "ethan.williams@example.com"),
+          new Person("Emma", "Jones", "emma.jones@example.com"),
+          new Person("Michael", "Brown", "michael.brown@example.com")
+        );
+        tableHistoryOfSelectedObject.setItems(data);*/
         /*comboBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override 
             public void changed(ObservableValue ov, String t, String t1) {                
@@ -103,17 +138,57 @@ public class TimePaneController implements Initializable {
     }
     
     public void handleInputEventForShape(InputEvent t, Shape shape) {
-        
+        if (t.getEventType() == MouseEvent.MOUSE_CLICKED) {
+            ObservableList<TableViewItem> data =
+            FXCollections.observableArrayList(
+              new TableViewItem(this.mainController.selectedSpatialEntity.validFrom.toString(), this.mainController.selectedSpatialEntity.validTo.toString(), this.mainController.selectedSpatialEntity.id)
+            );
+            tableHistoryOfSelectedObject.setItems(data);
+            
+            /*this.lengthOrPerimeter.textProperty().setValue(String.format("%.2f", spatialModel.getLengthOrPerimeter(this.mainController.selectedSpatialEntity)) + "m");
+            this.area.textProperty().setValue(String.format("%.2f", spatialModel.getArea(this.mainController.selectedSpatialEntity)) + "\u33A1");
+            
+            switch(this.internalState) {
+                case "DEFAULT":
+                    this.calculateDistance.setDisable(false);
+                    this.buttonShowObjectsToCertainDistance.setDisable(false);
+                    break;
+                case "READY TO MEASURE DISTANCE":
+                    double distance = this.spatialModel.getDistance(this.previousSelectedSpatialEntity, this.mainController.selectedSpatialEntity);
+                    this.labelDistance.textProperty().setValue(String.format("%.2f", distance) + "m");
+                    this.internalState = "DEFAULT";
+                    this.calculateDistance.textProperty().setValue("Calculate distance to other geometry");
+                    this.calculateDistance.setDisable(false);
+                    break;
+            }*/
+        }
     }
     
     // method called when the controller is focused (user clicked on apropiate menu item)
     public void resetState() {
         reloadComboBox();
+        /*
+        if (this.mainController.selectedSpatialEntity != null) {
+            this.lengthOrPerimeter.textProperty().setValue(String.format("%.2f", spatialModel.getLengthOrPerimeter(this.mainController.selectedSpatialEntity)) + "m");
+            this.area.textProperty().setValue(String.format("%.2f", spatialModel.getArea(this.mainController.selectedSpatialEntity)) + "\u33A1");
+            this.calculateDistance.setDisable(false);
+            this.buttonShowObjectsToCertainDistance.setDisable(false);
+        }
+        else {
+            this.labelDistance.textProperty().setValue(""); // reset distance information to empty string
+            this.lengthOrPerimeter.textProperty().setValue("");
+            this.area.textProperty().setValue("");
+            this.calculateDistance.setDisable(true);
+            this.buttonDeleteObjInInterval.setDisable(true);
+            
+        }
+        this.internalState = "DEFAULT";
+        this.calculateDistance.textProperty().setValue("Calculate distance to other geometry");
+        */
     }
     
     public void reloadComboBox() {
-        TimeModel timeModel = new TimeModel();
-        List<String> listOfDateWhenSomethingSpatialObjectChanges = timeModel.getListOfDateWhenSomethingSpatialObjectChanges(
+        List<String> listOfDateWhenSomethingSpatialObjectChanges = this.timeModel.getListOfDateWhenSomethingSpatialObjectChanges(
                 this.mainController.undergroundCheckbox.isSelected(), 
                 this.mainController.groundCheckbox.isSelected(), 
                 this.mainController.overgroundCheckbox.isSelected());

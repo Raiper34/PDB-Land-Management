@@ -48,7 +48,7 @@ public class TimeModel {
         List<String> listOfDateWhenSomethingSpatialObjectChanges = new ArrayList<>();
 
         try {
-            try (Statement stmt = conn.createStatement()) {
+            try (Statement stmt = DB.getConnection().createStatement()) {
                 
                 String query = "";
                 SimpleDateFormat sdf = new SimpleDateFormat("dd. MM. yyyy");
