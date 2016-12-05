@@ -148,6 +148,19 @@ public class Photo {
         return image;
     }
     
+    public Image getProcessedPhotoFromDatabase(int id, String process) throws SQLException, IOException
+    {
+        OrdImage imgProxy = this.getProxy(id);
+        if(imgProxy == null)
+        {
+            return null;
+        }
+        imgProxy.process(process);
+        BufferedImage bufferedImg = ImageIO.read(new ByteArrayInputStream(imgProxy.getDataInByteArray()));
+        Image image = SwingFXUtils.toFXImage(bufferedImg, null);
+        return image;
+    }
+    
     private int getMaxId() throws SQLException
     {
         int max = 0;

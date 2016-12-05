@@ -62,6 +62,9 @@ public class MultimediaPaneController implements Initializable {
     
     @FXML
     public AnchorPane imageSmiliarLayout4;
+    
+    @FXML
+    public AnchorPane gamaContrastPanel;
 
     /**
      * Initializes the controller class.
@@ -153,16 +156,61 @@ public class MultimediaPaneController implements Initializable {
     }
     
     @FXML
+    public void moreClick(ActionEvent event)
+    {
+        this.gamaContrastPanel.setVisible(true);
+    }
+    
+    @FXML
     public void backClick(ActionEvent event)
     {
         this.smiliarPanel.setVisible(false);
+        this.gamaContrastPanel.setVisible(false);
     }
+    
+    @FXML
+    public void rotateClick(ActionEvent event) throws SQLException, IOException
+    {
+        this.setProcessedImageById(this.mainController.selectedSpatialEntity.id, "rotate 90");
+    }
+    
+    @FXML
+    public void mirrorClick(ActionEvent event) throws SQLException, IOException
+    {
+        this.setProcessedImageById(this.mainController.selectedSpatialEntity.id, "mirror");
+    }
+    
+    @FXML
+    public void flipClick(ActionEvent event) throws SQLException, IOException
+    {
+        this.setProcessedImageById(this.mainController.selectedSpatialEntity.id, "flip");
+    }
+    
     
     public void setImageById(int id) throws SQLException, IOException
     {
         this.imageLayout.getChildren().clear();
         Photo photoModel = new Photo();
         Image img = photoModel.getPhotoFromDatabase(photoModel.estatesPhotoId(id));
+        if(img != null)
+        {
+            ImageView imgView = new ImageView(img);
+            imgView.fitWidthProperty().bind(this.imageLayout.widthProperty());
+            imgView.fitHeightProperty().bind(this.imageLayout.heightProperty());
+            this.imageLayout.getChildren().add(imgView);
+            this.deleteImageButton.setDisable(false);
+        }
+        else
+        {
+            this.deleteImageButton.setDisable(true);
+        }
+    }
+    
+    public void setProcessedImageById(int id, String process) throws SQLException, IOException
+    {
+        this.imageLayout.getChildren().clear();
+        Photo photoModel = new Photo();
+        Image img = photoModel.getProcessedPhotoFromDatabase(photoModel.estatesPhotoId(id), process);
         if(img != null)
         {
             ImageView imgView = new ImageView(img);
