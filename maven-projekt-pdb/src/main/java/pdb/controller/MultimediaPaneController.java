@@ -44,6 +44,21 @@ public class MultimediaPaneController implements Initializable {
     @FXML
     public Button deleteImageButton; 
     
+    @FXML 
+    public Button moreButton;
+    
+    @FXML 
+    public Button mirrorButton;
+    
+    @FXML 
+    public Button flipButton;
+    
+    @FXML 
+    public Button rotateButton;
+    
+    @FXML 
+    public Button smiliarButton;
+    
     @FXML
     public AnchorPane imageLayout;
     
@@ -239,12 +254,22 @@ public class MultimediaPaneController implements Initializable {
             imgView.fitWidthProperty().bind(this.imageLayout.widthProperty());
             imgView.fitHeightProperty().bind(this.imageLayout.heightProperty());
             this.imageLayout.getChildren().add(imgView);
-            this.deleteImageButton.setDisable(false);
+            this.switchButtons(false);
         }
         else
         {
-            this.deleteImageButton.setDisable(true);
+            this.switchButtons(true);
         }
+    }
+    
+    private void switchButtons(boolean val)
+    {
+        this.deleteImageButton.setDisable(val);
+        this.moreButton.setDisable(val); 
+        this.mirrorButton.setDisable(val); 
+        this.flipButton.setDisable(val); 
+        this.rotateButton.setDisable(val);
+        this.smiliarButton.setDisable(val);
     }
     
     public void setProcessedImageById(int id, String process) throws SQLException, IOException
@@ -258,11 +283,11 @@ public class MultimediaPaneController implements Initializable {
             imgView.fitWidthProperty().bind(this.imageLayout.widthProperty());
             imgView.fitHeightProperty().bind(this.imageLayout.heightProperty());
             this.imageLayout.getChildren().add(imgView);
-            this.deleteImageButton.setDisable(false);
+            this.switchButtons(false);
         }
         else
         {
-            this.deleteImageButton.setDisable(true);
+            this.switchButtons(true);
         }
     }
     
@@ -276,6 +301,8 @@ public class MultimediaPaneController implements Initializable {
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
             this.setImageById(this.mainController.selectedSpatialEntity.id);
+            this.smiliarPanel.setVisible(false);
+            this.gamaContrastPanel.setVisible(false);
         }
     }
 
