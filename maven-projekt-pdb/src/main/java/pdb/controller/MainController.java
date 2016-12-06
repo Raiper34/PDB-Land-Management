@@ -191,6 +191,8 @@ public class MainController implements Initializable {
     {
         DatabaseModel db = DatabaseModel.getInstance();
         db.initializeDatabase();
+        this.mapPaneController.clearMemoryAndMap();
+        this.databaseInitialized();
     }
     
     @FXML

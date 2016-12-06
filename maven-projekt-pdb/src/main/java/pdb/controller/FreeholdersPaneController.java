@@ -120,6 +120,7 @@ public class FreeholdersPaneController implements Initializable {
         firstNameCol.setMinWidth(300);
         firstNameCol.setCellValueFactory(
                 new PropertyValueFactory<Freeholder, String>("name"));
+        this.freeholdersTable.getColumns().clear();
         this.freeholdersTable.getColumns().addAll(firstNameCol);
         this.freeholdersTable.setItems(freeholdersModel.getListAllFreeHolders());
     }
