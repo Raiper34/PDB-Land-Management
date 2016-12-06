@@ -27,6 +27,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -71,6 +73,14 @@ public class TimePaneController implements Initializable {
     
     @FXML
     private TableView tableHistoryOfSelectedObject;
+    
+    @FXML
+    private Label selectedDateBoldLabel;
+    
+    @FXML
+    private Slider slider;
+    
+    private List<String> listOfDateWhenSomethingSpatialObjectChanges = new ArrayList<>();
 
     @FXML
     void datePickerOnAction(ActionEvent event) {
@@ -102,6 +112,21 @@ public class TimePaneController implements Initializable {
         this.columnValidFrom.setCellValueFactory(new PropertyValueFactory<TableViewItem, String>("validFrom"));
         this.columnValidTo.setCellValueFactory(new PropertyValueFactory<TableViewItem, String>("validTo"));
         
+        slider.valueProperty().addListener(new ChangeListener() {
+
+            @Override
+            public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+                String selectedDate = listOfDateWhenSomethingSpatialObjectChanges.get((int) slider.getValue());
+                selectedDateBoldLabel.setText(selectedDate);
+                mainController.mapPaneController.clearMap();
+                mainController.mapPaneController.initializeSpatialEntitiesModel();
+                mainController.dateOfCurrentlyShowedDatabaseSnapshot = selectedDate;
+                mainController.mapPaneController.loadEntities(selectedDate);
+                mainController.mapPaneController.loadEstates(selectedDate);
+                mainController.mapPaneController.drawSpatialEntities(mainController.undergroundCheckbox.isSelected(),mainController.groundCheckbox.isSelected(), mainController.overgroundCheckbox.isSelected());
+                mainController.selectedSpatialEntity = null;
+            }
+        });
     }
         
     @FXML
@@ -215,12 +240,23 @@ public class TimePaneController implements Initializable {
     }
     
     public void reloadComboBox() {
-        List<String> listOfDateWhenSomethingSpatialObjectChanges = this.timeModel.getListOfDateWhenSomethingSpatialObjectChanges(
+        listOfDateWhenSomethingSpatialObjectChanges = this.timeModel.getListOfDateWhenSomethingSpatialObjectChanges(
                 this.mainController.undergroundCheckbox.isSelected(), 
                 this.mainController.groundCheckbox.isSelected(), 
                 this.mainController.overgroundCheckbox.isSelected());
         comboBox.getItems().clear();
         comboBox.getItems().addAll(listOfDateWhenSomethingSpatialObjectChanges);
+        
+        slider.setMin(0);
+        slider.setMax(listOfDateWhenSomethingSpatialObjectChanges.size() - 1);
+        slider.setValue(listOfDateWhenSomethingSpatialObjectChanges.size() - 1);
+        slider.setShowTickMarks(true);
+        slider.setMajorTickUnit(1);
+        //slider.setSnapToTicks(true);
+        slider.setBlockIncrement(1);
+        slider.setMinorTickCount(0);
+        slider.setMajorTickUnit(1);
+        selectedDateBoldLabel.setText(listOfDateWhenSomethingSpatialObjectChanges.get((int) slider.getValue()));
     }
 
 }
