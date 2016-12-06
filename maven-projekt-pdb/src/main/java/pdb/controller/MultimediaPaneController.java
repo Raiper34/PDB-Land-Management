@@ -107,6 +107,7 @@ public class MultimediaPaneController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.smiliarPanel.setVisible(false);
         this.gamaContrastPanel.setVisible(false);
+        this.lock();
     }
     
     @FXML
@@ -270,6 +271,20 @@ public class MultimediaPaneController implements Initializable {
         this.flipButton.setDisable(val); 
         this.rotateButton.setDisable(val);
         this.smiliarButton.setDisable(val);
+    }
+    
+    public void lock()
+    {
+        this.imageLayout.getChildren().clear();
+        this.selectImageButton.setDisable(true);
+        this.switchButtons(true);
+    }
+    
+    public void unlock()
+    {
+        this.imageLayout.getChildren().clear();
+        this.selectImageButton.setDisable(false);
+        this.switchButtons(false);
     }
     
     public void setProcessedImageById(int id, String process) throws SQLException, IOException

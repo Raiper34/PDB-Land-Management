@@ -220,17 +220,25 @@ public class MainController implements Initializable {
             if (shape instanceof ImprovedPolygon) {
                 ImprovedPolygon improvedShape = (ImprovedPolygon) shape;
                 if (improvedShape.isEstate()) {
+                    this.multimediaPaneController.unlock();
                     setSelectedSpatialEntity((SpatialEntity) improvedShape.getEstateReference() );
                 }
                 else {
+                    this.multimediaPaneController.lock();
                     setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
                 }
             } else if ( shape instanceof ImprovedCircle) {
+                this.multimediaPaneController.lock();
                 ImprovedCircle improvedShape = (ImprovedCircle) shape;
                 setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
             } else if ( shape instanceof ImprovedPath) {
+                this.multimediaPaneController.lock();
                 ImprovedPath improvedShape = (ImprovedPath) shape;
                 setSelectedSpatialEntity((SpatialEntity) improvedShape.getEntityReference() );
+            }
+            else
+            {
+                this.multimediaPaneController.lock();
             }
         }
         
@@ -256,7 +264,12 @@ public class MainController implements Initializable {
                 // entityModificationPaneController.handleInputEventForShape(InputEvent t, Shape shape);
                 break;
             case "Multimedia":
-                multimediaPaneController.handleInputEventForShape(t, shape);
+                if (shape instanceof ImprovedPolygon) {
+                    ImprovedPolygon improvedShape = (ImprovedPolygon) shape;
+                    if (improvedShape.isEstate()) {
+                        multimediaPaneController.handleInputEventForShape(t, shape);
+                    }
+                }
                 break;
             case "Time":
                 timePaneController.handleInputEventForShape(t, shape);
@@ -292,7 +305,7 @@ public class MainController implements Initializable {
                 // entityModificationPaneController.handleInputEventForMap(InputEvent event);
                 break;
             case "Multimedia":
-                // multimediaPaneController.handleInputEventForMap(InputEvent event);
+                //multimediaPaneController.handleInputEventForMap(InputEvent event);
                 break;
             case "Time":
                 // timePaneController.handleInputEventForMap(InputEvent event);
