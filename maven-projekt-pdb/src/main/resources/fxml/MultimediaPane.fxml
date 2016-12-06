@@ -8,13 +8,13 @@
 <AnchorPane fx:id="multimediaAnchorPane" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.MultimediaPaneController">
    <children>
       <Button fx:id="moreButton" layoutX="139.0" layoutY="74.0" mnemonicParsing="false" onAction="#moreClick" prefHeight="26.0" prefWidth="102.0" text="More" />
-      <Button layoutX="138.0" layoutY="43.0" mnemonicParsing="false" onAction="#mirrorClick" prefHeight="26.0" prefWidth="102.0" text="Mirror" />
-      <Button layoutX="257.0" layoutY="12.0" mnemonicParsing="false" onAction="#flipClick" prefHeight="26.0" prefWidth="95.0" text="Flip" />
+      <Button fx:id="mirrorButton" layoutX="138.0" layoutY="43.0" mnemonicParsing="false" onAction="#mirrorClick" prefHeight="26.0" prefWidth="102.0" text="Mirror" />
+      <Button fx:id="flipButton" layoutX="257.0" layoutY="12.0" mnemonicParsing="false" onAction="#flipClick" prefHeight="26.0" prefWidth="95.0" text="Flip" />
       <Button fx:id="selectImageButton" layoutX="18.0" layoutY="12.0" mnemonicParsing="false" onAction="#selectImageClick" text="Select image" />
       <AnchorPane fx:id="imageLayout" layoutX="20.0" layoutY="102.0" prefHeight="298.0" prefWidth="359.0" />
       <Button fx:id="deleteImageButton" layoutX="18.0" layoutY="44.0" mnemonicParsing="false" onAction="#deleteImageClick" text="Delete Image" />
-      <Button fx:id="selectImageButton1" layoutX="257.0" layoutY="43.0" mnemonicParsing="false" onAction="#findSmiliarClick" text="Find Smiliar" />
-      <Button fx:id="selectImageButton11" layoutX="137.0" layoutY="12.0" mnemonicParsing="false" onAction="#rotateClick" prefHeight="26.0" prefWidth="102.0" text="Rotate" />
+      <Button fx:id="smiliarButton" layoutX="257.0" layoutY="43.0" mnemonicParsing="false" onAction="#findSmiliarClick" text="Find Smiliar" />
+      <Button fx:id="rotateButton" layoutX="137.0" layoutY="12.0" mnemonicParsing="false" onAction="#rotateClick" prefHeight="26.0" prefWidth="102.0" text="Rotate" />
       <AnchorPane fx:id="smiliarPanel" prefHeight="298.0" prefWidth="359.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button layoutX="339.0" layoutY="10.0" mnemonicParsing="false" onAction="#backClick" text="Back" />

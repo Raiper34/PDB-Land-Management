@@ -57,8 +57,9 @@ public class Freeholder
         ObservableList<Estate> estates = FXCollections.observableArrayList();
         
         Estate estate = null;
+        Estate tempEstate = null;
         OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) connection.prepareStatement(
-            "select * from estates where id = " + this.id
+            "select * from estates where id = " + this.id + "order by id"
         );
         try 
         {
@@ -74,6 +75,23 @@ public class Freeholder
                     Date valid_to = (Date) rset.getDate("valid_to");
                     estate = new Estate(id, name, description, null, valid_from, valid_to, null);
                     estates.add(estate);
+                    /*int id = (int) rset.getInt("id");
+                    String name = (String) rset.getString("name");
+                    String description = (String) rset.getString("description");
+                    Date valid_from = (Date) rset.getDate("valid_from");
+                    Date valid_to = (Date) rset.getDate("valid_to");
+                    tempEstate = new Estate(id, name, description, null, valid_from, valid_to, null);
+                    if(estate == null)
+                    {
+                        estate = tempEstate;
+                    }
+                    else
+                    {
+                        if(tempEstate.validFrom > estate.validTo.)
+                        {
+                            
+                        }
+                    }*/
                 }
             } 
             finally 

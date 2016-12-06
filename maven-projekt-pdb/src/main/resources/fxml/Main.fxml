@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="AnchorPane" prefHeight="670.0" prefWidth="975.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.MainController">
@@ -68,9 +69,9 @@
                               </TitledPane>
                           </panes>
                       </Accordion>
-                      <CheckBox fx:id="undergroundCheckbox" onAction="#groundCheckboxClick"  layoutX="100.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Underground" />
-                      <CheckBox fx:id="groundCheckbox" onAction="#groundCheckboxClick" layoutX="217.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Ground" />
-                      <CheckBox fx:id="overgroundCheckbox" onAction="#groundCheckboxClick" layoutX="299.0" layoutY="610.0" mnemonicParsing="false" selected="true" text="Overground" />
+                      <CheckBox fx:id="undergroundCheckbox" layoutX="100.0" layoutY="610.0" mnemonicParsing="false" onAction="#groundCheckboxClick" selected="true" text="Underground" />
+                      <CheckBox fx:id="groundCheckbox" layoutX="217.0" layoutY="610.0" mnemonicParsing="false" onAction="#groundCheckboxClick" selected="true" text="Ground" />
+                      <CheckBox fx:id="overgroundCheckbox" layoutX="299.0" layoutY="610.0" mnemonicParsing="false" onAction="#groundCheckboxClick" selected="true" text="Overground" />
                   <Label layoutX="10.0" layoutY="610.0" text="Show layers: " />
                   </children>
               </AnchorPane>
@@ -112,6 +113,23 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <fx:include fx:id="databaseSettings" source="DatabaseSettings.fxml" />
                 </AnchorPane>
+              </content>
+            </TitledPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane opacity="0.68" prefHeight="670.0" prefWidth="1062.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TitledPane animated="false" collapsible="false" layoutX="260.0" layoutY="271.0" prefHeight="207.0" prefWidth="483.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="3.0" layoutY="3.0" prefHeight="180.0" prefWidth="481.0" text="Loading..." textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="40.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
               </content>
             </TitledPane>
          </children>
