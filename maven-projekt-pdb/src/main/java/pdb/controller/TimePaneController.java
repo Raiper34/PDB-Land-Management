@@ -8,9 +8,12 @@ package pdb.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -99,6 +102,32 @@ public class TimePaneController implements Initializable {
         this.columnValidFrom.setCellValueFactory(new PropertyValueFactory<TableViewItem, String>("validFrom"));
         this.columnValidTo.setCellValueFactory(new PropertyValueFactory<TableViewItem, String>("validTo"));
         
+    }
+        
+    @FXML
+    public void tableHistoryOfSelectedObjectClick(MouseEvent event)
+    {
+        TableViewItem tableviewItem = (TableViewItem) this.tableHistoryOfSelectedObject.getSelectionModel().getSelectedItem();
+        if(tableviewItem != null)
+        {
+                ArrayList<PreparedStatement> sqlQueriesToGetObjectInHistotory = 
+                this.timeModel.createSqlQueriesToGetObjectInHistotory
+                (
+                    tableviewItem.getValidFrom(),
+                    tableviewItem.getValidTo(), 
+                    tableviewItem.getId(),
+                    tableviewItem.getSpatialEntityType()
+                );
+                
+                this.mainController.mapPaneController.clearMap();
+                this.mainController.mapPaneController.initializeSpatialEntitiesModel();
+                this.mainController.dateOfCurrentlyShowedDatabaseSnapshot = tableviewItem.getValidFrom();
+                this.mainController.mapPaneController.loadEntities(sqlQueriesToGetObjectInHistotory.get(0));
+                this.mainController.mapPaneController.loadEstates(sqlQueriesToGetObjectInHistotory.get(1));
+                this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
+        }
+    }
+        
         /* final ObservableList<Person> data =
         FXCollections.observableArrayList(
           new Person("Jacob", "Smith", "jacob.smith@example.com"),
@@ -116,7 +145,7 @@ public class TimePaneController implements Initializable {
         this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
             }    
         });*/
-    }
+    
     
     @FXML
     void comboBoxOnAction(ActionEvent event) {
@@ -139,10 +168,8 @@ public class TimePaneController implements Initializable {
     
     public void handleInputEventForShape(InputEvent t, Shape shape) {
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            ObservableList<TableViewItem> data =
-            FXCollections.observableArrayList(
-              new TableViewItem(this.mainController.selectedSpatialEntity.validFrom.toString(), this.mainController.selectedSpatialEntity.validTo.toString(), this.mainController.selectedSpatialEntity.id)
-            );
+            ObservableList<TableViewItem> data = this.timeModel.getHistoryOfObjecWithSpecifiedId(this.mainController.selectedSpatialEntity);
+
             tableHistoryOfSelectedObject.setItems(data);
             
             /*this.lengthOrPerimeter.textProperty().setValue(String.format("%.2f", spatialModel.getLengthOrPerimeter(this.mainController.selectedSpatialEntity)) + "m");

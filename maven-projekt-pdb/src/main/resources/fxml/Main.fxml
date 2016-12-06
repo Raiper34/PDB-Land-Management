@@ -95,6 +95,11 @@
                     <MenuItem mnemonicParsing="false" onAction="#disconnectClick" text="Disconnect" />
                   </items>
                 </Menu>
+                <Menu mnemonicParsing="false" text="Map">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#showAllObjectsInSelectedTimeContext" text="Show all objects in selected time context" />
+                  </items>
+                </Menu>
               </menus>
             </MenuBar>
          </top>

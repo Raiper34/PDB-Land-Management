@@ -332,6 +332,15 @@ public class MainController implements Initializable {
 
     }
     
+    @FXML
+    public void showAllObjectsInSelectedTimeContext(ActionEvent event) {
+        this.mapPaneController.clearMap();
+        this.mapPaneController.initializeSpatialEntitiesModel();
+        this.mapPaneController.loadEntities(this.dateOfCurrentlyShowedDatabaseSnapshot);
+        this.mapPaneController.loadEstates(this.dateOfCurrentlyShowedDatabaseSnapshot);
+        this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
+    }
+    
     public void setSelectedSpatialEntity(SpatialEntity spatialEntity) {
         selectedSpatialEntity = spatialEntity;
     }

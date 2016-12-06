@@ -17,7 +17,7 @@
       <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="22.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dates in which changes in spatial objects have occurred in showed layers, you can pick one:" wrappingWidth="365.00000262260437" />
       <DatePicker fx:id="datePicker" layoutX="23.0" layoutY="135.0" onAction="#datePickerOnAction" prefHeight="26.0" prefWidth="206.0" />
       <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="23.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Or choose your own date when you want to see snapshot of spatial objects:" wrappingWidth="349.9999961256981" />
-      <TableView fx:id="tableHistoryOfSelectedObject" layoutX="23.0" layoutY="212.0" prefHeight="93.0" prefWidth="365.0">
+      <TableView fx:id="tableHistoryOfSelectedObject" layoutX="23.0" layoutY="212.0" onMouseClicked="#tableHistoryOfSelectedObjectClick" prefHeight="93.0" prefWidth="365.0">
         <columns>
           <TableColumn fx:id="columnValidFrom" prefWidth="190.0" text="valid_from" />
           <TableColumn fx:id="columnValidTo" prefWidth="180.0" text="valid_to" />

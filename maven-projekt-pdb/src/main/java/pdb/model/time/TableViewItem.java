@@ -14,11 +14,13 @@ public class TableViewItem {
     private String validFrom;
     private String validTo;
     private int id;
+    private String spatialEntityType; // 'estate' or 'related spatial entity'
  
-    public TableViewItem(String validFrom, String validTo, int id) {
+    public TableViewItem(String validFrom, String validTo, int id, String spatialEntityType) {
         this.validFrom = validFrom;
         this.validTo = validTo;
         this.id = id;
+        this.spatialEntityType = spatialEntityType;
     }
  
     public String getValidFrom() {
@@ -40,5 +42,12 @@ public class TableViewItem {
     }
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public String getSpatialEntityType() {
+        return this.spatialEntityType;
+    }
+    public void setSpatialEntityType(String spatialEntityType) {
+        this.spatialEntityType = spatialEntityType;
     }
 }

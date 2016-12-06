@@ -6,6 +6,7 @@
 package pdb.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,8 +16,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import oracle.spatial.geometry.JGeometry;
+import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
+import pdb.model.spatial.SpatialEntity;
+import pdb.model.time.TableViewItem;
 
 /**
  *
@@ -83,5 +89,102 @@ public class TimeModel {
 
         return listOfDateWhenSomethingSpatialObjectChanges;
         
+    }
+    
+    public ObservableList<TableViewItem> getHistoryOfObjecWithSpecifiedId(SpatialEntity spatialEntity) {
+        ObservableList<TableViewItem> data = FXCollections.observableArrayList();
+        
+        String sqlQuery = "";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd. MM. yyyy");
+        
+        String spatialEntityType = "";
+
+        if (spatialEntity instanceof Entity) {
+   
+            sqlQuery += "SELECT valid_from, valid_to, id" +
+                        "  FROM related_spatial_entities" +
+                        "  WHERE id = "+ ((Entity) spatialEntity).id +"";
+            
+            spatialEntityType = "related spatial entity";
+        } 
+        else if ( spatialEntity instanceof Estate) {
+        
+            sqlQuery += "SELECT valid_from, valid_to, id" +
+                        "  FROM estates" +
+                        "  WHERE id = "+ ((Estate) spatialEntity).id +"";
+            
+            spatialEntityType = "estate";
+        } 
+
+        try {
+
+            try (Statement stmt = DatabaseModel.getInstance().getConnection().createStatement()) {
+                
+                try (ResultSet rset = stmt.executeQuery(sqlQuery)) {
+                    while (rset.next()) {
+                        data.add(new TableViewItem(sdf.format(rset.getDate("valid_from")), sdf.format(rset.getDate("valid_to")), rset.getInt("id"), spatialEntityType));
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SpatialEntitiesModel.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        catch (Exception ex) {
+            System.err.println("Exception: " + ex.getMessage());
+        }
+        
+        return data;
+    }
+
+    public ArrayList<PreparedStatement> createSqlQueriesToGetObjectInHistotory(String validFrom, String validTo, int id, String spatialEntityType) {
+
+        ArrayList<PreparedStatement> sqlQueriesToGetObjectInHistotory = new ArrayList<PreparedStatement>();
+        
+        String entityCondition = "";
+        String estateCondition = "";
+        
+        String sqlQueryEntities = "SELECT * from related_spatial_entities WHERE id IS NULL"; // get empty result set
+        String sqlQueryEstates = "SELECT * from estates WHERE id IS NULL"; // get empty result set
+             
+        // spatialEntityType is related entity
+        if (spatialEntityType.equals("related spatial entity")) {
+            sqlQueryEntities = "select * from related_spatial_entities " +
+                "WHERE id = "+ id +" " +
+                    "AND valid_from <= TO_DATE('"+ validFrom +"', 'dd. mm. yyyy') " + 
+                    "AND valid_to >= TO_DATE('"+ validTo +"', 'dd. mm. yy')";
+      
+        }
+        // selectedSpatialEntity is instance of Estate
+        else {
+            sqlQueryEstates = "select * from estates " +
+                "WHERE id = "+ id +" " +
+                    "AND valid_from <= TO_DATE('"+ validFrom +"', 'dd. mm. yyyy') " + 
+                    "AND valid_to >= TO_DATE('"+ validTo +"', 'dd. mm. yyyy')";
+        
+        }
+        
+        //System.out.println("w" + sqlQueryEstates);
+        //System.out.println("e" + sqlQueryEntities);
+        //System.out.println(spatialEntityType)
+                
+        try {
+            PreparedStatement psSelectEntities = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEntities);
+            PreparedStatement psSelectEstates = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEstates);
+
+            sqlQueriesToGetObjectInHistotory.add(psSelectEntities);
+            sqlQueriesToGetObjectInHistotory.add(psSelectEstates);
+        }
+        catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        catch (Exception ex) {
+            System.err.println("Exception: " + ex.getMessage());
+        }
+
+        return sqlQueriesToGetObjectInHistotory;
     }
 }
