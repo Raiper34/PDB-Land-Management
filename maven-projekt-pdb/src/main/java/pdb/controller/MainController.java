@@ -176,6 +176,7 @@ public class MainController implements Initializable {
         this.entityModificationPaneController.addParent(this);
         this.timePaneController.addParent(this);
         this.spatialPaneController.addParent(this);
+        this.freeholdersPaneController.injectMainController(this);
     }
     
     /**
