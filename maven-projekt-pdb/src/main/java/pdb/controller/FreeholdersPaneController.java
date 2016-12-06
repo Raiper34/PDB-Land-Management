@@ -95,12 +95,31 @@ public class FreeholdersPaneController implements Initializable {
             this.selectedFreeholder = person;
             this.detailPanel.setVisible(true);
             
-            TableColumn firstNameCol = new TableColumn("Estate");
-            firstNameCol.setMinWidth(300);
+            TableColumn firstNameCol = new TableColumn("Id");
+            firstNameCol.setMinWidth(80);
             firstNameCol.setCellValueFactory(
-                    new PropertyValueFactory<Estate, String>("info"));
+                    new PropertyValueFactory<Estate, String>("id"));
+            
+            TableColumn fourthNameCol = new TableColumn("Name");
+            fourthNameCol.setMinWidth(80);
+            fourthNameCol.setCellValueFactory(
+                    new PropertyValueFactory<Estate, String>("name"));
+            
+            TableColumn secondNameCol = new TableColumn("From");
+            secondNameCol.setMinWidth(80);
+            secondNameCol.setCellValueFactory(
+                    new PropertyValueFactory<Estate, String>("from"));
+            
+            TableColumn thirdNameCol = new TableColumn("To");
+            thirdNameCol.setMinWidth(80);
+            thirdNameCol.setCellValueFactory(
+                    new PropertyValueFactory<Estate, String>("to"));
+            
             this.estatesTable.getColumns().clear();
             this.estatesTable.getColumns().addAll(firstNameCol);
+            this.estatesTable.getColumns().addAll(fourthNameCol);
+            this.estatesTable.getColumns().addAll(secondNameCol);
+            this.estatesTable.getColumns().addAll(thirdNameCol);
             this.estatesTable.setItems(person.ownedEstates());
         }
     }
@@ -117,11 +136,18 @@ public class FreeholdersPaneController implements Initializable {
         freeholdersModel.getFreeHoldersFromDatabase();
         
         TableColumn firstNameCol = new TableColumn("Name");
-        firstNameCol.setMinWidth(300);
+        firstNameCol.setMinWidth(100);
         firstNameCol.setCellValueFactory(
                 new PropertyValueFactory<Freeholder, String>("name"));
+        
+        TableColumn secondNameCol = new TableColumn("BirthDate");
+        secondNameCol.setMinWidth(200);
+        secondNameCol.setCellValueFactory(
+                new PropertyValueFactory<Freeholder, String>("birthDateP"));
+        
         this.freeholdersTable.getColumns().clear();
         this.freeholdersTable.getColumns().addAll(firstNameCol);
+        this.freeholdersTable.getColumns().addAll(secondNameCol);
         this.freeholdersTable.setItems(freeholdersModel.getListAllFreeHolders());
     }
     

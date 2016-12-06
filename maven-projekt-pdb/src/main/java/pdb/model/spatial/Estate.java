@@ -42,8 +42,23 @@ public class Estate extends SpatialEntity{
         return this.id + " " + name  + " from:" + this.validFrom.toString() + " to:" + this.validTo.toString();
     }
     
-    public void setInfo(String fName) 
+    public String getId()
     {
-        //Todo
+        return this.id + "";
+    }
+    
+    public String getFrom()
+    {
+        return this.validFrom.toString();
+    }
+    
+    public String getTo()
+    {
+        return this.validTo.toString();
+    }
+    
+    public String getName()
+    {
+        return this.name;
     }
 }

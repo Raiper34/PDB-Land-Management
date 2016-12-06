@@ -25,6 +25,7 @@ public class Freeholder
 {
 
     private final SimpleStringProperty name;
+    private final SimpleStringProperty birthDateP;
     public String first_name;
     public String surname;
     public String birthDate;
@@ -36,7 +37,8 @@ public class Freeholder
         this.first_name = first_name;
         this.surname = surname;
         this.birthDate = birthDate;
-        name = new SimpleStringProperty(first_name + " " + surname + " (" + birthDate + ")"); 
+        name = new SimpleStringProperty(first_name + " " + surname); 
+        birthDateP = new SimpleStringProperty(birthDate);
     }
     
     public String getName() 
@@ -47,6 +49,11 @@ public class Freeholder
     public void setName(String fName) 
     {
         name.set(fName);
+    }
+    
+    public String getBirthDateP() 
+    {
+        return birthDateP.get();
     }
     
     public ObservableList<Estate> ownedEstates() throws SQLException
