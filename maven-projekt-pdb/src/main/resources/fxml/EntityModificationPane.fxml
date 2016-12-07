@@ -14,8 +14,8 @@
    <children>
       <Label layoutX="23.0" layoutY="18.0" text="Name:" />
       <Label layoutX="22.0" layoutY="49.0" text="Description:" />
-      <TextField layoutX="112.0" layoutY="16.0" prefHeight="26.0" prefWidth="274.0" />
-      <TextArea layoutX="111.0" layoutY="50.0" prefHeight="65.0" prefWidth="274.0" />
+      <TextField fx:id="nameField" layoutX="112.0" layoutY="16.0" prefHeight="26.0" prefWidth="274.0" />
+      <TextArea fx:id="descriptionArea" layoutX="111.0" layoutY="50.0" prefHeight="65.0" prefWidth="274.0" />
       <Button fx:id="buttonSave" layoutX="306.0" layoutY="191.0" mnemonicParsing="false" onAction="#saveClick" prefHeight="26.0" prefWidth="79.0" text="Save" />
       <Label layoutX="12.0" layoutY="129.0" text="Actual owner:" />
       <Separator layoutX="22.0" layoutY="225.0" prefHeight="3.0" prefWidth="364.0" />
@@ -29,8 +29,8 @@
       <DatePicker layoutX="294.0" layoutY="381.0" prefHeight="26.0" prefWidth="95.0" />
       <Separator layoutX="26.0" layoutY="362.0" prefHeight="3.0" prefWidth="364.0" />
       <ComboBox fx:id="comboboxFreeholders" layoutX="111.0" layoutY="124.0" prefHeight="26.0" prefWidth="274.0" />
-      <DatePicker layoutX="111.0" layoutY="160.0" prefHeight="26.0" prefWidth="117.0" />
-      <DatePicker layoutX="258.0" layoutY="159.0" prefHeight="26.0" prefWidth="126.0" />
+      <DatePicker fx:id="pickerFrom" layoutX="111.0" layoutY="160.0" prefHeight="26.0" prefWidth="117.0" />
+      <DatePicker fx:id="pickerTo" layoutX="258.0" layoutY="159.0" prefHeight="26.0" prefWidth="126.0" />
       <Label layoutX="66.0" layoutY="165.0" text="From:" />
       <Label layoutX="233.0" layoutY="166.0" text="To:" />
    </children>
