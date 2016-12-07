@@ -93,6 +93,40 @@ public class FreeholderModel {
         }
     }
     
+    public ObservableList<Freeholder> getEstatesFreeholdersFromDatabase(int estateId) throws SQLException
+    {
+        ObservableList<Freeholder> estatesFreeholders = FXCollections.observableArrayList();
+        Freeholder freeholder = null;
+        OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
+            "select * from estates, freeholders where estates.freeholders_id = freeholders.id and estates.id = " + estateId
+        );
+        try 
+        {
+            OracleResultSet rset = (OracleResultSet) pstmtSelect.executeQuery();
+            try 
+            {
+                while (rset.next()) 
+                {
+                    int id = (int) rset.getInt("id");
+                    String name = (String) rset.getString("first_name");
+                    String surname = (String) rset.getString("surname");
+                    String birthDate = (String) rset.getString("birth_date");
+                    freeholder = new Freeholder(id, name, surname, birthDate);
+                    estatesFreeholders.add(freeholder);
+                }
+            } 
+            finally 
+            {
+                rset.close();
+            }
+            } 
+        finally 
+        {
+            pstmtSelect.close();
+        }
+        return estatesFreeholders;
+    }
+    
     public Freeholder getFreeholderById(int number) throws SQLException
     {
         Freeholder freeholder = null;

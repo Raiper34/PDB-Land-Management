@@ -42,6 +42,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pdb.model.multimedial.Photo;
 import pdb.model.DatabaseModel;
+import pdb.model.freeholder.Freeholder;
+import pdb.model.freeholder.FreeholderModel;
 import pdb.model.time.TimeModel;
 import pdb.model.time.TableViewItem;
 
@@ -70,6 +72,9 @@ public class TimePaneController implements Initializable {
     
     @FXML
     private TableView tableHistoryOfSelectedObject;
+    
+    @FXML
+    private TableView freeholdersHistoryTable;
     
     @FXML
     private Label selectedDateBoldLabel;
@@ -188,11 +193,15 @@ public class TimePaneController implements Initializable {
         this.mainController = c1;
     }
     
-    public void handleInputEventForShape(InputEvent t, Shape shape) {
+    public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException {
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED) {
             ObservableList<TableViewItem> data = this.timeModel.getHistoryOfObjecWithSpecifiedId(this.mainController.selectedSpatialEntity);
 
             tableHistoryOfSelectedObject.setItems(data);
+            
+            this.initFreeholdersHistory();
+            
+            
             
             /*this.lengthOrPerimeter.textProperty().setValue(String.format("%.2f", spatialModel.getLengthOrPerimeter(this.mainController.selectedSpatialEntity)) + "m");
             this.area.textProperty().setValue(String.format("%.2f", spatialModel.getArea(this.mainController.selectedSpatialEntity)) + "\u33A1");
@@ -211,6 +220,22 @@ public class TimePaneController implements Initializable {
                     break;
             }*/
         }
+    }
+    
+    public void initFreeholdersHistory() throws SQLException
+    {
+        FreeholderModel freeholdersModel = new FreeholderModel();
+        ObservableList<Freeholder> estatesFreeholders = freeholdersModel.getEstatesFreeholdersFromDatabase(this.mainController.selectedSpatialEntity.id);
+        
+        TableColumn firstNameCol = new TableColumn("Name");
+        firstNameCol.setMinWidth(100);
+        firstNameCol.setCellValueFactory(
+                new PropertyValueFactory<Freeholder, String>("name"));
+        
+        
+        this.freeholdersHistoryTable.getColumns().clear();
+        this.freeholdersHistoryTable.getColumns().addAll(firstNameCol);
+        this.freeholdersHistoryTable.setItems(estatesFreeholders);
     }
     
     // method called when the controller is focused (user clicked on apropiate menu item)

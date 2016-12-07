@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="timeAnchorPane" prefHeight="430.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.TimePaneController">
+<AnchorPane id="AnchorPane" fx:id="timeAnchorPane" prefHeight="530.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.TimePaneController">
    <children>
       <ComboBox fx:id="comboBox" layoutX="22.0" layoutY="24.0" onAction="#comboBoxOnAction" prefHeight="26.0" prefWidth="365.0" promptText="Pick date to show snapshot of spatial objects" />
       <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="20.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dates in which changes in spatial objects have occurred in showed layers, you can pick one:" wrappingWidth="365.00000262260437">
@@ -20,14 +20,14 @@
          </font></Text>
       <DatePicker fx:id="datePicker" layoutX="23.0" layoutY="100.0" onAction="#datePickerOnAction" prefHeight="26.0" prefWidth="206.0" />
       <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="23.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Or choose your own date when you want to see snapshot of spatial objects:" wrappingWidth="349.9999961256981" />
-      <TableView fx:id="tableHistoryOfSelectedObject" layoutX="22.0" layoutY="249.0" onMouseClicked="#tableHistoryOfSelectedObjectClick" prefHeight="93.0" prefWidth="365.0">
+      <TableView fx:id="tableHistoryOfSelectedObject" layoutX="22.0" layoutY="235.0" onMouseClicked="#tableHistoryOfSelectedObjectClick" prefHeight="93.0" prefWidth="365.0">
         <columns>
           <TableColumn fx:id="columnValidFrom" prefWidth="190.0" text="valid_from" />
           <TableColumn fx:id="columnValidTo" prefWidth="180.0" text="valid_to" />
         </columns>
       </TableView>
       <Separator layoutX="22.0" layoutY="210.0" prefHeight="1.0" prefWidth="365.0" />
-      <Label layoutX="22.0" layoutY="222.0" text="History of selected object:" />
+      <Label layoutX="22.0" layoutY="219.0" text="History of selected object:" />
       <Slider fx:id="slider" layoutX="21.0" layoutY="157.0" prefHeight="16.0" prefWidth="365.0" />
       <Text fill="#000000e5" fontSmoothingType="LCD" layoutX="22.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Or use slider to select snapshot of spatial objects:" wrappingWidth="349.9999961256981" />
       <Label layoutX="21.0" layoutY="181.0" text="Selected date:" />
@@ -36,5 +36,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
+      <TableView fx:id="freeholdersHistoryTable" layoutX="21.0" layoutY="354.0" prefHeight="84.0" prefWidth="365.0" />
+      <Label layoutX="23.0" layoutY="337.0" text="History of freeholders:" />
    </children>
 </AnchorPane>
