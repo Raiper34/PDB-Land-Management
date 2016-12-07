@@ -63,9 +63,6 @@ public class TimePaneController implements Initializable {
     private DatePicker datePicker;
     
     @FXML 
-    private Button buttonDeleteObjInInterval;
-    
-    @FXML 
     private TableColumn columnValidFrom;
     
     @FXML 
@@ -244,19 +241,25 @@ public class TimePaneController implements Initializable {
                 this.mainController.undergroundCheckbox.isSelected(), 
                 this.mainController.groundCheckbox.isSelected(), 
                 this.mainController.overgroundCheckbox.isSelected());
+                //
+
         comboBox.getItems().clear();
+
         comboBox.getItems().addAll(listOfDateWhenSomethingSpatialObjectChanges);
+
         
         slider.setMin(0);
         slider.setMax(listOfDateWhenSomethingSpatialObjectChanges.size() - 1);
-        slider.setValue(listOfDateWhenSomethingSpatialObjectChanges.size() - 1);
+        //slider.setValue(listOfDateWhenSomethingSpatialObjectChanges.size() - 1);
         slider.setShowTickMarks(true);
         slider.setMajorTickUnit(1);
         //slider.setSnapToTicks(true);
         slider.setBlockIncrement(1);
         slider.setMinorTickCount(0);
         slider.setMajorTickUnit(1);
+
         selectedDateBoldLabel.setText(listOfDateWhenSomethingSpatialObjectChanges.get((int) slider.getValue()));
+
     }
 
 }
