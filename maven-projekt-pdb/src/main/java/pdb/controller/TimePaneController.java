@@ -42,7 +42,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pdb.model.multimedial.Photo;
 import pdb.model.DatabaseModel;
-import pdb.model.TimeModel;
+import pdb.model.time.TimeModel;
 import pdb.model.time.TableViewItem;
 
 

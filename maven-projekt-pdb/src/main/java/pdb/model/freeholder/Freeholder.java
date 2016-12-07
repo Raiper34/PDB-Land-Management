@@ -113,4 +113,10 @@ public class Freeholder
         
         return estates;
     }
+    
+    public String toString() 
+    { 
+        return this.first_name + " " + this.surname;
+    } 
+    
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pdb.model;
+package pdb.model.time;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import oracle.spatial.geometry.JGeometry;
+import pdb.model.DatabaseModel;
+import pdb.model.SpatialEntitiesModel;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
 import pdb.model.spatial.SpatialEntity;

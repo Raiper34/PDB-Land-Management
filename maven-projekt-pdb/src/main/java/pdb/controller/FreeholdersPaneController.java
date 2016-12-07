@@ -33,7 +33,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
-import pdb.model.TimeModel;
+import pdb.model.time.TimeModel;
 
 import pdb.model.freeholder.FreeholderModel;
 import pdb.model.spatial.Estate;

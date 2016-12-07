@@ -262,7 +262,7 @@ public class MainController implements Initializable {
                 // addEntityPaneController.handleInputEventForShape(InputEvent t, Shape shape);
                 break;
             case "Entity modification":
-                // entityModificationPaneController.handleInputEventForShape(InputEvent t, Shape shape);
+                entityModificationPaneController.handleInputEventForShape(t, shape);
                 break;
             case "Multimedia":
                 if (shape instanceof ImprovedPolygon) {

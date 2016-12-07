@@ -29,7 +29,7 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Shape;
-import pdb.model.TimeModel;
+import pdb.model.time.TimeModel;
 import pdb.model.spatial.SpatialEntity;
 import pdb.model.spatial.SpatialModel;
 
