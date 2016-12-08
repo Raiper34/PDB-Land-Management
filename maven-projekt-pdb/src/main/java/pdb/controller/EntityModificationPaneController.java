@@ -227,12 +227,24 @@ public class EntityModificationPaneController implements Initializable {
     }
     
     private void doResize(InputEvent t) {
+        if(t.getEventType() == MouseEvent.MOUSE_CLICKED && this.mainController.selectedSpatialEntity != null){
+            if( ! pressedOnSelectedObject(t))
+                return;
+            start = new Point2D(((MouseEvent) t).getX(), ((MouseEvent) t).getY());
+        }
+            
         if(t.getEventType() == ScrollEvent.SCROLL && this.mainController.selectedSpatialEntity != null){
             originalGeometry = this.mainController.selectedSpatialEntity.geometry;
             System.err.println("Started scroll");
             try {
-                
-                JGeometry point = new JGeometry(originalGeometry.getFirstPoint()[0], originalGeometry.getFirstPoint()[1], 0);
+
+                JGeometry point;
+                if(start != null){
+                    point = new JGeometry(start.getX(), start.getY(), 0);
+                } else {
+                    point = new JGeometry(originalGeometry.getFirstPoint()[0], originalGeometry.getFirstPoint()[1], 0);
+                    System.err.println("POUZIVAME PRVY BOD GEOMETRIE");
+                }
                 double scale = ((ScrollEvent) t).getDeltaY() / 1000;
                 JGeometry translated = originalGeometry.affineTransforms(false, 0, 0, 0,
                         true, point, 1+scale, 1+scale, 0, false, null, null, 0, 0, false, 0, 0, 0, 0, 0, 0, false, null, null, 0, false, null, null);
@@ -293,7 +305,44 @@ public class EntityModificationPaneController implements Initializable {
     }
 
     private void doRotate(InputEvent t) {
-        
+        if(t.getEventType() == MouseEvent.MOUSE_CLICKED && this.mainController.selectedSpatialEntity != null){
+            if( ! pressedOnSelectedObject(t))
+                return;
+            start = new Point2D(((MouseEvent) t).getX(), ((MouseEvent) t).getY());
+        }
+            
+        if(t.getEventType() == ScrollEvent.SCROLL && this.mainController.selectedSpatialEntity != null){
+            originalGeometry = this.mainController.selectedSpatialEntity.geometry;
+            System.err.println("Started scroll");
+            try {
+
+                JGeometry point;
+                if(start != null){
+                    point = new JGeometry(start.getX(), start.getY(), 0);
+                } else {
+                    point = new JGeometry(originalGeometry.getFirstPoint()[0], originalGeometry.getFirstPoint()[1], 0);
+                    System.err.println("NO CENTER POINT, USE FIRST POINT OF THE GEOMETRY");
+                }
+                double scale = ((ScrollEvent) t).getDeltaY() / 1000;
+                
+                JGeometry translated = originalGeometry.affineTransforms(false, 0, 0, 0, 
+                        false, null, 0, 0, 0,
+                        true, point, null, 1*scale, -1, false, 0, 0, 0, 0, 0, 0, false, null, null, 0, false, null, null);
+                if(! isGeometryInMap(translated) || isGeometryTooSmall(translated)){
+                    System.out.println("pdb.controller.EntityModificationPaneController.handleInputEventForMap(): NOT IN BOUNDS OR TOO SMALL");
+                    return;
+                }
+                this.mainController.selectedSpatialEntity.geometry = translated;
+                this.mainController.mapPaneController.drawSpatialEntities();
+            } catch (Exception ex) {
+                Logger.getLogger(EntityModificationPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            double deltaX = ((ScrollEvent) t).getDeltaX();
+            double deltaY = ((ScrollEvent) t).getDeltaY();
+            System.err.println("deltaX" + deltaX);
+            System.err.println("deltaY" + deltaY);
+            originalGeometry = null;
+        }
     }
 
 }
