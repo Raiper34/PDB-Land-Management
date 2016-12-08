@@ -232,9 +232,21 @@ public class TimePaneController implements Initializable {
         firstNameCol.setCellValueFactory(
                 new PropertyValueFactory<Freeholder, String>("name"));
         
+        TableColumn secondNameCol = new TableColumn("From");
+        secondNameCol.setMinWidth(100);
+        secondNameCol.setCellValueFactory(
+                new PropertyValueFactory<Freeholder, String>("wasFreeholderOfEstateFrom"));
+        
+        TableColumn thirdNameCol = new TableColumn("To");
+        thirdNameCol.setMinWidth(100);
+        thirdNameCol.setCellValueFactory(
+                new PropertyValueFactory<Freeholder, String>("wasFreeholderOfEstateTo"));
+        
         
         this.freeholdersHistoryTable.getColumns().clear();
         this.freeholdersHistoryTable.getColumns().addAll(firstNameCol);
+        this.freeholdersHistoryTable.getColumns().addAll(secondNameCol);
+        this.freeholdersHistoryTable.getColumns().addAll(thirdNameCol);
         this.freeholdersHistoryTable.setItems(estatesFreeholders);
     }
     

@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -112,6 +114,11 @@ public class FreeholderModel {
                     String surname = (String) rset.getString("surname");
                     String birthDate = (String) rset.getString("birth_date");
                     freeholder = new Freeholder(id, name, surname, birthDate);
+                    Date validFrom = rset.getDate("valid_from");
+                    Date validTo = rset.getDate("valid_to");
+                    DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                    freeholder.wasFreeholderOfEstateFrom = df.format(validFrom); 
+                    freeholder.wasFreeholderOfEstateTo = df.format(validTo);
                     estatesFreeholders.add(freeholder);
                 }
             } 

@@ -30,6 +30,9 @@ public class Freeholder
     public String surname;
     public String birthDate;
     public int id;
+    public String wasFreeholderOfEstateFrom;
+    public String wasFreeholderOfEstateTo;
+    
     
     Freeholder(int id, String first_name, String surname, String birthDate)
     {
@@ -54,6 +57,16 @@ public class Freeholder
     public String getBirthDateP() 
     {
         return birthDateP.get();
+    }
+    
+    public String getWasFreeholderOfEstateFrom()
+    {
+        return this.wasFreeholderOfEstateFrom;
+    }
+    
+    public String getWasFreeholderOfEstateTo()
+    {
+        return this.wasFreeholderOfEstateTo;
     }
     
     public ObservableList<Estate> ownedEstates() throws SQLException
