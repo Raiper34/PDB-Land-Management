@@ -5,18 +5,14 @@
  */
 package pdb.controller;
 
-import java.awt.Dimension;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -31,10 +27,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.SpatialEntitiesModel;
 import pdb.model.spatial.Entity;
@@ -188,13 +181,22 @@ public class AddEntityPaneController implements Initializable {
     }
 
     public void addCircle() {
-        Point2D start = new Point2D(newPoints.get(0).getCenterX(), newPoints.get(0).getCenterY());
-        Point2D end = new Point2D(newPoints.get(1).getCenterX(), newPoints.get(1).getCenterY());
-        double radius = start.distance(end);
+        double radius = calculateRadius();
+        
+        if (newPoints.get(0).getCenterX() - radius < 0 ||
+                    newPoints.get(0).getCenterY() - radius < 0 ||
+                    newPoints.get(0).getCenterX() + radius > 650 ||
+                    newPoints.get(0).getCenterY() + radius > 650)
+            return;
+        
         newCircle = new Circle(newPoints.get(0).getCenterX(), newPoints.get(0).getCenterY(), radius);
         mainController.mapPaneController.mapa.getChildren().add(newCircle);
     }
-
+    private double calculateRadius(){
+        Point2D start = new Point2D(newPoints.get(0).getCenterX(), newPoints.get(0).getCenterY());
+        Point2D end = new Point2D(newPoints.get(1).getCenterX(), newPoints.get(1).getCenterY());
+        return start.distance(end);
+    }
     /*
     * @param InputEvent event
      */
@@ -212,6 +214,7 @@ public class AddEntityPaneController implements Initializable {
             addPoint(mouseEvent);
             addCircle();
         } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+            
             //remove old point from map and list
             removePoint(1);
             //remove newRectangle from map and clear it
@@ -311,10 +314,14 @@ public class AddEntityPaneController implements Initializable {
             return;
         }
             
-        Calendar cal = Calendar.getInstance();
-        Date validFromDate = cal.getTime();
-        cal.add(Calendar.YEAR, 1);
-        Date validToDate = cal.getTime();
+        Calendar calToday = Calendar.getInstance();
+        calToday.set(Calendar.HOUR_OF_DAY, 0);
+        calToday.set(Calendar.MINUTE, 0);
+        calToday.set(Calendar.SECOND, 0);
+        calToday.set(Calendar.MILLISECOND, 0);
+        Date validFromDate = calToday.getTime();
+        calToday.add(Calendar.YEAR, 1);
+        Date validToDate = calToday.getTime();
         if (typeOfNewSpatialEntity.equals("estate")) {
             //getLastID of estate
             int id = spatialEntitiesModel.getNewIdForEstate();
