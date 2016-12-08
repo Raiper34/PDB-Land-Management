@@ -182,6 +182,7 @@ public class EntityModificationPaneController implements Initializable {
                 doResize(t);
                 break;
             case "Rotate":
+                doRotate(t);
                 break;
         }
         
@@ -219,6 +220,48 @@ public class EntityModificationPaneController implements Initializable {
         }
     }
     
+    private void doResize(InputEvent t) {
+        if(t.getEventType() == ScrollEvent.SCROLL && this.mainController.selectedSpatialEntity != null){
+            originalGeometry = this.mainController.selectedSpatialEntity.geometry;
+            System.err.println("Started scroll");
+            try {
+                
+                JGeometry point = new JGeometry(originalGeometry.getFirstPoint()[0], originalGeometry.getFirstPoint()[1], 0);
+                double scale = ((ScrollEvent) t).getDeltaY() / 1000;
+                JGeometry translated = originalGeometry.affineTransforms(false, 0, 0, 0,
+                        true, point, 1+scale, 1+scale, 0, false, null, null, 0, 0, false, 0, 0, 0, 0, 0, 0, false, null, null, 0, false, null, null);
+                if(! isGeometryInMap(translated) || isGeometryTooSmall(translated)){
+                    System.out.println("pdb.controller.EntityModificationPaneController.handleInputEventForMap(): NOT IN BOUNDS OR TOO SMALL");
+                    return;
+                }
+                this.mainController.selectedSpatialEntity.geometry = translated;
+                this.mainController.mapPaneController.drawSpatialEntities();
+            } catch (Exception ex) {
+                Logger.getLogger(EntityModificationPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            double deltaX = ((ScrollEvent) t).getDeltaX();
+            double deltaY = ((ScrollEvent) t).getDeltaY();
+            System.err.println("deltaX" + deltaX);
+            System.err.println("deltaY" + deltaY);
+            originalGeometry = null;
+        } 
+    }
+    public boolean isGeometryTooSmall(JGeometry translated){
+        double x = translated.getFirstPoint()[0];
+        double y = translated.getFirstPoint()[1];
+        double radius = 15;
+        JGeometry minimalGeom = new JGeometry(3, 0, new int[]{1, 1003, 1},
+            new double[]{x-radius,y-radius, x+radius,y-radius, x+radius,y+radius, x-radius,y+radius, x-radius,y-radius}
+        );
+        try {
+            if( translated.isInside(minimalGeom, 0, "FALSE"))
+                return true;
+        } catch (Exception ex) {
+            Logger.getLogger(EntityModificationPaneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     public boolean isGeometryInMap(JGeometry translated){
         JGeometry map = new JGeometry(3, 0, new int[]{1, 1003, 1},
             new double[]{0,0, 650,0, 650,650, 0,650, 0,0}
@@ -232,14 +275,6 @@ public class EntityModificationPaneController implements Initializable {
         return false;
     }
 
-    private void doResize(InputEvent t) {
-        if(t.getEventType() == ScrollEvent.SCROLL_STARTED){
-            
-        } else if (t.getEventType() == ScrollEvent.SCROLL_FINISHED){
-            
-        }
-    }
-
     private boolean pressedOnSelectedObject(InputEvent t) {
         JGeometry point = new JGeometry(((MouseEvent) t).getX(), ((MouseEvent) t).getY(), 0);
         try {
@@ -249,6 +284,10 @@ public class EntityModificationPaneController implements Initializable {
             Logger.getLogger(EntityModificationPaneController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    private void doRotate(InputEvent t) {
+        
     }
 
 }
