@@ -154,14 +154,20 @@ public class EntityModificationPaneController implements Initializable {
             this.nameField.setText(this.mainController.selectedSpatialEntity.name);
             this.descriptionArea.setText(this.mainController.selectedSpatialEntity.description);
             int index = 0;
+            boolean found = false;
+            //this.mainController.selectedSpatialEntity.toShapes(spatialEntity, editationMode)
             for(Freeholder freeholder : freehodlers) {
                 if(freeholder.id == this.mainController.selectedSpatialEntity.id)
                  {
+                    found = true;
                     break;
                  }
                 index++;
             }
-            this.comboboxFreeholders.getSelectionModel().select(index);
+            if(found)
+            {
+                this.comboboxFreeholders.getSelectionModel().select(index);
+            }
             
             Instant instant = Instant.ofEpochMilli(this.mainController.selectedSpatialEntity.validFrom.getTime());
             this.pickerFrom.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
