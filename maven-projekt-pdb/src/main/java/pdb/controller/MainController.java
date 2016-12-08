@@ -303,7 +303,7 @@ public class MainController implements Initializable {
                 addEntityPaneController.handleInputEventForMap(event);
                 break;
             case "Entity modification":
-                // entityModificationPaneController.handleInputEventForMap(InputEvent event);
+                entityModificationPaneController.handleInputEventForMap(event);
                 break;
             case "Multimedia":
                 //multimediaPaneController.handleInputEventForMap(InputEvent event);
