@@ -210,7 +210,7 @@ public class EntityModificationPaneController implements Initializable {
             try {
                 translated = originalGeometry.affineTransforms(true, translation.getX(), translation.getY(),
                     0, false, null, 0, 0, 0, false, null, null, 0, 0, false, 0, 0, 0, 0, 0, 0, false, null, null, 0, false, null, null);
-                if(! transInMap(translated)){
+                if(! isTranslatedInMap(translated)){
                     System.out.println("pdb.controller.EntityModificationPaneController.handleInputEventForMap(): NOT IN BOUNDS");
                     return;
                 }
@@ -225,7 +225,7 @@ public class EntityModificationPaneController implements Initializable {
         }
     }
     
-    public boolean transInMap(JGeometry translated){
+    public boolean isTranslatedInMap(JGeometry translated){
         JGeometry map = new JGeometry(3, 0, new int[]{1, 1003, 1},
             new double[]{0,0, 650,0, 650,650, 0,650, 0,0}
         );
