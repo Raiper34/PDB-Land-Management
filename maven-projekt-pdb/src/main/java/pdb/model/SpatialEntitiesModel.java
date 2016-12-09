@@ -215,22 +215,28 @@ public class SpatialEntitiesModel {
         return entities;
     }
     
-            
     /*
     * @return List<Estate>
     */
-    public List<Estate> getEstate(int ID, Date from, Date to) {
+    public List<Estate> getEstateByIdWhichIntersectsInterval(int ID, Date from, Date to) {
         List<Estate> estates = new ArrayList<>();
 
         try {
             try (PreparedStatement stmt = conn.prepareStatement(""
                     + "select * from estates WHERE "
-                    + "valid_from >= ? "
-                    + "AND valid_to <= ?"
+                    + "("
+                    + "(valid_from <= ? and valid_to >= ?)"
+                    + "OR"
+                    + "(valid_from <= ? and valid_to >= ?)"
+                    + ")"
                     + "AND ID = ?")) {
                 stmt.setDate(1, new java.sql.Date(from.getTime()));
                 stmt.setDate(2, new java.sql.Date(to.getTime()));
-                stmt.setInt(3, ID);
+                
+                stmt.setDate(3, new java.sql.Date(to.getTime()));
+                stmt.setDate(4, new java.sql.Date(from.getTime()));
+                
+                stmt.setInt(5, ID);
                 try (ResultSet rset = stmt.executeQuery()) {
                     while (rset.next()) {
                         
@@ -263,19 +269,25 @@ public class SpatialEntitiesModel {
     /*
     * @return List<Entity>
     */
-    public List<Entity> getEntity(int ID, Date from, Date to) {
+    public List<Entity> getEntityByIdWhichIntersectsInterval(int ID, Date from, Date to) {
         List<Entity> entities = new ArrayList<>();
         
         try {
             try (PreparedStatement stmt = conn.prepareStatement(""
-                    + "select * from related_spatial_entities "
-                    + "WHERE "
-                    + "valid_from >= ? "
-                    + "AND valid_to <= ?"
+                    + "select * from related_spatial_entities WHERE"
+                    + "("
+                    + "(valid_from <= ? and valid_to >= ?)"
+                    + "OR"
+                    + "(valid_from <= ? and valid_to >= ?)"
+                    + ")"
                     + "AND ID = ?")) {
                 stmt.setDate(1, new java.sql.Date(from.getTime()));
                 stmt.setDate(2, new java.sql.Date(to.getTime()));
-                stmt.setInt(3, ID);
+                stmt.setDate(3, new java.sql.Date(to.getTime()));
+                stmt.setDate(4, new java.sql.Date(from.getTime()));
+                
+                stmt.setInt(5, ID);
+                
                 try (ResultSet rset = stmt.executeQuery()) {
                     while (rset.next()) {
                         byte[] image = rset.getBytes("geometry");
