@@ -8,22 +8,16 @@ package pdb.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,9 +40,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Shape;
 import javafx.util.Callback;
 import oracle.spatial.geometry.JGeometry;
+import pdb.model.SpatialEntitiesModel;
 import pdb.model.entityModification.EntityModificationModel;
 import pdb.model.freeholder.Freeholder;
 import pdb.model.freeholder.FreeholderModel;
+import pdb.model.spatial.Estate;
 
 /**
  *
@@ -131,6 +127,9 @@ public class EntityModificationPaneController implements Initializable {
         System.out.println(test.id);
        }
        this.mainController.originalSelectedSpatialEntityGeometry = this.mainController.selectedSpatialEntity.geometry;
+       
+       SpatialEntitiesModel spatialEntitiesModel = mainController.mapPaneController.spatialEntitiesModel;
+       spatialEntitiesModel.updateSpatialEntity((Estate) this.mainController.selectedSpatialEntity, (Estate) this.mainController.selectedSpatialEntity);
     }
     
     public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException, IOException 

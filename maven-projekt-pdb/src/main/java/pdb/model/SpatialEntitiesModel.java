@@ -40,6 +40,47 @@ public class SpatialEntitiesModel {
         freeholdersModel = new FreeholderModel();
     }
 
+    
+    public void updateSpatialEntity(Estate originalSpatialEntity, Estate spatialEntityToSave){
+        try{
+            PreparedStatement statementUpdateSpatialEntity = conn.prepareStatement("UPDATE estates "
+                    + "SET "
+                    + "name = ?, "
+                    + "description = ?, "
+                    + "geometry = ?, "
+                    + "valid_from = ?, "
+                    + "valid_to = ?, "
+                    + "freeholders_id = ? "
+                    + "WHERE ID = ? AND valid_from = ? AND valid_to = ?"
+            );
+            try {
+                statementUpdateSpatialEntity.setString(1, spatialEntityToSave.name);
+                statementUpdateSpatialEntity.setString(2, spatialEntityToSave.description);
+                statementUpdateSpatialEntity.setObject(3, JGeometry.storeJS(conn, spatialEntityToSave.geometry));
+                statementUpdateSpatialEntity.setDate(4, new java.sql.Date(spatialEntityToSave.validFrom.getTime()));
+                statementUpdateSpatialEntity.setDate(5, new java.sql.Date(spatialEntityToSave.validTo.getTime()));
+                if(spatialEntityToSave.freeholder != null)
+                    statementUpdateSpatialEntity.setInt(6, spatialEntityToSave.freeholder.id);
+                else
+                    statementUpdateSpatialEntity.setInt(6, 0);
+                
+                
+                statementUpdateSpatialEntity.setInt(7, originalSpatialEntity.id);
+                statementUpdateSpatialEntity.setDate(8, new java.sql.Date(originalSpatialEntity.validFrom.getTime()));
+                statementUpdateSpatialEntity.setDate(9, new java.sql.Date(originalSpatialEntity.validTo.getTime()));
+                System.err.println(statementUpdateSpatialEntity);
+                statementUpdateSpatialEntity.executeUpdate();
+            } finally {
+                statementUpdateSpatialEntity.close();
+            }
+        } 
+         catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Exception: " + ex.getMessage());
+        }
+    }
+    
     /*
     * @param Estate spatialEntityToSave
     */
