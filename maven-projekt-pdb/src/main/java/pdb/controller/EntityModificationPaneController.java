@@ -320,8 +320,10 @@ public class EntityModificationPaneController implements Initializable {
             int index = 0;
             boolean found = false;
             //this.mainController.selectedSpatialEntity.toShapes(spatialEntity, editationMode)
+            
+            int currentFreeholderId = ((Estate)this.mainController.selectedSpatialEntity).freeholder.id;
             for(Freeholder freeholder : freehodlers) {
-                if(freeholder.id == this.mainController.selectedSpatialEntity.id)
+                if(freeholder.id == currentFreeholderId)
                  {
                     found = true;
                     break;
