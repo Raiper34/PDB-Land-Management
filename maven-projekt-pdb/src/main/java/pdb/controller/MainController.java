@@ -135,7 +135,13 @@ public class MainController implements Initializable {
                         currentTitledPane = "Add entity";
                         break;
                     case "Entity modification":
-                        entityModificationPaneController.resetState();
+                    {
+                        try {
+                            entityModificationPaneController.resetState();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                         currentTitledPane = "Entity modification";
                         break;
                     case "Multimedia":
@@ -286,13 +292,14 @@ public class MainController implements Initializable {
     }
     
     @FXML
-    public void groundCheckboxClick(ActionEvent event)
+    public void groundCheckboxClick(ActionEvent event) throws SQLException
     {
         this.mapPaneController.clearMap();
         this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
         this.timePaneController.reloadComboBox();
         this.selectedSpatialEntity = null;
         this.spatialPaneController.resetState(); // must be after this.selectedSpatialEntity = null
+        this.entityModificationPaneController.resetState();
     }
     
     public void handleInputEventForMap(InputEvent event) {

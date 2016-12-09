@@ -310,7 +310,8 @@ public class TimePaneController implements Initializable {
         slider.setMinorTickCount(0);
         slider.setMajorTickUnit(1);
 
-        selectedDateBoldLabel.setText(listOfDateWhenSomethingSpatialObjectChanges.get((int) slider.getValue()));
+        int sliderValue = (int) slider.getValue();
+        selectedDateBoldLabel.setText(listOfDateWhenSomethingSpatialObjectChanges.get(sliderValue));
 
     }
 

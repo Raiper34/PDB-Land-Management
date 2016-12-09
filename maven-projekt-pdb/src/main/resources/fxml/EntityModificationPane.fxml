@@ -21,7 +21,7 @@
       <Button fx:id="buttonSave" layoutX="306.0" layoutY="191.0" mnemonicParsing="false" onAction="#saveClick" prefHeight="26.0" prefWidth="79.0" text="Save" />
       <Label layoutX="12.0" layoutY="129.0" text="Actual owner:" />
       <Separator layoutX="22.0" layoutY="225.0" prefHeight="3.0" prefWidth="364.0" />
-      <Button fx:id="buttonDeleteObjInInterval" disable="true" layoutX="22.0" layoutY="381.0" mnemonicParsing="false" text="Delete obj. in interval" />
+      <Button fx:id="buttonDeleteObjInInterval" disable="true" layoutX="22.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#buttonDeleteObjInIntervalClicked" text="Delete obj. in interval" />
       <DatePicker fx:id="datePickerDeleteFrom" layoutX="186.0" layoutY="381.0" prefHeight="26.0" prefWidth="95.0" />
       <Label layoutX="286.0" layoutY="385.0" text="-">
          <font>

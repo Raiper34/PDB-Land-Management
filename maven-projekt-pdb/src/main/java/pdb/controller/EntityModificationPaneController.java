@@ -47,8 +47,10 @@ import javafx.scene.shape.Shape;
 import javafx.util.Callback;
 import jdk.internal.util.xml.impl.Input;
 import oracle.spatial.geometry.JGeometry;
+import pdb.model.entityModification.EntityModificationModel;
 import pdb.model.freeholder.Freeholder;
 import pdb.model.freeholder.FreeholderModel;
+import pdb.model.spatial.SpatialEntity;
 
 /**
  *
@@ -100,10 +102,13 @@ public class EntityModificationPaneController implements Initializable {
     Point2D end = null;
     JGeometry originalGeometry;
     
+    private EntityModificationModel entityModificationModel;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //drawTest();
-        System.out.println("Hello from EntityModificationPane");
+        //System.out.println("Hello from EntityModificationPane");
+        this.entityModificationModel = new EntityModificationModel();
         editation.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
@@ -374,6 +379,18 @@ public class EntityModificationPaneController implements Initializable {
             this.pickerTo.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
             this.datePickerDeleteTo.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
             this.buttonDeleteObjInInterval.setDisable(false);
+    }
+    
+    @FXML
+    void buttonDeleteObjInIntervalClicked(MouseEvent event) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MM. yyyy");        
+
+        this.entityModificationModel.deleteObjectInInterval(this.mainController.selectedSpatialEntity, this.datePickerDeleteFrom.getValue(), this.datePickerDeleteTo.getValue());
+        this.mainController.mapPaneController.clearMap();
+        this.mainController.mapPaneController.initializeSpatialEntitiesModel();
+        this.mainController.mapPaneController.loadEntities(this.mainController.dateOfCurrentlyShowedDatabaseSnapshot);
+        this.mainController.mapPaneController.loadEstates(this.mainController.dateOfCurrentlyShowedDatabaseSnapshot);
+        this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());    
     }
 
 }
