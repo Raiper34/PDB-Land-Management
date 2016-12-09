@@ -15,6 +15,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +48,7 @@ import pdb.model.SpatialEntitiesModel;
 import pdb.model.entityModification.EntityModificationModel;
 import pdb.model.freeholder.Freeholder;
 import pdb.model.freeholder.FreeholderModel;
+import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
 
 /**
@@ -129,8 +132,13 @@ public class EntityModificationPaneController implements Initializable {
         System.out.println(test.id);
        }
        this.mainController.originalSelectedSpatialEntityGeometry = this.mainController.selectedSpatialEntity.geometry;
-       
        SpatialEntitiesModel spatialEntitiesModel = mainController.mapPaneController.spatialEntitiesModel;
+       
+       Calendar testStart = new GregorianCalendar(2015, 0, 1);
+       Calendar testEnd = new GregorianCalendar(2016, 0, 1);
+       //List<Entity> entityChanges =  spatialEntitiesModel.getEntity(this.mainController.selectedSpatialEntity.id, testStart.getTime(), testEnd.getTime());
+       List<Estate> entityChanges =  spatialEntitiesModel.getEstateByIdWhichIntersectsInterval(this.mainController.selectedSpatialEntity.id, testStart.getTime(), testEnd.getTime());
+       
        spatialEntitiesModel.updateSpatialEntity(this.mainController.selectedSpatialEntity, this.mainController.selectedSpatialEntity);
        
         LocalDate localDate = this.pickerFrom.getValue();
