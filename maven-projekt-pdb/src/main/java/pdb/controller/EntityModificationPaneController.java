@@ -134,11 +134,6 @@ public class EntityModificationPaneController implements Initializable {
        this.mainController.originalSelectedSpatialEntityGeometry = this.mainController.selectedSpatialEntity.geometry;
        SpatialEntitiesModel spatialEntitiesModel = mainController.mapPaneController.spatialEntitiesModel;
        
-       Calendar testStart = new GregorianCalendar(2015, 0, 1);
-       Calendar testEnd = new GregorianCalendar(2016, 0, 1);
-       //List<Entity> entityChanges =  spatialEntitiesModel.getEntity(this.mainController.selectedSpatialEntity.id, testStart.getTime(), testEnd.getTime());
-       List<Estate> entityChanges =  spatialEntitiesModel.getEstateByIdWhichIntersectsInterval(this.mainController.selectedSpatialEntity.id, testStart.getTime(), testEnd.getTime());
-       
        spatialEntitiesModel.updateSpatialEntity(this.mainController.selectedSpatialEntity, this.mainController.selectedSpatialEntity);
        
         LocalDate localDate = this.pickerFrom.getValue();
