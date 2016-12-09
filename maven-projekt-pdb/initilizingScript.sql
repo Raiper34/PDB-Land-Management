@@ -473,6 +473,14 @@ INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_
 	    ),
 	    TO_DATE('24-12-2006', 'dd-mm-yyyy'), TO_DATE('20-07-2016', 'dd-mm-yyyy'), 2, 8
 );
+INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_id) VALUES(
+	    8,
+	    SDO_GEOMETRY(2003, NULL, NULL,
+		    SDO_ELEM_INFO_ARRAY(1, 1003, 1),
+		    SDO_ORDINATE_ARRAY(550,450, 650,450, 650,650, 450,650, 450,550, 550,550, 550,450)
+	    ),
+	    TO_DATE('21-07-2016', 'dd-mm-yyyy'), TO_DATE('20-07-2017', 'dd-mm-yyyy'), 1, 8
+);
 
 
 COMMIT;
