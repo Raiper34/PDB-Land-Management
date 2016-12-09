@@ -320,19 +320,21 @@ public class EntityModificationPaneController implements Initializable {
             int index = 0;
             boolean found = false;
             //this.mainController.selectedSpatialEntity.toShapes(spatialEntity, editationMode)
-            
-            int currentFreeholderId = ((Estate)this.mainController.selectedSpatialEntity).freeholder.id;
-            for(Freeholder freeholder : freehodlers) {
-                if(freeholder.id == currentFreeholderId)
-                 {
-                    found = true;
-                    break;
-                 }
-                index++;
-            }
-            if(found)
-            {
-                this.comboboxFreeholders.getSelectionModel().select(index);
+
+            if(this.mainController.selectedSpatialEntity instanceof Estate) {
+                int currentFreeholderId = ((Estate)this.mainController.selectedSpatialEntity).freeholder.id;
+                for(Freeholder freeholder : freehodlers) {
+                    if(freeholder.id == currentFreeholderId)
+                     {
+                        found = true;
+                        break;
+                     }
+                    index++;
+                }
+                if(found)
+                {
+                    this.comboboxFreeholders.getSelectionModel().select(index);
+                }
             }
             
             Instant instant = Instant.ofEpochMilli(this.mainController.selectedSpatialEntity.validFrom.getTime());
