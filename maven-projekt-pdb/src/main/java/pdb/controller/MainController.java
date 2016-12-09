@@ -118,6 +118,9 @@ public class MainController implements Initializable {
     public MultimediaPaneController multimediaPaneController;
 
     public SpatialEntity selectedSpatialEntity = null; 
+
+    public JGeometry originalSelectedSpatialEntityGeometry = null; 
+
     
     /**
      * Initializes the controller class.
@@ -350,6 +353,10 @@ public class MainController implements Initializable {
     }
     
     public void setSelectedSpatialEntity(SpatialEntity spatialEntity) {
+        if(selectedSpatialEntity != null && originalSelectedSpatialEntityGeometry != null){
+            selectedSpatialEntity.geometry = originalSelectedSpatialEntityGeometry;
+        }
+        originalSelectedSpatialEntityGeometry = (JGeometry) spatialEntity.geometry.clone();
         selectedSpatialEntity = spatialEntity;
     }
 }

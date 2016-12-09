@@ -343,7 +343,7 @@ INSERT INTO freeholders (id, first_name, surname, birth_date) VALUES(4,'Filip', 
 INSERT INTO freeholders (id, first_name, surname, birth_date) VALUES(5,'Honza', 'Noprs', TO_DATE('01-05-1948', 'dd-mm-yyyy'));
 INSERT INTO freeholders (id, first_name, surname, birth_date) VALUES(6,'Peter', 'Tuvxy', TO_DATE('01-07-1938', 'dd-mm-yyyy'));
 INSERT INTO freeholders (id, first_name, surname, birth_date) VALUES(7,'Karel', 'Gott', TO_DATE('01-08-1998', 'dd-mm-yyyy'));
-INSERT INTO freeholders (id, first_name, surname, birth_date) VALUES(8,'Fiko', 'Pomecosipopit', TO_DATE('01-09-1978', 'dd-mm-yyyy'));
+INSERT INTO freeholders (id, first_name, surname, birth_date) VALUES(8,'Fiko', 'Pome', TO_DATE('01-09-1978', 'dd-mm-yyyy'));
 
 INSERT INTO photos (id) VALUES(1);
 INSERT INTO photos (id) VALUES(2);

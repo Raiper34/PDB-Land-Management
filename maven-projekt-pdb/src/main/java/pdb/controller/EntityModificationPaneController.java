@@ -130,10 +130,12 @@ public class EntityModificationPaneController implements Initializable {
        {
         System.out.println(test.id);
        }
+       this.mainController.originalSelectedSpatialEntityGeometry = this.mainController.selectedSpatialEntity.geometry;
     }
     
     public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException, IOException 
     {
+        
         //this.mainController.selectedSpatialEntity;
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
@@ -177,7 +179,6 @@ public class EntityModificationPaneController implements Initializable {
                 translated = originalGeometry.affineTransforms(true, translation.getX(), translation.getY(),
                     0, false, null, 0, 0, 0, false, null, null, 0, 0, false, 0, 0, 0, 0, 0, 0, false, null, null, 0, false, null, null);
                 if(! isGeometryInMap(translated)){
-                    System.out.println("pdb.controller.EntityModificationPaneController.handleInputEventForMap(): NOT IN BOUNDS");
                     return;
                 }
                 this.mainController.selectedSpatialEntity.geometry = translated;
@@ -222,7 +223,6 @@ public class EntityModificationPaneController implements Initializable {
                 }
                 
                 if(! isGeometryInMap(translated) || isGeometryTooSmall(translated)){
-                    System.out.println("pdb.controller.EntityModificationPaneController.handleInputEventForMap(): NOT IN BOUNDS OR TOO SMALL");
                     return;
                 }
                 this.mainController.selectedSpatialEntity.geometry = translated;
