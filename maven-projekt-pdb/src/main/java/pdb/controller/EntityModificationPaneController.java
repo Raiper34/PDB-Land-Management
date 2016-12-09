@@ -9,10 +9,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -130,6 +132,40 @@ public class EntityModificationPaneController implements Initializable {
        
        SpatialEntitiesModel spatialEntitiesModel = mainController.mapPaneController.spatialEntitiesModel;
        spatialEntitiesModel.updateSpatialEntity(this.mainController.selectedSpatialEntity, this.mainController.selectedSpatialEntity);
+       
+        LocalDate localDate = this.pickerFrom.getValue();
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        Date pickerFrom = Date.from(instant);
+        Date dbFrom = this.mainController.selectedSpatialEntity.validFrom;
+        
+        localDate = this.pickerTo.getValue();
+        instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        Date pickerTo = Date.from(instant);
+        Date dbTo = this.mainController.selectedSpatialEntity.validTo;
+       
+       if((dbFrom.after(pickerFrom) || dbFrom.equals(pickerFrom)) //object timeline is inside picker timeline
+            && (dbTo.before(pickerTo) || dbTo.equals(pickerTo)))
+       {
+           //update only 
+       }
+       else if((dbFrom.before(pickerFrom)) //picker timeline is inside object timeline 
+               && (dbTo.after(pickerTo)))
+       {
+           //one update 
+           //two inserts
+       }
+       else if((dbFrom.before(pickerFrom)) //object left limit is outside picker timeline
+               && (dbTo.before(pickerTo) || dbTo.equals(pickerTo)))
+       {
+           //one update
+           //one insert
+       }
+       else if((dbFrom.after(pickerFrom) || dbFrom.equals(pickerFrom)) 
+               && (dbTo.after(pickerTo)))
+       {
+           //one update
+           //one insert
+       }
     }
     
     public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException, IOException 
