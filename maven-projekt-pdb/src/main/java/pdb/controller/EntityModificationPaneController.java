@@ -129,7 +129,7 @@ public class EntityModificationPaneController implements Initializable {
        this.mainController.originalSelectedSpatialEntityGeometry = this.mainController.selectedSpatialEntity.geometry;
        
        SpatialEntitiesModel spatialEntitiesModel = mainController.mapPaneController.spatialEntitiesModel;
-       spatialEntitiesModel.updateSpatialEntity((Estate) this.mainController.selectedSpatialEntity, (Estate) this.mainController.selectedSpatialEntity);
+       spatialEntitiesModel.updateSpatialEntity(this.mainController.selectedSpatialEntity, this.mainController.selectedSpatialEntity);
     }
     
     public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException, IOException 

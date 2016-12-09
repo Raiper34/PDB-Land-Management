@@ -40,6 +40,17 @@ public class SpatialEntitiesModel {
         freeholdersModel = new FreeholderModel();
     }
 
+    public void updateSpatialEntity(SpatialEntity originalSpatialEntity, SpatialEntity spatialEntityToSave){
+        if(originalSpatialEntity instanceof Entity && spatialEntityToSave instanceof Entity){
+            updateSpatialEntity((Entity) originalSpatialEntity, (Entity) spatialEntityToSave);
+        }
+        if(originalSpatialEntity instanceof Estate && spatialEntityToSave instanceof Estate){
+            updateSpatialEntity((Estate) originalSpatialEntity, (Estate) spatialEntityToSave);
+        }
+    }
+    public void updateSpatialEntity(Entity originalSpatialEntity, Entity spatialEntityToSave){
+        
+    }
     
     public void updateSpatialEntity(Estate originalSpatialEntity, Estate spatialEntityToSave){
         try{
