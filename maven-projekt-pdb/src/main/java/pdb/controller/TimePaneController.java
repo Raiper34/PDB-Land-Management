@@ -88,8 +88,8 @@ public class TimePaneController implements Initializable {
     void datePickerOnAction(ActionEvent event) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MM. yyyy");
         LocalDate date = datePicker.getValue();
-        String pickedDate = formatter.format(date);
-        if (pickedDate != null) {
+        if (date != null) {
+            String pickedDate = formatter.format(date);
             this.mainController.mapPaneController.clearMap();
             this.mainController.mapPaneController.initializeSpatialEntitiesModel();
             this.mainController.dateOfCurrentlyShowedDatabaseSnapshot = pickedDate;
@@ -97,7 +97,9 @@ public class TimePaneController implements Initializable {
             this.mainController.mapPaneController.loadEstates(pickedDate);
             this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
             this.mainController.selectedSpatialEntity = null;
-       }
+            this.slider.setValue(0);
+            this.comboBox.getSelectionModel().clearSelection();
+        }
     }
     
     public MainController mainController;
@@ -127,6 +129,11 @@ public class TimePaneController implements Initializable {
                 mainController.mapPaneController.loadEstates(selectedDate);
                 mainController.mapPaneController.drawSpatialEntities(mainController.undergroundCheckbox.isSelected(),mainController.groundCheckbox.isSelected(), mainController.overgroundCheckbox.isSelected());
                 mainController.selectedSpatialEntity = null;
+                // pokud byla nastavena hodnota 0, je možné že to nastavila obsluha jiné události (související s výběrem data) v takovém případě bychom pouze cyklicky volali danou obsluhu a ta zase nás atak pořád dokola a to nechceme
+                if ((int) slider.getValue() != 0) {
+                    datePicker.setValue(null);
+                    comboBox.getSelectionModel().clearSelection();
+                }
             }
         });
     }
@@ -186,6 +193,14 @@ public class TimePaneController implements Initializable {
             this.mainController.mapPaneController.loadEstates(pickedDate);
             this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
             this.mainController.selectedSpatialEntity = null;
+            
+            this.datePicker.setValue(null);
+            try {
+                this.slider.setValue(0);
+            }
+            catch(Exception e) {
+                System.err.println(e.getMessage());
+            }
        }
     }
     

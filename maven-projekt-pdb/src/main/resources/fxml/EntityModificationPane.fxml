@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="entityModificationAnchorPane" prefHeight="430.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.EntityModificationPaneController">
+<AnchorPane id="AnchorPane" fx:id="entityModificationAnchorPane" prefHeight="430.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.EntityModificationPaneController">
    <children>
       <Label layoutX="23.0" layoutY="18.0" text="Name:" />
       <Label layoutX="22.0" layoutY="49.0" text="Description:" />
@@ -22,13 +22,13 @@
       <Label layoutX="12.0" layoutY="129.0" text="Actual owner:" />
       <Separator layoutX="22.0" layoutY="225.0" prefHeight="3.0" prefWidth="364.0" />
       <Button fx:id="buttonDeleteObjInInterval" disable="true" layoutX="22.0" layoutY="381.0" mnemonicParsing="false" text="Delete obj. in interval" />
-      <DatePicker layoutX="186.0" layoutY="381.0" prefHeight="26.0" prefWidth="95.0" />
+      <DatePicker fx:id="datePickerDeleteFrom" layoutX="186.0" layoutY="381.0" prefHeight="26.0" prefWidth="95.0" />
       <Label layoutX="286.0" layoutY="385.0" text="-">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <DatePicker layoutX="294.0" layoutY="381.0" prefHeight="26.0" prefWidth="95.0" />
+      <DatePicker fx:id="datePickerDeleteTo" layoutX="294.0" layoutY="381.0" prefHeight="26.0" prefWidth="95.0" />
       <Separator layoutX="26.0" layoutY="362.0" prefHeight="3.0" prefWidth="364.0" />
       <ComboBox fx:id="comboboxFreeholders" layoutX="111.0" layoutY="124.0" prefHeight="26.0" prefWidth="274.0" />
       <DatePicker fx:id="pickerFrom" layoutX="111.0" layoutY="160.0" prefHeight="26.0" prefWidth="117.0" />

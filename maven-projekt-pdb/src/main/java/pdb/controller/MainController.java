@@ -135,7 +135,7 @@ public class MainController implements Initializable {
                         currentTitledPane = "Add entity";
                         break;
                     case "Entity modification":
-                        // entityModificationPaneController.resetState();
+                        entityModificationPaneController.resetState();
                         currentTitledPane = "Entity modification";
                         break;
                     case "Multimedia":

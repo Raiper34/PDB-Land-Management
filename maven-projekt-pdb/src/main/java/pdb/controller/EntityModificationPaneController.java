@@ -64,9 +64,6 @@ public class EntityModificationPaneController implements Initializable {
     @FXML
     public AnchorPane entityModificationAnchorPane;
     
-    @FXML 
-    private Button buttonDeleteObjInInterval;
-    
     @FXML
     private ComboBox comboboxFreeholders;
     
@@ -87,6 +84,15 @@ public class EntityModificationPaneController implements Initializable {
     
     @FXML
     public ToggleGroup editation;
+    
+    @FXML 
+    public DatePicker datePickerDeleteFrom;
+    
+    @FXML
+    public DatePicker datePickerDeleteTo;
+    
+    @FXML 
+    private Button buttonDeleteObjInInterval;
     
     String editationMode = "Move";
     
@@ -128,51 +134,7 @@ public class EntityModificationPaneController implements Initializable {
         //this.mainController.selectedSpatialEntity;
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
-            FreeholderModel freeholdersModel = new FreeholderModel();
-            freeholdersModel.getFreeHoldersFromDatabase();
-            ObservableList<Freeholder> freehodlers = freeholdersModel.getListAllFreeHolders();
-            this.comboboxFreeholders.setItems(freehodlers);
-
-            this.comboboxFreeholders.setCellFactory(new Callback<ListView<Freeholder>,ListCell<Freeholder>>(){
-                 @Override
-                 public ListCell<Freeholder> call(ListView<Freeholder> l){
-                     return new ListCell<Freeholder>(){
-                         @Override
-                         protected void updateItem(Freeholder item, boolean empty) {
-                             super.updateItem(item, empty);
-                             if (item == null || empty) {
-                                 setGraphic(null);
-                             } else {
-                                 setText(item.first_name + " " +item.surname);
-                             }
-                         }
-                     } ;
-                 }
-             });
-            
-            //SetDefault Values
-            this.nameField.setText(this.mainController.selectedSpatialEntity.name);
-            this.descriptionArea.setText(this.mainController.selectedSpatialEntity.description);
-            int index = 0;
-            boolean found = false;
-            //this.mainController.selectedSpatialEntity.toShapes(spatialEntity, editationMode)
-            for(Freeholder freeholder : freehodlers) {
-                if(freeholder.id == this.mainController.selectedSpatialEntity.id)
-                 {
-                    found = true;
-                    break;
-                 }
-                index++;
-            }
-            if(found)
-            {
-                this.comboboxFreeholders.getSelectionModel().select(index);
-            }
-            
-            Instant instant = Instant.ofEpochMilli(this.mainController.selectedSpatialEntity.validFrom.getTime());
-            this.pickerFrom.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
-            instant = Instant.ofEpochMilli(this.mainController.selectedSpatialEntity.validTo.getTime());
-            this.pickerTo.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
+            this.actualizePaneContent();
         }
     }
     
@@ -343,6 +305,75 @@ public class EntityModificationPaneController implements Initializable {
             System.err.println("deltaY" + deltaY);
             originalGeometry = null;
         }
+    }
+    
+    public void resetState() throws SQLException {
+        
+        if (this.mainController.selectedSpatialEntity != null) {
+            this.actualizePaneContent();
+        }
+        else {
+            buttonDeleteObjInInterval.setDisable(true);
+            this.pickerFrom.setValue(null);
+            this.datePickerDeleteFrom.setValue(null);
+            this.pickerTo.setValue(null);
+            this.datePickerDeleteTo.setValue(null);
+            this.comboboxFreeholders.getSelectionModel().clearSelection();
+            
+            this.nameField.setText("");
+            this.descriptionArea.setText("");
+        }
+    }
+    
+    private void actualizePaneContent() throws SQLException  {
+         FreeholderModel freeholdersModel = new FreeholderModel();
+            freeholdersModel.getFreeHoldersFromDatabase();
+            ObservableList<Freeholder> freehodlers = freeholdersModel.getListAllFreeHolders();
+            this.comboboxFreeholders.setItems(freehodlers);
+
+            this.comboboxFreeholders.setCellFactory(new Callback<ListView<Freeholder>,ListCell<Freeholder>>(){
+                 @Override
+                 public ListCell<Freeholder> call(ListView<Freeholder> l){
+                     return new ListCell<Freeholder>(){
+                         @Override
+                         protected void updateItem(Freeholder item, boolean empty) {
+                             super.updateItem(item, empty);
+                             if (item == null || empty) {
+                                 setGraphic(null);
+                             } else {
+                                 setText(item.first_name + " " +item.surname);
+                             }
+                         }
+                     } ;
+                 }
+             });
+            
+            //SetDefault Values
+            this.nameField.setText(this.mainController.selectedSpatialEntity.name);
+            this.descriptionArea.setText(this.mainController.selectedSpatialEntity.description);
+            int index = 0;
+            boolean found = false;
+            //this.mainController.selectedSpatialEntity.toShapes(spatialEntity, editationMode)
+            for(Freeholder freeholder : freehodlers) {
+                if(freeholder.id == this.mainController.selectedSpatialEntity.id)
+                 {
+                    found = true;
+                    break;
+                 }
+                index++;
+            }
+            if(found)
+            {
+                this.comboboxFreeholders.getSelectionModel().select(index);
+            }
+            
+            Instant instant = Instant.ofEpochMilli(this.mainController.selectedSpatialEntity.validFrom.getTime());
+            this.pickerFrom.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
+            this.datePickerDeleteFrom.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
+            instant = Instant.ofEpochMilli(this.mainController.selectedSpatialEntity.validTo.getTime());
+            this.pickerTo.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
+            this.datePickerDeleteTo.setValue(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate());
+            this.buttonDeleteObjInInterval.setDisable(false);
     }
 
 }
