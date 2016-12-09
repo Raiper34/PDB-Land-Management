@@ -45,12 +45,10 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Shape;
 import javafx.util.Callback;
-import jdk.internal.util.xml.impl.Input;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.entityModification.EntityModificationModel;
 import pdb.model.freeholder.Freeholder;
 import pdb.model.freeholder.FreeholderModel;
-import pdb.model.spatial.SpatialEntity;
 
 /**
  *
