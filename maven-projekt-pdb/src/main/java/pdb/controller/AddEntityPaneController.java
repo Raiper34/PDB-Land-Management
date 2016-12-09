@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -34,6 +35,7 @@ import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
 import pdb.model.spatial.Shapes;
 import pdb.model.spatial.SpatialEntity;
+import sun.util.calendar.Gregorian;
 
 /**
  *
@@ -320,8 +322,8 @@ public class AddEntityPaneController implements Initializable {
         calToday.set(Calendar.SECOND, 0);
         calToday.set(Calendar.MILLISECOND, 0);
         Date validFromDate = calToday.getTime();
-        calToday.add(Calendar.YEAR, 1);
-        Date validToDate = calToday.getTime();
+        
+        Date validToDate = new GregorianCalendar(2116, 9, 27).getTime();
         if (typeOfNewSpatialEntity.equals("estate")) {
             //getLastID of estate
             int id = spatialEntitiesModel.getNewIdForEstate();
