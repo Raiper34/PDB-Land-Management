@@ -241,6 +241,47 @@ public class FreeholderModel {
         return numberOfFreeholdersOwnedEstateInInterval;
     }
 
+    public int getNumberOfOwnedEstatesOfFreeholdersWithSameFirstName(Freeholder selectedFreeholder, Date pickerFrom, Date pickerTo){
+        int numberOfOwnedEstatesOfFreeholdersWithSameFirstName = 0;
+//SELECT COUNT(*) as cnt from
+//(
+//SELECT  FREEHOLDERS.FIRST_NAME as FNAME, ESTATES.ID as EID FROM FREEHOLDERS
+//LEFT JOIN ESTATES ON FREEHOLDERS.ID=ESTATES.FREEHOLDERS_ID
+//WHERE VALID_TO BETWEEN TO_DATE('1-1-1900', 'dd-mm-yyyy') AND TO_DATE('22-12-2116', 'dd-mm-yyyy') AND FREEHOLDERS.FIRST_NAME = 'Filip'
+//GROUP BY FREEHOLDERS.FIRST_NAME, ESTATES.ID
+//) GROUP BY FNAME;
+
+        try {
+            try (PreparedStatement stmt = this.connection.prepareStatement("" +
+                    "SELECT COUNT(*) as cnt from " +
+                    "( " +
+                    "SELECT  FREEHOLDERS.FIRST_NAME as FNAME, ESTATES.ID as EID FROM FREEHOLDERS " +
+                    "LEFT JOIN ESTATES ON FREEHOLDERS.ID=ESTATES.FREEHOLDERS_ID " +
+                    "WHERE VALID_TO BETWEEN ? AND ? AND FREEHOLDERS.FIRST_NAME = ? " +
+                    "GROUP BY FREEHOLDERS.FIRST_NAME, ESTATES.ID " +
+                    ") GROUP BY FNAME"
+                    )) {
+                stmt.setDate(1, new java.sql.Date(pickerFrom.getTime()));
+                stmt.setDate(2, new java.sql.Date(pickerTo.getTime()));
+                stmt.setString(3, selectedFreeholder.first_name);
+
+                try (ResultSet rset = stmt.executeQuery()) {
+                     if (rset.next()) {
+                        numberOfOwnedEstatesOfFreeholdersWithSameFirstName = (int) rset.getInt("cnt");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(this.getClass().getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        
+        return numberOfOwnedEstatesOfFreeholdersWithSameFirstName;
+    }
+    
     public int getNumberOfOwnedTimesEstateBy(Freeholder selectedFreeholder, Estate estate, Date pickerFrom, Date pickerTo) {
         int numberOfOwnedTimesEstatesBy = 0;
 //SELECT ESTATES.ID, ESTATES.NAME, FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME, COUNT(ESTATES.ID) as cnt FROM ESTATES
