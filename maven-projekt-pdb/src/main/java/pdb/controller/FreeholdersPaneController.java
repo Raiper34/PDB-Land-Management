@@ -9,9 +9,12 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +31,7 @@ import javafx.scene.layout.VBox;
 import pdb.model.freeholder.Freeholder;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -69,6 +73,19 @@ public class FreeholdersPaneController implements Initializable {
     public AnchorPane detailPanel;
      
     public Freeholder selectedFreeholder;
+    
+    @FXML
+    public DatePicker pickerFrom;
+    
+    @FXML
+    public DatePicker pickerTo;
+    
+    @FXML
+    public Label labelNumberOfFreeholdersOwnedEstate;
+    
+    @FXML
+    public Label labelNumberOwnedTimes;
+            
     
     /**
      * Initializes the controller class.
@@ -187,6 +204,45 @@ public class FreeholdersPaneController implements Initializable {
     public void injectMainController(MainController mainController)
     {
         this.mainController = mainController;
+    }
+    
+    @FXML
+    public void calculateStats(){
+        System.out.println("Calculating the stats");
+        
+        if(this.pickerFrom.getValue() != null &&  this.pickerTo.getValue() != null){
+            LocalDate localDate = this.pickerFrom.getValue();
+            Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+            Date pickerFrom = Date.from(instant);
+
+            localDate = this.pickerTo.getValue();
+            instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+            Date pickerTo = Date.from(instant);
+            
+            FreeholderModel freeholderModel = new FreeholderModel();
+            int numberOfFreeholdersOwnedEstates = -1;
+            int numberOwnedTimes = -1;
+            if(this.mainController.selectedSpatialEntity != null &&
+                    this.mainController.selectedSpatialEntity instanceof Estate){
+                numberOwnedTimes = freeholderModel.getNumberOfOwnedTimesEstateBy(this.selectedFreeholder, (Estate) this.mainController.selectedSpatialEntity ,pickerFrom, pickerTo);
+                numberOfFreeholdersOwnedEstates = freeholderModel.getNumberOfFreeholdersOwnedEstateInInterval((Estate) this.mainController.selectedSpatialEntity, pickerFrom, pickerTo);            
+
+                labelNumberOfFreeholdersOwnedEstate.setText("Count of Freeholders owned selected estate: " + numberOfFreeholdersOwnedEstates);
+                labelNumberOwnedTimes.setText("Count of times the freeholder owned the selected estate: " + numberOwnedTimes);
+            }
+            else {
+                labelNumberOfFreeholdersOwnedEstate.setText("Please select an estate on a map and click calculate.");
+                labelNumberOwnedTimes.setText("Please select an estate on a map and click calculate.");
+            }
+        } else {
+            labelNumberOwnedTimes.setText("You need to pick an interval!");
+            labelNumberOfFreeholdersOwnedEstate.setText("You need to pick an interval!");
+        }
+        
+
+        //select
+        //zobraz
+        
     }
     
     

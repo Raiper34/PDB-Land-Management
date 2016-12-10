@@ -7,8 +7,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.FreeholdersPaneController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pdb.controller.FreeholdersPaneController">
    <children>
       <TextField fx:id="name" layoutX="165.0" layoutY="23.0" />
       <TextField fx:id="surname" layoutX="167.0" layoutY="56.0" />
@@ -21,15 +22,31 @@
         
       </TableView>
       <Label layoutX="26.0" layoutY="145.0" text="Freeholders" />
-      <AnchorPane fx:id="detailPanel" layoutX="8.0" layoutY="4.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="detailPanel" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button layoutX="338.0" layoutY="16.0" mnemonicParsing="false" onAction="#backClick" text="Back" />
-            <TableView fx:id="estatesTable" layoutX="11.0" layoutY="53.0" onMouseClicked="#tableHistoryOfEstatesForFreeholderClick" prefHeight="333.0" prefWidth="380.0">
+            <TableView fx:id="estatesTable" layoutX="11.0" layoutY="53.0" onMouseClicked="#tableHistoryOfEstatesForFreeholderClick" prefHeight="149.0" prefWidth="380.0">
               <columns>
                 <TableColumn minWidth="0.0" prefWidth="0.0" text="C2" />
               </columns>
             </TableView>
             <Label layoutX="13.0" layoutY="28.0" text="Estates Actual/Historical" />
+            <DatePicker fx:id="pickerFrom" layoutX="48.0" layoutY="222.0" prefHeight="26.0" prefWidth="159.0" />
+            <DatePicker fx:id="pickerTo" layoutX="236.0" layoutY="222.0" prefHeight="26.0" prefWidth="159.0" />
+            <Label layoutX="11.0" layoutY="227.0" text="From" />
+            <Label layoutX="214.0" layoutY="227.0" text="To" />
+            <Label fx:id="labelNumberOfFreeholdersOwnedEstate" layoutX="14.0" layoutY="254.0" prefHeight="16.0" prefWidth="303.0" text="Count of Freeholders owned selected estate:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelNumberOwnedTimes" layoutX="13.0" layoutY="272.0" prefHeight="16.0" prefWidth="364.0" text="Count of times the freeholder owned selected estate:">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="12.0" layoutY="206.0" prefHeight="16.0" prefWidth="221.0" text="Select an interval for stats below" />
+            <Button layoutX="273.0" layoutY="360.0" mnemonicParsing="false" onAction="#calculateStats" text="Calculate stats" />
          </children>
       </AnchorPane>
    </children>

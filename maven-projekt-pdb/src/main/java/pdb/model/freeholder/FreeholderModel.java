@@ -6,6 +6,7 @@
 package pdb.model.freeholder;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,6 +14,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import oracle.jdbc.OraclePreparedStatement;
@@ -20,6 +23,7 @@ import oracle.jdbc.OracleResultSet;
 
 import pdb.model.DatabaseModel;
 import pdb.model.DatabaseModel;
+import pdb.model.spatial.Estate;
 import pdb.model.spatial.ImprovedCircle;
 
 /**
@@ -193,6 +197,71 @@ public class FreeholderModel {
         }
         return max;
     }
+
+    public int getNumberOfFreeholdersOwnedEstateInInterval(Estate estate, Date pickerFrom, Date pickerTo) {
+        
+        int numberOfFreeholdersOwnedEstateInInterval = 0;
+        
+//        try {
+//            try (PreparedStatement stmt = this.connection.prepareStatement(""
+//                    + "select * from related_spatial_entities WHERE "
+//                    + "valid_to >= ?")) {
+//                stmt.setDate(1, new java.sql.Date(new Date().getTime()));
+//                
+//                try (ResultSet rset = stmt.executeQuery()) {
+//                     if (rset.next()) {
+//                        numberOfFreeholdersOwnedEstateInInterval = (int) rset.getInt("cnt");
+//                    }
+//                } catch (Exception ex) {
+//                    Logger.getLogger(this.getClass().getName()).log(
+//                            Level.SEVERE, null, ex);
+//                }
+//            }
+//
+//        } catch (SQLException sqlEx) {
+//            System.err.println("SQLException: " + sqlEx.getMessage());
+//        }
+        
+        return numberOfFreeholdersOwnedEstateInInterval;
+    }
+
+    public int getNumberOfOwnedTimesEstateBy(Freeholder selectedFreeholder, Estate estate, Date pickerFrom, Date pickerTo) {
+        int numberOfOwnedTimesEstatesBy = 0;
+//SELECT ESTATES.ID, ESTATES.NAME, FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME, COUNT(ESTATES.ID) as cnt FROM ESTATES
+//LEFT JOIN FREEHOLDERS ON ESTATES.FREEHOLDERS_ID=FREEHOLDERS.ID
+//WHERE VALID_TO BETWEEN TO_DATE('22-12-2006', 'dd-mm-yyyy') AND TO_DATE('22-12-2116', 'dd-mm-yyyy')
+//AND FREEHOLDERS.ID = 1 AND ESTATES.ID = 8
+//GROUP BY ESTATES.ID, ESTATES.NAME, FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME; 
+        try {
+            try (PreparedStatement stmt = this.connection.prepareStatement(""
+                    + "SELECT ESTATES.ID, ESTATES.NAME, FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME, COUNT(ESTATES.ID) as cnt "
+                    + "FROM ESTATES LEFT JOIN FREEHOLDERS ON ESTATES.FREEHOLDERS_ID=FREEHOLDERS.ID "
+                    + "WHERE VALID_TO BETWEEN ? AND ? "
+                    + "AND FREEHOLDERS.ID = ? AND ESTATES.ID = ? "
+                    + "GROUP BY ESTATES.ID, ESTATES.NAME, FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME"
+                    )) {
+                stmt.setDate(1, new java.sql.Date(pickerFrom.getTime()));
+                stmt.setDate(2, new java.sql.Date(pickerTo.getTime()));
+                stmt.setInt(3, selectedFreeholder.id);
+                stmt.setInt(4, estate.id);
+
+                try (ResultSet rset = stmt.executeQuery()) {
+                     if (rset.next()) {
+                        numberOfOwnedTimesEstatesBy = (int) rset.getInt("cnt");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(this.getClass().getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        
+        return numberOfOwnedTimesEstatesBy;
+    }
+    
     
     
 }

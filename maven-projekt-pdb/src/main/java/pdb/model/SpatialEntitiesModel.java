@@ -127,7 +127,9 @@ public class SpatialEntitiesModel {
         } 
         else if( spatialEntityToSave instanceof Estate ){
             saveSpatialEntityToDB((Estate) spatialEntityToSave);
-        }
+        } 
+        else 
+            System.err.println("THE SPATIAL ENTITY IS NOT ENTITY NOR ESTATE");
     }
     
     /*
