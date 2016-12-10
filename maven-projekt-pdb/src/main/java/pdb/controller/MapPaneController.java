@@ -431,6 +431,7 @@ public class MapPaneController implements Initializable {
     public void drawSpatialEntitiesByLayer(boolean underground, boolean ground, boolean overground)
     {
         int tmpID = lastSelectedShapeID;
+        //System.out.println(this.mainController.dateOfCurrentlyShowedDatabaseSnapshot);
         Paint[] tmpPaintArray = {arrPaintFillAndStrokeLastSelectedObject[0], arrPaintFillAndStrokeLastSelectedObject[1]};
         String tmpEntityType = lastSelectedEntityType;
         clearMap();

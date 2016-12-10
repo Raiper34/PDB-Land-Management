@@ -83,6 +83,8 @@ public class TimePaneController implements Initializable {
     private Slider slider;
     
     private List<String> listOfDateWhenSomethingSpatialObjectChanges = new ArrayList<>();
+    
+    private boolean dontUpdateSlider = false;
 
     @FXML
     void datePickerOnAction(ActionEvent event) {
@@ -120,6 +122,10 @@ public class TimePaneController implements Initializable {
 
             @Override
             public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+                //System.out.println(mainController.dateOfCurrentlyShowedDatabaseSnapshot);
+                if (listOfDateWhenSomethingSpatialObjectChanges.size() == 0 || dontUpdateSlider == true) {
+                    return;               
+                }
                 String selectedDate = listOfDateWhenSomethingSpatialObjectChanges.get((int) slider.getValue());
                 selectedDateBoldLabel.setText(selectedDate);
                 mainController.mapPaneController.clearMap();
@@ -184,6 +190,7 @@ public class TimePaneController implements Initializable {
     @FXML
     void comboBoxOnAction(ActionEvent event) {
        // comboBox.getSelectionModel().getSelectedItem();
+       //System.out.println(this.mainController.dateOfCurrentlyShowedDatabaseSnapshot);
        String pickedDate = (String) comboBox.getSelectionModel().getSelectedItem();
        if (pickedDate != null) {
             this.mainController.mapPaneController.clearMap();
@@ -300,7 +307,7 @@ public class TimePaneController implements Initializable {
 
         comboBox.getItems().addAll(listOfDateWhenSomethingSpatialObjectChanges);
 
-        
+        dontUpdateSlider = true;
         slider.setMin(0);
         slider.setMax(listOfDateWhenSomethingSpatialObjectChanges.size() - 1);
         //slider.setValue(listOfDateWhenSomethingSpatialObjectChanges.size() - 1);
@@ -315,9 +322,10 @@ public class TimePaneController implements Initializable {
         if (listOfDateWhenSomethingSpatialObjectChanges.size() != size) {
             sliderValue = 0;
         }
-        
-        selectedDateBoldLabel.setText(listOfDateWhenSomethingSpatialObjectChanges.get(sliderValue));
-
+        if (listOfDateWhenSomethingSpatialObjectChanges.size() != 0) {
+            selectedDateBoldLabel.setText(listOfDateWhenSomethingSpatialObjectChanges.get(sliderValue));
+        }
+        dontUpdateSlider = false;
     }
 
 }
