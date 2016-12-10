@@ -315,6 +315,87 @@ public class SpatialEntitiesModel {
     }
     
     /*
+    * @return List<Estate>
+    */
+    public Estate createEstate(int ID, Date from, Date to) {
+        Estate estate = null;
+
+        try {
+            try (PreparedStatement stmt = conn.prepareStatement(""
+                    + "select * from estates WHERE "
+                    + "valid_from = ? and valid_to = ? and id = ?")) {
+                stmt.setDate(1, new java.sql.Date(from.getTime()));
+                stmt.setDate(2, new java.sql.Date(to.getTime()));              
+                stmt.setInt(3, ID);
+                try (ResultSet rset = stmt.executeQuery()) {
+                    while (rset.next()) {
+                        
+                        byte[] image = rset.getBytes("geometry");
+                        JGeometry jGeometry = JGeometry.load(image);
+                        
+                        Freeholder freeholder = freeholdersModel.getFreeholderById(rset.getInt("freeholders_id"));
+                        estate = new Estate(rset.getInt("id"),
+                                rset.getString("name"),
+                                rset.getString("description"),
+                                jGeometry,
+                                rset.getDate("valid_from"),
+                                rset.getDate("valid_to"),
+                                freeholder);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SpatialEntitiesModel.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        
+        return estate;
+    }
+    
+    /*
+    * @return List<Entity>
+    */
+    public Entity createEntity(int ID, Date from, Date to) {
+        Entity entity = null;
+        
+        try {
+            try (PreparedStatement stmt = conn.prepareStatement(""
+                    + "select * from related_spatial_entities WHERE "
+                    + "valid_from = ? and valid_to = ? and id = ?")) {
+                stmt.setDate(1, new java.sql.Date(from.getTime()));
+                stmt.setDate(2, new java.sql.Date(to.getTime()));
+                
+                stmt.setInt(3, ID);
+                
+                try (ResultSet rset = stmt.executeQuery()) {
+                    while (rset.next()) {
+                        byte[] image = rset.getBytes("geometry");
+                        JGeometry jGeometry = JGeometry.load(image);
+                        entity = new Entity(rset.getInt("id"),
+                                rset.getString("name"),
+                                rset.getString("description"),
+                                jGeometry, rset.getDate("valid_from"),
+                                rset.getDate("valid_to"),
+                                rset.getString("entity_type"),
+                                rset.getString("layer"));
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SpatialEntitiesModel.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
+        
+        return entity;
+    }
+    
+    /*
     * @param String dateSnapshot
     * @return List<Entity>
     */
