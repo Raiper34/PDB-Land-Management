@@ -156,16 +156,16 @@ public class TimeModel {
         if (spatialEntityType.equals("related spatial entity")) {
             sqlQueryEntities = "select * from related_spatial_entities " +
                 "WHERE id = "+ id +" " +
-                    "AND valid_from <= TO_DATE('"+ validFrom +"', 'dd. mm. yyyy') " + 
-                    "AND valid_to >= TO_DATE('"+ validTo +"', 'dd. mm. yy')";
+                    "AND valid_from = TO_DATE('"+ validFrom +"', 'dd. mm. yyyy') " + 
+                    "AND valid_to = TO_DATE('"+ validTo +"', 'dd. mm. yy')";
       
         }
         // selectedSpatialEntity is instance of Estate
         else {
             sqlQueryEstates = "select * from estates " +
                 "WHERE id = "+ id +" " +
-                    "AND valid_from <= TO_DATE('"+ validFrom +"', 'dd. mm. yyyy') " + 
-                    "AND valid_to >= TO_DATE('"+ validTo +"', 'dd. mm. yyyy')";
+                    "AND valid_from = TO_DATE('"+ validFrom +"', 'dd. mm. yyyy') " + 
+                    "AND valid_to = TO_DATE('"+ validTo +"', 'dd. mm. yyyy')";
         
         }
         

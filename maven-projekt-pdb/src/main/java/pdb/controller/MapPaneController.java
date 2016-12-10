@@ -442,15 +442,16 @@ public class MapPaneController implements Initializable {
         for (Entity entity : entities){
             // underground circle type objects
             for (ImprovedCircle shape : entity.toShapes().circles){
-                if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("entity")) {
-                    shape.setFill(ShapesColorsDefinition.selectedObjectFill);
-                    shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
-                    continue;
-                }
                 
                 if (shape.getEntityReference().getLayer().equals("underground")) {
                     if(underground)
                     {
+                        if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("entity")) {
+                            shape.setFill(ShapesColorsDefinition.selectedObjectFill);
+                            shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
+                            this.addShapeToMapAndSetListeners(shape);
+                            continue;
+                        }
                         // water connection
                         if (shape.getEntityReference().getEntityType().equals("water connection")) {
                             shape.setFill(ShapesColorsDefinition.waterConnectionFill);
@@ -467,14 +468,16 @@ public class MapPaneController implements Initializable {
             }
             // underground path type objects
             for (ImprovedPath shape : entity.toShapes().paths){
-                if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("entity")) {
-                    shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
-                    continue;
-                }
                 
                 if (shape.getEntityReference().getLayer().equals("underground")) {
                     if(underground)
                     {
+                        if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("entity")) {
+                            shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
+                            shape.setStrokeWidth(2.0);
+                            this.addShapeToMapAndSetListeners(shape);
+                            continue;
+                        }
                         // water pipes
                         if (shape.getEntityReference().getEntityType().equals("water pipes")) {
                             shape.setStroke(ShapesColorsDefinition.waterPipesStroke);
@@ -494,14 +497,17 @@ public class MapPaneController implements Initializable {
         // next print estaes
         for (Estate estate : estates){
             for (ImprovedPolygon shape : estate.toShapes().polygons){
-                if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("estate")) {
-                    shape.setFill(ShapesColorsDefinition.selectedObjectFill);
-                    shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
-                    continue;
-                }
                 
                 if(ground)
                 {
+                    if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("estate")) {
+                        shape.setFill(ShapesColorsDefinition.selectedObjectFill);
+                        shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
+                        shape.setStrokeWidth(1.0);
+                        this.addShapeToMapAndSetListeners(shape);
+                        continue;
+                    }
+                    
                     shape.setFill(ShapesColorsDefinition.estateFill);
                     shape.setStroke(ShapesColorsDefinition.estateStroke);
                     shape.setStrokeWidth(1.0);
@@ -514,15 +520,16 @@ public class MapPaneController implements Initializable {
         for (Entity entity : entities){
             // overground polygon type objects
             for (ImprovedPolygon shape : entity.toShapes().polygons){
-                if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("entity")) {
-                    shape.setFill(ShapesColorsDefinition.selectedObjectFill);
-                    shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
-                    continue;
-                }
                 
                 if (shape.getEntityReference().getLayer().equals("overground")) {
                     if(overground)
                     {
+                        if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("entity")) {
+                            shape.setFill(ShapesColorsDefinition.selectedObjectFill);
+                            shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
+                            this.addShapeToMapAndSetListeners(shape);
+                            continue;
+                        }
                         // house
                         if (shape.getEntityReference().getEntityType().equals("house")) {
                             shape.setFill(ShapesColorsDefinition.houseFill);
@@ -535,15 +542,16 @@ public class MapPaneController implements Initializable {
             }
             // overground circle type objects
             for (ImprovedCircle shape : entity.toShapes().circles){
-                if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("entity")) {
-                    shape.setFill(ShapesColorsDefinition.selectedObjectFill);
-                    shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
-                    continue;
-                }
                 
                 if (shape.getEntityReference().getLayer().equals("overground")) {
                     if(overground)
                     {
+                        if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("entity")) {
+                            shape.setFill(ShapesColorsDefinition.selectedObjectFill);
+                            shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
+                            this.addShapeToMapAndSetListeners(shape);
+                            continue;
+                        }
                         // water area
                         if (shape.getEntityReference().getEntityType().equals("water area")) {
                             shape.setFill(ShapesColorsDefinition.waterAreaFill);
@@ -571,14 +579,21 @@ public class MapPaneController implements Initializable {
             }
             // overground path type objects
             for (ImprovedPath shape : entity.toShapes().paths){
-                if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("entity")) {
-                    shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
-                    continue;
-                }
                 
                 if (shape.getEntityReference().getLayer().equals("overground")) {
                     if(overground)
                     {
+                        if (shape.dbId == lastSelectedShapeID && lastSelectedEntityType.equals("entity")) {
+                            shape.setStroke(ShapesColorsDefinition.selectedObjectStroke);
+                            if (shape.getEntityReference().getEntityType().equals("power lines")) {
+                                shape.setStrokeWidth(2.0);
+                            }
+                            else if (shape.getEntityReference().getEntityType().equals("path")) {
+                                shape.setStrokeWidth(10.0);
+                            }
+                            this.addShapeToMapAndSetListeners(shape);
+                            continue;
+                        }
                         // power lines
                         if (shape.getEntityReference().getEntityType().equals("power lines")) {
                             shape.setStroke(ShapesColorsDefinition.powerLinesStroke);

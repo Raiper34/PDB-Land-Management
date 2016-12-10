@@ -271,20 +271,20 @@ public class SpatialModel {
                 sqlQueryEstates = "select * from estates " +
                 "WHERE (SDO_WITHIN_DISTANCE(geometry, ?, 'distance="+ distance +"') = 'TRUE' " +
                     "AND valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                    "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
+                    "AND valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
                     estateCondition;
                 
                 sqlQueryEntities = "select * from related_spatial_entities " +
                 "WHERE (SDO_WITHIN_DISTANCE(geometry, ?, 'distance="+ distance +"') = 'TRUE' " +
                     "AND valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                    "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
+                    "AND valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
                     entityCondition;
                 break;
             case "entities":
                 sqlQueryEntities = "select * from related_spatial_entities " +
                 "WHERE (SDO_WITHIN_DISTANCE(geometry, ?, 'distance="+ distance +"') = 'TRUE' " +
                     "AND valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                    "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
+                    "AND valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
                     entityCondition;
                 
                 if (!estateCondition.isEmpty()) {
@@ -298,7 +298,7 @@ public class SpatialModel {
                 sqlQueryEstates = "select * from estates " +
                 "WHERE (SDO_WITHIN_DISTANCE(geometry, ?, 'distance="+ distance +"') = 'TRUE' " +
                     "AND valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                    "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
+                    "AND valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy'))" +
                     estateCondition;
                 
                 if (!entityCondition.isEmpty()) {
@@ -369,15 +369,15 @@ public class SpatialModel {
                 sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects = 
                 "select * from estates where " + 
                 "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                "AND valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                 "AND id IN "+
                     "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
                     "WHERE r.entity_type IN ("+ entitiyTypes +") " +
                         "AND SDO_FILTER(r.geometry, e.geometry) = 'TRUE' " +
                         "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                        "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND r.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                         "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                        "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                        "AND e.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
                 try {
                     // check if is something is boundary box a if yes, then check it more in detail using SDO_ANYINTERACT
                     psEstatesWhichContainOrNotContainSpecifiedObjects = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects);
@@ -387,15 +387,15 @@ public class SpatialModel {
                         sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects = 
                         "select * from estates where " + 
                         "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                        "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                         "AND id IN "+
                             "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
                             "WHERE r.entity_type IN ("+ entitiyTypes +") " +
                                 "AND SDO_ANYINTERACT(r.geometry, e.geometry) = 'TRUE' " +
                                 "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                                "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                                "AND r.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                                 "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                                "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                                "AND e.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
                     }
                 }
                 catch (SQLException sqlEx) {
@@ -407,15 +407,15 @@ public class SpatialModel {
                 sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects = 
                 "select * from estates where " + 
                 "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                "AND valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                 "AND id NOT IN "+
                     "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
                     "WHERE r.entity_type IN ("+ entitiyTypes +") " +
                         "AND SDO_ANYINTERACT(r.geometry, e.geometry) = 'TRUE' " +
                         "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                        "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND r.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                         "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                        "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                        "AND e.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
                 break;
         }
         //System.err.println(sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects);
@@ -465,15 +465,15 @@ public class SpatialModel {
                 sqlQueryEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = 
                 "select * from estates where " + 
                 "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                "AND valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                 "AND id IN "+
                     "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
                     "WHERE r.entity_type IN ("+ entitiyTypes +") " +
                         "AND SDO_FILTER(r.geometry, e.geometry) = 'TRUE' " +
                         "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                        "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND r.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                         "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                        "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                        "AND e.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
                 try {
                     // check if is something ns boundary box a if yes, then check it more in detail using SDO_ANYINTERACT
                     psEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = DatabaseModel.getInstance().getConnection().prepareStatement(sqlQueryEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects);
@@ -483,15 +483,15 @@ public class SpatialModel {
                         sqlQueryEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = 
                         "select * from estates where " + 
                         "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                        "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                         "AND id IN "+
                             "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
                             "WHERE r.entity_type IN ("+ entitiyTypes +") " +
                                 "AND SDO_ANYINTERACT(r.geometry, e.geometry) = 'TRUE' " +
                                 "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                                "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                                "AND r.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                                 "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                                "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                                "AND e.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
                     }
                 }
                 catch (SQLException sqlEx) {
@@ -503,15 +503,15 @@ public class SpatialModel {
                 sqlQueryEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects = 
                 "select * from estates where " + 
                 "valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                "AND valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                "AND valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                 "AND id NOT IN "+
                     "(select DISTINCT id from (select e.photos_id photos_id, e.geometry geometry, e.freeholders_id freeholders_id, e.id id, e.name name, e.description description, e.valid_from valid_from, e.valid_to valid_to from estates e, related_spatial_entities r " +
                     "WHERE r.entity_type IN ("+ entitiyTypes +") " +
                         "AND SDO_ANYINTERACT(r.geometry, e.geometry) = 'TRUE' " +
                         "AND r.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                        "AND r.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
+                        "AND r.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " +
                         "AND e.valid_from <= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy') " + 
-                        "AND e.valid_to >= TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
+                        "AND e.valid_to > TO_DATE('"+ dateOfCurrentlyShowedDatabaseSnapshot +"', 'dd. mm. yyyy')))";
                 break;
         }
         //System.err.println(sqlQueryEstatesWhichContainOrNotContainSpecifiedObjects);

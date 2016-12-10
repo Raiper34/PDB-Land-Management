@@ -211,7 +211,7 @@ public class SpatialEntitiesModel {
         try {
             try (PreparedStatement stmt = conn.prepareStatement(""
                     + "select * from related_spatial_entities WHERE "
-                    + "valid_to >= ?")) {
+                    + "valid_to > ?")) {
                 stmt.setDate(1, new java.sql.Date(new Date().getTime()));
                 try (ResultSet rset = stmt.executeQuery()) {
                     while (rset.next()) {
@@ -429,7 +429,7 @@ public class SpatialEntitiesModel {
         try {
             try (Statement stmt = conn.createStatement()) {
                 try (ResultSet rset = stmt.executeQuery("select * from "
-                        + "related_spatial_entities WHERE valid_from <= TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy') and valid_to >= TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy')")) {
+                        + "related_spatial_entities WHERE valid_from <= TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy') and valid_to > TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy')")) {
                     while (rset.next()) {
                         byte[] image = rset.getBytes("geometry");
                         JGeometry jGeometry = JGeometry.load(image);
@@ -496,7 +496,7 @@ public class SpatialEntitiesModel {
         try {
             try (PreparedStatement stmt = conn.prepareStatement(""
                     + "select * from estates WHERE "
-                    + "valid_to >= ?")) {
+                    + "valid_to > ?")) {
                 stmt.setDate(1, new java.sql.Date(new Date().getTime()));
                 try (ResultSet rset = stmt.executeQuery()) {
                     while (rset.next()) {
@@ -536,7 +536,7 @@ public class SpatialEntitiesModel {
 
         try {
             try (Statement stmt = conn.createStatement()) {
-                try (ResultSet rset = stmt.executeQuery("select * from estates WHERE valid_from <= TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy') and valid_to >= TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy')")) {
+                try (ResultSet rset = stmt.executeQuery("select * from estates WHERE valid_from <= TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy') and valid_to > TO_DATE('"+ dateSnapshot +"', 'dd. mm. yyyy')")) {
                     while (rset.next()) {
                         
                         byte[] image = rset.getBytes("geometry");
