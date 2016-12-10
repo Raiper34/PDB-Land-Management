@@ -354,6 +354,8 @@ public class MainController implements Initializable {
     
     public void setSelectedSpatialEntity(SpatialEntity spatialEntity) {
         if(selectedSpatialEntity != null && originalSelectedSpatialEntityGeometry != null){
+            if(spatialEntity.id == selectedSpatialEntity.id)
+                return;
             selectedSpatialEntity.geometry = originalSelectedSpatialEntityGeometry;
         }
         originalSelectedSpatialEntityGeometry = (JGeometry) spatialEntity.geometry.clone();
