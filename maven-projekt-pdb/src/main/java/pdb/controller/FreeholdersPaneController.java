@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdb.controller;
 
 import java.net.URL;
@@ -45,7 +40,8 @@ import pdb.model.time.TableViewItem;
 
 /**
  * FXML Controller class
- *
+ * Freeholders Panel controller
+ * 
  * @author gulan
  */
 public class FreeholdersPaneController implements Initializable {
@@ -100,6 +96,11 @@ public class FreeholdersPaneController implements Initializable {
         this.selectedFreeholder = null;
     }    
     
+    /**
+     * Add freeholder to db, method call after button click
+     * @param event
+     * @throws SQLException 
+     */
     @FXML
     public void addFreeholderClick(ActionEvent event) throws SQLException
     {
@@ -113,6 +114,11 @@ public class FreeholdersPaneController implements Initializable {
         this.freeholdersTable.setItems(freeholdersModel.getListAllFreeHolders());
     }
     
+    /**
+     * Method call after table click, it erase table of freeholders and show table of freholders estates
+     * @param event
+     * @throws SQLException 
+     */
     @FXML
     public void tableClick(MouseEvent event) throws SQLException
     {
@@ -151,12 +157,20 @@ public class FreeholdersPaneController implements Initializable {
         }
     }
     
+    /**
+     * Go to default page in this panel
+     * @param event 
+     */
     @FXML
     public void backClick(ActionEvent event)
     {
         this.detailPanel.setVisible(false);
     }
     
+    /**
+     * Init list of freeholders, it fill table with freehodlders from database
+     * @throws SQLException 
+     */
     public void initList() throws SQLException
     {
         FreeholderModel freeholdersModel = new FreeholderModel();
@@ -178,6 +192,10 @@ public class FreeholdersPaneController implements Initializable {
         this.freeholdersTable.setItems(freeholdersModel.getListAllFreeHolders());
     }
     
+    /**
+     * Show freeholders estate from freeholders estates history on map
+     * @param event 
+     */
     @FXML
     public void tableHistoryOfEstatesForFreeholderClick(MouseEvent event)
     {
@@ -204,11 +222,18 @@ public class FreeholdersPaneController implements Initializable {
         }
     }
     
+    /**
+     * Inject main controller, we can call main controler methods then, eg. redraw map etc..
+     * @param mainController 
+     */
     public void injectMainController(MainController mainController)
     {
         this.mainController = mainController;
     }
     
+    /**
+     * Calculate stats of freeholder, number of owned estates...
+     */
     @FXML
     public void calculateStats(){
         System.out.println("Calculating the stats");
@@ -244,8 +269,7 @@ public class FreeholdersPaneController implements Initializable {
         } else {
             labelNumberOwnedTimes.setText("You need to pick an interval!");
             labelNumberOfFreeholdersOwnedEstate.setText("You need to pick an interval!");
-        }
-        
+        }      
 
         //select
         //zobraz

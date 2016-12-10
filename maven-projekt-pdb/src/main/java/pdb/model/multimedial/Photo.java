@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdb.model.multimedial;
 
 import java.awt.image.BufferedImage;
@@ -23,20 +18,29 @@ import pdb.model.DatabaseModel;
 import pdb.model.freeholder.Freeholder;
 
 /**
- *
- * @author archie
+ * Class to manipulate with multimedial database
+ * @author Gulan
  */
 public class Photo {
 
     private DatabaseModel database;
     private Connection connection;
     
+    /**
+     * Constructor
+     * @throws SQLException 
+     */
     public Photo() throws SQLException {
         this.database = DatabaseModel.getInstance();
         this.connection = this.database.getConnection();
     }
 
-    
+    /**
+     * Get proxy for future manipulation
+     * @param id
+     * @return image proxy
+     * @throws SQLException 
+     */
     public OrdImage getProxy(int id) throws SQLException
     {
         OrdImage imgProxy = null;
@@ -65,6 +69,13 @@ public class Photo {
         return imgProxy;
     }
     
+    /**
+     * Insert image from file into database
+     * @param filename
+     * @param estate_id
+     * @throws SQLException
+     * @throws IOException 
+     */
     public void insertPhotoFromFile(String filename, int estate_id) throws SQLException, IOException 
     {
         int id = this.getMaxId() + 1;
@@ -136,6 +147,13 @@ public class Photo {
         }
     }
     
+    /**
+     * Get image from database by id
+     * @param id
+     * @return image in Image datatype
+     * @throws SQLException
+     * @throws IOException 
+     */
     public Image getPhotoFromDatabase(int id) throws SQLException, IOException
     {
         OrdImage imgProxy = this.getProxy(id);
@@ -148,6 +166,14 @@ public class Photo {
         return image;
     }
     
+    /**
+     * Get processed photo from database, after use some filter or image manipulation, first do any process then get image
+     * @param id
+     * @param process
+     * @return manipulated image from database as Image data type
+     * @throws SQLException
+     * @throws IOException 
+     */
     public Image getProcessedPhotoFromDatabase(int id, String process) throws SQLException, IOException
     {
         OrdImage imgProxy = this.getProxy(id);
@@ -161,6 +187,11 @@ public class Photo {
         return image;
     }
     
+    /**
+     * Get max id of images
+     * @return max id as integer
+     * @throws SQLException 
+     */
     private int getMaxId() throws SQLException
     {
         int max = 0;
@@ -177,6 +208,12 @@ public class Photo {
         return max;
     }
     
+    /**
+     * Get photo id from estate table
+     * @param estate_id
+     * @return estate id as Integer
+     * @throws SQLException 
+     */
     public int estatesPhotoId(int estate_id) throws SQLException
     {
         int id = 0;
@@ -193,6 +230,11 @@ public class Photo {
         return id;
     }
     
+    /**
+     * Delete estates photo from database
+     * @param estate_id
+     * @throws SQLException 
+     */
     public void deleteEstatePhoto(int estate_id) throws SQLException
     {
         int photo_id = this.estatesPhotoId(estate_id);
@@ -200,6 +242,11 @@ public class Photo {
         this.deletePhotoById(photo_id);
     }
     
+    /**
+     * Delete photo by id from database
+     * @param id
+     * @throws SQLException 
+     */
     private void deletePhotoById(int id) throws SQLException
     {
         OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
@@ -209,6 +256,11 @@ public class Photo {
         pstmtSelect.close();
     }
     
+    /**
+     * Set estates photo_id in table to null
+     * @param id
+     * @throws SQLException 
+     */
     private void setEstatePhotoToNull(int id) throws SQLException
     {
         OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
@@ -218,6 +270,12 @@ public class Photo {
         pstmtSelect.close();
     }
     
+    /**
+     * Assign photo to estate, it update estates row with new photo id
+     * @param estate_id
+     * @param photo_id
+     * @throws SQLException 
+     */
     private void assignPhotoToEstate(int estate_id, int photo_id) throws SQLException
     {
         OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
@@ -227,6 +285,13 @@ public class Photo {
         pstmtSelect.close();
     }
     
+    /**
+     * Find smiliar images of given image
+     * @param id
+     * @return Observable list of smiliar images
+     * @throws SQLException
+     * @throws IOException 
+     */
     public ObservableList<Image> findSmiliar(int id) throws SQLException, IOException
     {
         ObservableList<Image> images = FXCollections.observableArrayList();

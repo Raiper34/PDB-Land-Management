@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdb.controller;
 
 import java.io.File;
@@ -33,8 +28,10 @@ import pdb.model.DatabaseModel;
 
 
 /**
+ * FXML Controller class
+ * Multimedia controller
  * 
- * @author raiper34
+ * @author gulan
  */
 public class MultimediaPaneController implements Initializable {
     
@@ -110,6 +107,12 @@ public class MultimediaPaneController implements Initializable {
         this.lock();
     }
     
+    /**
+     * Select image from filesystem, method call after button click
+     * @param event
+     * @throws SQLException
+     * @throws IOException 
+     */
     @FXML
     public void selectImageClick(ActionEvent event) throws SQLException, IOException
     {
@@ -130,6 +133,12 @@ public class MultimediaPaneController implements Initializable {
         this.setImageById(this.mainController.selectedSpatialEntity.id);
     }
     
+    /**
+     * Delete image fromdatabase, method call after button click
+     * @param event
+     * @throws SQLException
+     * @throws IOException 
+     */
     @FXML
     public void deleteImageClick(ActionEvent event) throws SQLException, IOException
     {
@@ -138,6 +147,12 @@ public class MultimediaPaneController implements Initializable {
         this.setImageById(this.mainController.selectedSpatialEntity.id);
     }
     
+    /**
+     * Find smiliar images, method call after button click
+     * @param event
+     * @throws SQLException
+     * @throws IOException 
+     */
     @FXML
     public void findSmiliarClick(ActionEvent event) throws SQLException, IOException
     {
@@ -191,12 +206,20 @@ public class MultimediaPaneController implements Initializable {
         );
     }
     
+    /**
+     * More click, show next page in multimedial panel, call after button click
+     * @param event 
+     */
     @FXML
     public void moreClick(ActionEvent event)
     {
         this.gamaContrastPanel.setVisible(true);
     }
     
+    /**
+     * Back to first page in multimedial panel, call after button click
+     * @param event 
+     */
     @FXML
     public void backClick(ActionEvent event)
     {
@@ -204,24 +227,48 @@ public class MultimediaPaneController implements Initializable {
         this.gamaContrastPanel.setVisible(false);
     }
     
+    /**
+     * Rotate image click, call after button click
+     * @param event
+     * @throws SQLException
+     * @throws IOException 
+     */
     @FXML
     public void rotateClick(ActionEvent event) throws SQLException, IOException
     {
         this.setProcessedImageById(this.mainController.selectedSpatialEntity.id, "rotate 90");
     }
     
+    /**
+     * Mirror image click, call after button click
+     * @param event
+     * @throws SQLException
+     * @throws IOException 
+     */
     @FXML
     public void mirrorClick(ActionEvent event) throws SQLException, IOException
     {
         this.setProcessedImageById(this.mainController.selectedSpatialEntity.id, "mirror");
     }
     
+    /**
+     * Flip image click, call after button click
+     * @param event
+     * @throws SQLException
+     * @throws IOException 
+     */
     @FXML
     public void flipClick(ActionEvent event) throws SQLException, IOException
     {
         this.setProcessedImageById(this.mainController.selectedSpatialEntity.id, "flip");
     }
     
+    /**
+     * Gamma apply from sliders, call after button click
+     * @param event
+     * @throws SQLException
+     * @throws IOException 
+     */
     @FXML
     public void gammaAplyClick(ActionEvent event) throws SQLException, IOException
     {
@@ -233,6 +280,12 @@ public class MultimediaPaneController implements Initializable {
         this.gamaContrastPanel.setVisible(false);
     }
     
+    /**
+     * Contrast apply from sliders, call after button click
+     * @param event
+     * @throws SQLException
+     * @throws IOException 
+     */
     @FXML
     public void contrastApplyClick(ActionEvent event) throws SQLException, IOException
     {
@@ -244,6 +297,12 @@ public class MultimediaPaneController implements Initializable {
         this.gamaContrastPanel.setVisible(false);
     }
     
+    /**
+     * Set image by ID, show into image panel
+     * @param id
+     * @throws SQLException
+     * @throws IOException 
+     */
     public void setImageById(int id) throws SQLException, IOException
     {
         this.imageLayout.getChildren().clear();
@@ -263,6 +322,10 @@ public class MultimediaPaneController implements Initializable {
         }
     }
     
+    /**
+     * Switch button disable by val
+     * @param val 
+     */
     private void switchButtons(boolean val)
     {
         this.deleteImageButton.setDisable(val);
@@ -273,6 +336,9 @@ public class MultimediaPaneController implements Initializable {
         this.smiliarButton.setDisable(val);
     }
     
+    /**
+     * Lock image manipulation buttons
+     */
     public void lock()
     {
         this.imageLayout.getChildren().clear();
@@ -280,6 +346,9 @@ public class MultimediaPaneController implements Initializable {
         this.switchButtons(true);
     }
     
+    /**
+     * Unlock image manipulation button
+     */
     public void unlock()
     {
         this.imageLayout.getChildren().clear();
@@ -287,6 +356,13 @@ public class MultimediaPaneController implements Initializable {
         this.switchButtons(false);
     }
     
+    /**
+     * Set processed image by ID, show changed image inside panel
+     * @param id
+     * @param process
+     * @throws SQLException
+     * @throws IOException 
+     */
     public void setProcessedImageById(int id, String process) throws SQLException, IOException
     {
         this.imageLayout.getChildren().clear();
@@ -306,11 +382,22 @@ public class MultimediaPaneController implements Initializable {
         }
     }
     
+    /**
+     * Inject main controller, we can use main controllers methods then
+     * @param mainController 
+     */
     public void injectMainController(MainController mainController)
     {
         this.mainController = mainController;
     }
     
+    /**
+     * Call this method when click on some estate or entity, fill panel with data 
+     * @param t
+     * @param shape
+     * @throws SQLException
+     * @throws IOException 
+     */
     public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException, IOException 
     {
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED)

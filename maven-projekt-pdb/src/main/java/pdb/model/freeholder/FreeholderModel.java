@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdb.model.freeholder;
 
 import java.sql.Connection;
@@ -27,7 +22,7 @@ import pdb.model.spatial.Estate;
 import pdb.model.spatial.ImprovedCircle;
 
 /**
- *
+ * Class to manipulating with freeholders table
  * @author gulan
  */
 public class FreeholderModel {
@@ -37,6 +32,9 @@ public class FreeholderModel {
     
     public ObservableList<Freeholder> freeholders;
     
+    /**
+     * Constructor
+     */
     public FreeholderModel()
     {
         this.database = DatabaseModel.getInstance();
@@ -44,6 +42,12 @@ public class FreeholderModel {
         this.freeholders = FXCollections.observableArrayList();
     }
     
+    /**
+     * Create new freeholder into database
+     * @param name
+     * @param surname
+     * @param birthDate 
+     */
     public void createNewFreeholder(String name, String surname, String birthDate)
     {
         try 
@@ -62,11 +66,19 @@ public class FreeholderModel {
         }
     }
     
+    /**
+     * Get all freeholders stored in atribute
+     * @return observable list of freeholders
+     */
     public ObservableList<Freeholder> getListAllFreeHolders()
     {
         return this.freeholders;
     }
     
+    /**
+     * Get freeholders from database and store into observable list of atribute
+     * @throws SQLException 
+     */
     public void getFreeHoldersFromDatabase() throws SQLException
     {
         Freeholder freeholder = null;
@@ -99,6 +111,12 @@ public class FreeholderModel {
         }
     }
     
+    /**
+     * Get estates freeholders from database by estate id
+     * @param estateId
+     * @return observable list of freeholders of estate
+     * @throws SQLException 
+     */
     public ObservableList<Freeholder> getEstatesFreeholdersFromDatabase(int estateId) throws SQLException
     {
         ObservableList<Freeholder> estatesFreeholders = FXCollections.observableArrayList();
@@ -166,6 +184,12 @@ public class FreeholderModel {
         return estatesFreeholders;
     }
     
+    /**
+     * Get freeholder from database by id 
+     * @param number
+     * @return freeholder from db
+     * @throws SQLException 
+     */
     public Freeholder getFreeholderById(int number) throws SQLException
     {
         Freeholder freeholder = null;
@@ -198,6 +222,11 @@ public class FreeholderModel {
         return freeholder;
     }
     
+    /**
+     * Get max id of freeholders from database
+     * @return max id as Integer
+     * @throws SQLException 
+     */
     private int getMaxId() throws SQLException
     {
         int max = 0;
@@ -226,16 +255,16 @@ public class FreeholderModel {
         return max;
     }
 
+    /**
+     * Get number of freeholders that own estete in selected interval
+     * @param estate
+     * @param pickerFrom
+     * @param pickerTo
+     * @return number of freeholders
+     */
     public int getNumberOfFreeholdersOwnedEstateInInterval(Estate estate, Date pickerFrom, Date pickerTo) {
         
-        int numberOfFreeholdersOwnedEstateInInterval = 0;
-//SELECT COUNT(*) as cnt from
-//(
-//SELECT FREEHOLDERS.ID as FID, FREEHOLDERS.FIRST_NAME, FREEHOLDERS.SURNAME, ESTATES.ID as EID, ESTATES.NAME FROM FREEHOLDERS
-//LEFT JOIN ESTATES ON FREEHOLDERS.ID=ESTATES.FREEHOLDERS_ID
-//WHERE VALID_TO BETWEEN TO_DATE('1-1-1900', 'dd-mm-yyyy') AND TO_DATE('22-12-2116', 'dd-mm-yyyy') AND ESTATES.ID = 8
-//GROUP BY FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME, FREEHOLDERS.SURNAME, ESTATES.ID, ESTATES.NAME
-//) GROUP BY EID;  
+        int numberOfFreeholdersOwnedEstateInInterval = 0; 
 
         try {
             try (PreparedStatement stmt = this.connection.prepareStatement("" + 
@@ -269,15 +298,15 @@ public class FreeholderModel {
         return numberOfFreeholdersOwnedEstateInInterval;
     }
 
+    /**
+     * Get Number of owned states of freeholders with same first name
+     * @param selectedFreeholder
+     * @param pickerFrom
+     * @param pickerTo
+     * @return number as Integer
+     */
     public int getNumberOfOwnedEstatesOfFreeholdersWithSameFirstName(Freeholder selectedFreeholder, Date pickerFrom, Date pickerTo){
         int numberOfOwnedEstatesOfFreeholdersWithSameFirstName = 0;
-//SELECT COUNT(*) as cnt from
-//(
-//SELECT  FREEHOLDERS.FIRST_NAME as FNAME, ESTATES.ID as EID FROM FREEHOLDERS
-//LEFT JOIN ESTATES ON FREEHOLDERS.ID=ESTATES.FREEHOLDERS_ID
-//WHERE VALID_TO BETWEEN TO_DATE('1-1-1900', 'dd-mm-yyyy') AND TO_DATE('22-12-2116', 'dd-mm-yyyy') AND FREEHOLDERS.FIRST_NAME = 'Filip'
-//GROUP BY FREEHOLDERS.FIRST_NAME, ESTATES.ID
-//) GROUP BY FNAME;
 
         try {
             try (PreparedStatement stmt = this.connection.prepareStatement("" +
@@ -310,14 +339,17 @@ public class FreeholderModel {
         return numberOfOwnedEstatesOfFreeholdersWithSameFirstName;
     }
     
+    /**
+     * Get number of owned times estate by
+     * @param selectedFreeholder
+     * @param estate
+     * @param pickerFrom
+     * @param pickerTo
+     * @return number as integer
+     */
     public int getNumberOfOwnedTimesEstateBy(Freeholder selectedFreeholder, Estate estate, Date pickerFrom, Date pickerTo) {
         int numberOfOwnedTimesEstatesBy = 0;
-//SELECT ESTATES.ID, ESTATES.NAME, FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME, COUNT(ESTATES.ID) as cnt FROM ESTATES
-//LEFT JOIN FREEHOLDERS ON ESTATES.FREEHOLDERS_ID=FREEHOLDERS.ID
-//WHERE VALID_TO BETWEEN TO_DATE('22-12-2006', 'dd-mm-yyyy') AND TO_DATE('22-12-2116', 'dd-mm-yyyy')
-//AND FREEHOLDERS.ID = 1 AND ESTATES.ID = 8
-//AND ESTATES.VALID_FROM NOT IN (SELECT DISTINCT ESTATES.VALID_TO FROM ESTATES WHERE ESTATES.ID = 2 AND FREEHOLDERS.ID = 4)
-//GROUP BY ESTATES.ID, ESTATES.NAME, FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME; 
+
         try {
             try (PreparedStatement stmt = this.connection.prepareStatement(""
                     + "SELECT ESTATES.ID, ESTATES.NAME, FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME, COUNT(ESTATES.ID) as cnt "

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdb.controller;
 
 import pdb.model.DatabaseModel;
@@ -20,7 +15,8 @@ import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
- *
+ * Database settings
+ * 
  * @author gulan
  */
 public class DatabaseSettingsController implements Initializable {
