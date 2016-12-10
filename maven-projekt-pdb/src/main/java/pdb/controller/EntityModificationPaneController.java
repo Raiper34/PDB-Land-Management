@@ -152,7 +152,7 @@ public class EntityModificationPaneController implements Initializable {
            Freeholder freeholder = (Freeholder) this.comboboxFreeholders.getSelectionModel().getSelectedItem();
            if(freeholder != null)
            {
-                //update freeholder id here
+                ((Estate)this.mainController.selectedSpatialEntity).setFreeholder(freeholder);
            }
            entityModel.saveSpatialEntityToDB((Estate)this.mainController.selectedSpatialEntity);
        }
@@ -160,6 +160,8 @@ public class EntityModificationPaneController implements Initializable {
        {
            entityModel.saveSpatialEntityToDB((Entity)this.mainController.selectedSpatialEntity);
        }
+       //Update
+       this.updateMapWithModifications();
     }
     
     public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException, IOException 
@@ -381,10 +383,15 @@ public class EntityModificationPaneController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MM. yyyy");        
 
         this.entityModificationModel.deleteObjectInInterval(this.mainController.selectedSpatialEntity, this.datePickerDeleteFrom.getValue(), this.datePickerDeleteTo.getValue());
+        this.updateMapWithModifications();
+    }
+    
+    void updateMapWithModifications()
+    {
         this.mainController.mapPaneController.clearMap();
         this.mainController.mapPaneController.initializeSpatialEntitiesModel();
         this.mainController.mapPaneController.loadEntities(this.mainController.dateOfCurrentlyShowedDatabaseSnapshot);
         this.mainController.mapPaneController.loadEstates(this.mainController.dateOfCurrentlyShowedDatabaseSnapshot);
-        this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());    
+        this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected()); 
     }
 }
