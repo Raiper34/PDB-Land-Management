@@ -120,15 +120,33 @@ public class SpatialEntitiesModel {
         }
     }
     
+    
+    public void saveSpatialEntityToDB(SpatialEntity spatialEntityToSave) {
+        if(spatialEntityToSave instanceof Entity){
+            saveSpatialEntityToDB((Entity) spatialEntityToSave);
+        } 
+        else if( spatialEntityToSave instanceof Estate ){
+            saveSpatialEntityToDB((Estate) spatialEntityToSave);
+        }
+    }
+    
     /*
     * @param Estate spatialEntityToSave
     */
     public void saveSpatialEntityToDB(Estate spatialEntityToSave) {
         try{
-            PreparedStatement statementInsertSpatialEntity = conn.prepareStatement("INSERT INTO estates "
-                    + "(id, name, description, geometry, valid_from, valid_to) "
-                    + "VALUES( ?, ?, ?, ?, ?, ?)"
-            );
+            PreparedStatement statementInsertSpatialEntity;
+            if(spatialEntityToSave.freeholder != null)
+                statementInsertSpatialEntity = conn.prepareStatement("INSERT INTO estates "
+                        + "(id, name, description, geometry, valid_from, valid_to, freeholders_id) "
+                        + "VALUES( ?, ?, ?, ?, ?, ?, ?)"
+                );
+            else{
+                statementInsertSpatialEntity = conn.prepareStatement("INSERT INTO estates "
+                        + "(id, name, description, geometry, valid_from, valid_to) "
+                        + "VALUES( ?, ?, ?, ?, ?, ?)"
+                );
+            }
             try {
                 statementInsertSpatialEntity.setInt(1, spatialEntityToSave.id);
                 statementInsertSpatialEntity.setString(2, spatialEntityToSave.name);
@@ -137,6 +155,10 @@ public class SpatialEntitiesModel {
                 statementInsertSpatialEntity.setObject(4, JGeometry.storeJS(conn, spatialEntityToSave.geometry));
                 statementInsertSpatialEntity.setDate(5, new java.sql.Date(spatialEntityToSave.validFrom.getTime()));
                 statementInsertSpatialEntity.setDate(6, new java.sql.Date(spatialEntityToSave.validTo.getTime()));
+                
+                 if(spatialEntityToSave.freeholder != null)
+                    statementInsertSpatialEntity.setInt(7, spatialEntityToSave.freeholder.id);
+                
                 statementInsertSpatialEntity.executeUpdate();
             } finally {
                 statementInsertSpatialEntity.close();
