@@ -368,7 +368,7 @@ INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_
 		    SDO_ELEM_INFO_ARRAY(1, 1003, 1),
 		    SDO_ORDINATE_ARRAY(0,0, 650,0, 650,150, 350,150, 350,100, 0,100, 0,0)
 	    ),
-	    TO_DATE('26-10-2016', 'dd-mm-yyyy'), TO_DATE('27-10-2116', 'dd-mm-yyyy'), 2, 1
+	    TO_DATE('25-10-2016', 'dd-mm-yyyy'), TO_DATE('27-10-2116', 'dd-mm-yyyy'), 2, 1
 );
 
 INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_id) VALUES(
@@ -394,7 +394,7 @@ INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_
 		    SDO_ELEM_INFO_ARRAY(1, 1003, 1),
 		    SDO_ORDINATE_ARRAY(0,100, 350,100, 350,400, 200,400, 200, 150, 100,150, 100,300, 0,300, 0,100)
 	    ),
-	    TO_DATE('13-09-2010', 'dd-mm-yyyy'),TO_DATE('27-10-2116', 'dd-mm-yyyy'), 7, 3
+	    TO_DATE('12-09-2010', 'dd-mm-yyyy'),TO_DATE('27-10-2116', 'dd-mm-yyyy'), 7, 3
 );
 
 INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_id) VALUES(
@@ -411,7 +411,7 @@ INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_
 		    SDO_ELEM_INFO_ARRAY(1, 1003, 1),
 		    SDO_ORDINATE_ARRAY(0,300, 100,300, 100,150, 200,150, 200,400, 75,400, 75,550, 0,550, 0,300)
 	    ),
-	    TO_DATE('26-10-2014', 'dd-mm-yyyy'), TO_DATE('27-10-2116', 'dd-mm-yyyy'), 5, 4
+	    TO_DATE('25-10-2014', 'dd-mm-yyyy'), TO_DATE('27-10-2116', 'dd-mm-yyyy'), 5, 4
 );
 
 INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_id) VALUES(
@@ -437,7 +437,7 @@ INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_
 		    SDO_ELEM_INFO_ARRAY(1, 1003, 1),
 		    SDO_ORDINATE_ARRAY(0,550, 350,550, 350,650, 0,650, 0,550)
 	    ),
-	    TO_DATE('11-07-2003', 'dd-mm-yyyy'), TO_DATE('27-10-2116', 'dd-mm-yyyy'), 6, 6
+	    TO_DATE('10-07-2003', 'dd-mm-yyyy'), TO_DATE('27-10-2116', 'dd-mm-yyyy'), 6, 6
 );
 
 INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_id) VALUES(
@@ -454,7 +454,7 @@ INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_
 		    SDO_ELEM_INFO_ARRAY(1, 1003, 1),
 		    SDO_ORDINATE_ARRAY(350,450, 550,450, 550,550, 450,550, 450, 650, 350,650, 350,450)
 	    ),
-	    TO_DATE('20-10-1995', 'dd-mm-yyyy'), TO_DATE('27-10-2116', 'dd-mm-yyyy'), 6, 7
+	    TO_DATE('19-10-1995', 'dd-mm-yyyy'), TO_DATE('27-10-2116', 'dd-mm-yyyy'), 6, 7
 );
 
 INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_id) VALUES(
@@ -471,7 +471,7 @@ INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_
 		    SDO_ELEM_INFO_ARRAY(1, 1003, 1),
 		    SDO_ORDINATE_ARRAY(550,450, 650,450, 650,650, 450,650, 450,550, 550,550, 550,450)
 	    ),
-	    TO_DATE('24-12-2006', 'dd-mm-yyyy'), TO_DATE('20-07-2016', 'dd-mm-yyyy'), 2, 8
+	    TO_DATE('23-12-2006', 'dd-mm-yyyy'), TO_DATE('20-07-2016', 'dd-mm-yyyy'), 2, 8
 );
 INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_id) VALUES(
 	    8,
@@ -479,7 +479,7 @@ INSERT INTO estates (id, geometry, valid_from, valid_to, freeholders_id, photos_
 		    SDO_ELEM_INFO_ARRAY(1, 1003, 1),
 		    SDO_ORDINATE_ARRAY(550,450, 650,450, 650,650, 450,650, 450,550, 550,550, 550,450)
 	    ),
-	    TO_DATE('21-07-2016', 'dd-mm-yyyy'), TO_DATE('20-07-2017', 'dd-mm-yyyy'), 1, 8
+	    TO_DATE('20-07-2016', 'dd-mm-yyyy'), TO_DATE('20-07-2017', 'dd-mm-yyyy'), 1, 8
 );
 
 
