@@ -297,10 +297,10 @@ public class MainController implements Initializable {
     @FXML
     public void groundCheckboxClick(ActionEvent event) throws SQLException
     {
+        setSelectedSpatialEntity(null);
         this.mapPaneController.clearMap();
         this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
         this.timePaneController.reloadComboBox();
-        this.selectedSpatialEntity = null;
         this.spatialPaneController.resetState(); // must be after this.selectedSpatialEntity = null
         this.entityModificationPaneController.resetState();
     }
@@ -353,12 +353,16 @@ public class MainController implements Initializable {
     }
     
     public void setSelectedSpatialEntity(SpatialEntity spatialEntity) {
+        
         if(selectedSpatialEntity != null && originalSelectedSpatialEntityGeometry != null){
-            if(spatialEntity.id == selectedSpatialEntity.id)
+            if(spatialEntity != null && spatialEntity.id == selectedSpatialEntity.id)
                 return;
             selectedSpatialEntity.geometry = originalSelectedSpatialEntityGeometry;
         }
-        originalSelectedSpatialEntityGeometry = (JGeometry) spatialEntity.geometry.clone();
+        if(spatialEntity != null)
+            originalSelectedSpatialEntityGeometry = (JGeometry) spatialEntity.geometry.clone();
+        else
+            originalSelectedSpatialEntityGeometry = null;
         selectedSpatialEntity = spatialEntity;
     }
 }
