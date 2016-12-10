@@ -85,6 +85,9 @@ public class FreeholdersPaneController implements Initializable {
     
     @FXML
     public Label labelNumberOwnedTimes;
+    
+    @FXML
+    public Label labelNumberOfEstatesOwnedByFreeholdWithSameName;
             
     
     /**
@@ -220,6 +223,10 @@ public class FreeholdersPaneController implements Initializable {
             Date pickerTo = Date.from(instant);
             
             FreeholderModel freeholderModel = new FreeholderModel();
+            int numberOfEstatesOwnedByFreeholdWithSameName = -1;
+            numberOfEstatesOwnedByFreeholdWithSameName = freeholderModel.getNumberOfOwnedEstatesOfFreeholdersWithSameFirstName(this.selectedFreeholder, pickerFrom, pickerTo);
+            labelNumberOfEstatesOwnedByFreeholdWithSameName.setText("Count of Estates owned by Freeholders with same First Name: " + numberOfEstatesOwnedByFreeholdWithSameName);
+            
             int numberOfFreeholdersOwnedEstates = -1;
             int numberOwnedTimes = -1;
             if(this.mainController.selectedSpatialEntity != null &&
