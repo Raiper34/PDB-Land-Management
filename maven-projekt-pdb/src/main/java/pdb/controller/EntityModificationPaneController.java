@@ -173,6 +173,14 @@ public class EntityModificationPaneController implements Initializable {
         {
             this.actualizePaneContent();
         }
+        if(this.mainController.selectedSpatialEntity instanceof Estate)
+        {
+            this.comboboxFreeholders.setDisable(false);
+        }
+        else
+        {
+            this.comboboxFreeholders.setDisable(true);
+        }
     }
     
     
