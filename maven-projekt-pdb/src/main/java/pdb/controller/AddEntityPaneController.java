@@ -35,7 +35,6 @@ import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
 import pdb.model.spatial.Shapes;
 import pdb.model.spatial.SpatialEntity;
-import sun.util.calendar.Gregorian;
 
 /**
  *
@@ -92,16 +91,17 @@ public class AddEntityPaneController implements Initializable {
     }
 
     /*
+    * Creates point if left mouse button clicked
     * @param InputEvent event
-     */
-    public void addPointOnClick(InputEvent event) {
+    */
+    public void addPointOnLeftMouseClick(InputEvent event) {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
             //Get the x and y of the click and create there a new circle
             MouseEvent mouseEvent = (MouseEvent) event;
-            
+
             /*The ending point of multiline*/
             if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                
+
                 return;
             }
             addPoint(mouseEvent);
@@ -109,22 +109,26 @@ public class AddEntityPaneController implements Initializable {
     }
 
     /*
+    * Creates new point and appends it to list of newPoints and draw it on map
     * @param MouseEvent event
-     */
+    */
     public void addPoint(MouseEvent event) {
         Circle point = new Circle(event.getX(), event.getY(), 2.0f, Paint.valueOf("Black"));
         newPoints.add(point);
         mainController.mapPaneController.mapa.getChildren().add(point);
     }
 
-    /*
+    /* removePoint from map and from list of newPoints
     * @param int index
-     */
+    */
     public void removePoint(int index) {
         mainController.mapPaneController.removeShapeFromMap(newPoints.get(index));
         newPoints.remove(index);
     }
-
+    
+    /* addLine to list of newLines and draw it on map
+    * 
+    */
     public void addLine() {
         if (newPoints != null && newPoints.size() > 1) {
             Line newLine = new Line(
@@ -138,6 +142,8 @@ public class AddEntityPaneController implements Initializable {
         }
     }
 
+    /* addRectangle to newRectangle and draw it on map
+    */
     public void addRectangle() {
         double width = Math.abs(newPoints.get(0).getCenterX() - newPoints.get(1).getCenterX());
         double height = Math.abs(newPoints.get(0).getCenterY() - newPoints.get(1).getCenterY());
@@ -148,9 +154,9 @@ public class AddEntityPaneController implements Initializable {
         mainController.mapPaneController.mapa.getChildren().add(newRectangle);
     }
 
-    /*
+    /* Draw a rectangle on map after mouse pressed and dragged.
     * @param InputEvent event
-     */
+    */
     public void addRectangleEventHandler(InputEvent event) {
         MouseEvent mouseEvent = (MouseEvent) event;
 
@@ -165,8 +171,9 @@ public class AddEntityPaneController implements Initializable {
             addPoint(mouseEvent);
             addRectangle();
         } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-            if ( mouseEvent.getX() > 650 || mouseEvent.getY() > 650)
+            if (mouseEvent.getX() > 650 || mouseEvent.getY() > 650) {
                 return;
+            }
             //remove old point from map and list
             removePoint(1);
             //remove newRectangle from map and clear it
@@ -182,26 +189,36 @@ public class AddEntityPaneController implements Initializable {
         }
     }
 
+    
+    /*
+    * Add circle to newPoints and draw it on map
+    */
     public void addCircle() {
         double radius = calculateRadius();
-        
-        if (newPoints.get(0).getCenterX() - radius < 0 ||
-                    newPoints.get(0).getCenterY() - radius < 0 ||
-                    newPoints.get(0).getCenterX() + radius > 650 ||
-                    newPoints.get(0).getCenterY() + radius > 650)
+
+        if (newPoints.get(0).getCenterX() - radius < 0
+                || newPoints.get(0).getCenterY() - radius < 0
+                || newPoints.get(0).getCenterX() + radius > 650
+                || newPoints.get(0).getCenterY() + radius > 650) {
             return;
-        
+        }
+
         newCircle = new Circle(newPoints.get(0).getCenterX(), newPoints.get(0).getCenterY(), radius);
         mainController.mapPaneController.mapa.getChildren().add(newCircle);
     }
-    private double calculateRadius(){
+    
+    /*
+    * calculateRadius from start to end of mouse drag event
+    */
+    private double calculateRadius() {
         Point2D start = new Point2D(newPoints.get(0).getCenterX(), newPoints.get(0).getCenterY());
         Point2D end = new Point2D(newPoints.get(1).getCenterX(), newPoints.get(1).getCenterY());
         return start.distance(end);
     }
-    /*
+
+    /* Create circle and draw it on map on mouse press and drag
     * @param InputEvent event
-     */
+    */
     public void addCircleEventHandler(InputEvent event) {
         MouseEvent mouseEvent = (MouseEvent) event;
 
@@ -216,7 +233,7 @@ public class AddEntityPaneController implements Initializable {
             addPoint(mouseEvent);
             addCircle();
         } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
-            
+
             //remove old point from map and list
             removePoint(1);
             //remove newRectangle from map and clear it
@@ -232,17 +249,17 @@ public class AddEntityPaneController implements Initializable {
         }
     }
 
-    /*
+    /* Create polygon from points and draw it on map after mouse click
     * @param InputEvent event
-     */
+    */
     private void addPolygonEventHandler(InputEvent event) {
         MouseEvent mouseEvent = (MouseEvent) event;
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
             if (newPoints.isEmpty()) {
-                addPointOnClick(event);
+                addPointOnLeftMouseClick(event);
                 newPolygon = new Polygon(mouseEvent.getX(), mouseEvent.getY());
             } else {
-                addPointOnClick(event);
+                addPointOnLeftMouseClick(event);
                 mainController.mapPaneController.removeShapeFromMap(newPolygon);
                 newPolygon.getPoints().add(mouseEvent.getX());
                 newPolygon.getPoints().add(mouseEvent.getY());
@@ -252,18 +269,18 @@ public class AddEntityPaneController implements Initializable {
         }
     }
 
-    /*
+    /* Call the relevant event handler based on a shape to be inserted (selected in GUI)
     * @param InputEvent event
-     */
+    */
     public void addNewSpatialEntity(InputEvent event) {
         switch (shapeOfNewSpatialEntity) {
             case "point":
                 if (newPoints.isEmpty()) {
-                    addPointOnClick(event);
+                    addPointOnLeftMouseClick(event);
                 }
                 return;
             case "multipoint":
-                addPointOnClick(event);
+                addPointOnLeftMouseClick(event);
                 break;
             case "line":
                 addLineToPath(event);
@@ -283,7 +300,7 @@ public class AddEntityPaneController implements Initializable {
         }
     }
 
-    /*
+    /* createJGeometry from gained shapes from mouse events
     * @return JGeometry
      */
     public JGeometry createJGeometry() {
@@ -306,23 +323,25 @@ public class AddEntityPaneController implements Initializable {
         }
     }
 
+    /* saveNewSpatialEntity prepare and populate new spatial entity and then save it to DB
+     */
     public void saveNewSpatialEntity() {
         SpatialEntitiesModel spatialEntitiesModel = mainController.mapPaneController.spatialEntitiesModel;
         SpatialEntity newSpatialEntity = null;
         //Create the new entity and jgeometry from the points I have got
         JGeometry geometry = createJGeometry();
-        if ( geometry == null) {
+        if (geometry == null) {
             System.out.println("Trying to save empty spatial entity");
             return;
         }
-            
+
         Calendar calToday = Calendar.getInstance();
         calToday.set(Calendar.HOUR_OF_DAY, 0);
         calToday.set(Calendar.MINUTE, 0);
         calToday.set(Calendar.SECOND, 0);
         calToday.set(Calendar.MILLISECOND, 0);
         Date validFromDate = calToday.getTime();
-        
+
         Date validToDate = new GregorianCalendar(2116, 9, 27).getTime();
         if (typeOfNewSpatialEntity.equals("estate")) {
             //getLastID of estate
@@ -359,6 +378,8 @@ public class AddEntityPaneController implements Initializable {
         deleteNewEntity();
     }
 
+     /* deleteNewEntity from map - clears the temporary objects not yet inserted to DB
+     */
     public void deleteNewEntity() {
         //Remove all the new shapes from map
         for (Circle shape : newPoints) {
@@ -392,22 +413,26 @@ public class AddEntityPaneController implements Initializable {
     public void handleInputEventForMap(InputEvent event) {
         this.addNewSpatialEntity(event);
     }
-
+    
+    
+    /* Insert new path to list of improved paths in Shapes class
+    * @param InputEvent event
+     */
     private void addLineToPaths(InputEvent event) {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
             MouseEvent mouseEvent = (MouseEvent) event;
-                
-            
+
             /*The ending point of multiline*/
             if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-                if ( !newShapes.paths.isEmpty() && newShapes.getLastPath().getElements().isEmpty())
+                if (!newShapes.paths.isEmpty() && newShapes.getLastPath().getElements().isEmpty()) {
                     return;
+                }
                 newShapes.addNewPath((Entity) newSpatialEntity, 0);
             } else {
                 addPoint(mouseEvent);
                 if (newShapes.paths.isEmpty()) {
                     newShapes.addNewPath((Entity) newSpatialEntity, 0);
-                } 
+                }
                 mainController.mapPaneController.mapa.getChildren().remove(newShapes.getLastPath());
                 newShapes.addElementToLastPath(mouseEvent.getX(), mouseEvent.getY());
                 mainController.mapPaneController.mapa.getChildren().add(newShapes.getLastPath());
@@ -415,6 +440,10 @@ public class AddEntityPaneController implements Initializable {
         }
     }
 
+    /* Insert new path to list of improved paths in Shapes class, but ignore the right click
+    * in order to create only 1 paths.
+    * @param InputEvent event
+     */
     private void addLineToPath(InputEvent event) {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
             if (((MouseEvent) event).getButton() == MouseButton.SECONDARY) {
