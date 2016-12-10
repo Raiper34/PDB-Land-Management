@@ -50,6 +50,7 @@ import pdb.model.freeholder.Freeholder;
 import pdb.model.freeholder.FreeholderModel;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
+import pdb.model.SpatialEntitiesModel;
 
 /**
  *
@@ -136,38 +137,42 @@ public class EntityModificationPaneController implements Initializable {
        
        spatialEntitiesModel.updateSpatialEntity(this.mainController.selectedSpatialEntity, this.mainController.selectedSpatialEntity);
        
-        LocalDate localDate = this.pickerFrom.getValue();
+        /*LocalDate localDate = this.pickerFrom.getValue();
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         Date pickerFrom = Date.from(instant);
-        Date dbFrom = this.mainController.selectedSpatialEntity.validFrom;
+        Date dbFrom = this.mainController.selectedSpatialEntity.validFrom;*/
         
-        localDate = this.pickerTo.getValue();
+        /*localDate = this.pickerTo.getValue();
         instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         Date pickerTo = Date.from(instant);
-        Date dbTo = this.mainController.selectedSpatialEntity.validTo;
+        Date dbTo = this.mainController.selectedSpatialEntity.validTo;*/
+
+       this.entityModificationModel.deleteObjectInInterval(this.mainController.selectedSpatialEntity, this.pickerFrom.getValue(), this.pickerTo.getValue());
+       SpatialEntitiesModel entityModel = new SpatialEntitiesModel();
        
-       if((dbFrom.after(pickerFrom) || dbFrom.equals(pickerFrom)) //object timeline is inside picker timeline
-            && (dbTo.before(pickerTo) || dbTo.equals(pickerTo)))
+       //Set dates
+       LocalDate localDate = this.pickerFrom.getValue();
+       Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+       this.mainController.selectedSpatialEntity.validFrom = Date.from(instant);
+       localDate = this.pickerTo.getValue();
+       this.mainController.selectedSpatialEntity.validTo = Date.from(instant);
+       //Set fdescription and name
+       this.mainController.selectedSpatialEntity.name = this.nameField.getText();
+       this.mainController.selectedSpatialEntity.description = this.descriptionArea.getText();
+       
+       if(this.mainController.selectedSpatialEntity instanceof Estate)
        {
-           //update only 
+           //Set freeholder
+           Freeholder freeholder = (Freeholder) this.comboboxFreeholders.getSelectionModel().getSelectedItem();
+           if(freeholder != null)
+           {
+                //update freeholder id here
+           }
+           entityModel.saveSpatialEntityToDB((Estate)this.mainController.selectedSpatialEntity);
        }
-       else if((dbFrom.before(pickerFrom)) //picker timeline is inside object timeline 
-               && (dbTo.after(pickerTo)))
+       else
        {
-           //one update 
-           //two inserts
-       }
-       else if((dbFrom.before(pickerFrom)) //object left limit is outside picker timeline
-               && (dbTo.before(pickerTo) || dbTo.equals(pickerTo)))
-       {
-           //one update
-           //one insert
-       }
-       else if((dbFrom.after(pickerFrom) || dbFrom.equals(pickerFrom)) 
-               && (dbTo.after(pickerTo)))
-       {
-           //one update
-           //one insert
+           entityModel.saveSpatialEntityToDB((Entity)this.mainController.selectedSpatialEntity);
        }
     }
     
