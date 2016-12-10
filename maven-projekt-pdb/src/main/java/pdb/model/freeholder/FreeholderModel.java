@@ -201,26 +201,42 @@ public class FreeholderModel {
     public int getNumberOfFreeholdersOwnedEstateInInterval(Estate estate, Date pickerFrom, Date pickerTo) {
         
         int numberOfFreeholdersOwnedEstateInInterval = 0;
-        
-//        try {
-//            try (PreparedStatement stmt = this.connection.prepareStatement(""
-//                    + "select * from related_spatial_entities WHERE "
-//                    + "valid_to >= ?")) {
-//                stmt.setDate(1, new java.sql.Date(new Date().getTime()));
-//                
-//                try (ResultSet rset = stmt.executeQuery()) {
-//                     if (rset.next()) {
-//                        numberOfFreeholdersOwnedEstateInInterval = (int) rset.getInt("cnt");
-//                    }
-//                } catch (Exception ex) {
-//                    Logger.getLogger(this.getClass().getName()).log(
-//                            Level.SEVERE, null, ex);
-//                }
-//            }
-//
-//        } catch (SQLException sqlEx) {
-//            System.err.println("SQLException: " + sqlEx.getMessage());
-//        }
+//SELECT COUNT(*) as cnt from
+//(
+//SELECT FREEHOLDERS.ID as FID, FREEHOLDERS.FIRST_NAME, FREEHOLDERS.SURNAME, ESTATES.ID as EID, ESTATES.NAME FROM FREEHOLDERS
+//LEFT JOIN ESTATES ON FREEHOLDERS.ID=ESTATES.FREEHOLDERS_ID
+//WHERE VALID_TO BETWEEN TO_DATE('1-1-1900', 'dd-mm-yyyy') AND TO_DATE('22-12-2116', 'dd-mm-yyyy') AND ESTATES.ID = 8
+//GROUP BY FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME, FREEHOLDERS.SURNAME, ESTATES.ID, ESTATES.NAME
+//) GROUP BY EID;  
+
+        try {
+            try (PreparedStatement stmt = this.connection.prepareStatement("" + 
+                    "SELECT COUNT(*) as cnt from " +
+                    "( " +
+                    "SELECT FREEHOLDERS.ID as FID, FREEHOLDERS.FIRST_NAME, FREEHOLDERS.SURNAME, ESTATES.ID as EID, ESTATES.NAME FROM FREEHOLDERS " +
+                    "LEFT JOIN ESTATES ON FREEHOLDERS.ID=ESTATES.FREEHOLDERS_ID " +
+                    "WHERE VALID_TO BETWEEN ? AND ? " + 
+                    "AND ESTATES.ID = ? " +
+                    "GROUP BY FREEHOLDERS.ID, FREEHOLDERS.FIRST_NAME, FREEHOLDERS.SURNAME, ESTATES.ID, ESTATES.NAME " +
+                    ") GROUP BY EID"
+            )) {
+                stmt.setDate(1, new java.sql.Date(pickerFrom.getTime()));
+                stmt.setDate(2, new java.sql.Date(pickerTo.getTime()));
+                stmt.setInt(3, estate.id);
+                
+                try (ResultSet rset = stmt.executeQuery()) {
+                     if (rset.next()) {
+                        numberOfFreeholdersOwnedEstateInInterval = (int) rset.getInt("cnt");
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(this.getClass().getName()).log(
+                            Level.SEVERE, null, ex);
+                }
+            }
+
+        } catch (SQLException sqlEx) {
+            System.err.println("SQLException: " + sqlEx.getMessage());
+        }
         
         return numberOfFreeholdersOwnedEstateInInterval;
     }
