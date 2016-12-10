@@ -402,11 +402,11 @@ public class AddEntityPaneController implements Initializable {
             if (mouseEvent.getButton() == MouseButton.SECONDARY) {
                 if ( !newShapes.paths.isEmpty() && newShapes.getLastPath().getElements().isEmpty())
                     return;
-                newShapes.addNewPath((Entity) newSpatialEntity, ((Entity) newSpatialEntity).id);
+                newShapes.addNewPath((Entity) newSpatialEntity, 0);
             } else {
                 addPoint(mouseEvent);
                 if (newShapes.paths.isEmpty()) {
-                    newShapes.addNewPath((Entity) newSpatialEntity, ((Entity) newSpatialEntity).id);
+                    newShapes.addNewPath((Entity) newSpatialEntity, 0);
                 } 
                 mainController.mapPaneController.mapa.getChildren().remove(newShapes.getLastPath());
                 newShapes.addElementToLastPath(mouseEvent.getX(), mouseEvent.getY());
