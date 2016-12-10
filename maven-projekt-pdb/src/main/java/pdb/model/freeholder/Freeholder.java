@@ -79,7 +79,7 @@ public class Freeholder
         Estate estate = null;
         Estate tempEstate = null;
         OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) connection.prepareStatement(
-            "select * from estates where id = " + this.id + "order by id"
+            "select * from estates where FREEHOLDERS_ID = " + this.id + "order by id"
         );
         try 
         {
