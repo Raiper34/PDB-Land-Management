@@ -102,9 +102,11 @@ public class FreeholderModel {
     public ObservableList<Freeholder> getEstatesFreeholdersFromDatabase(int estateId) throws SQLException
     {
         ObservableList<Freeholder> estatesFreeholders = FXCollections.observableArrayList();
+        Freeholder tmpFreeholder = null;
         Freeholder freeholder = null;
+        
         OraclePreparedStatement pstmtSelect = (OraclePreparedStatement) this.connection.prepareStatement(
-            "select * from estates, freeholders where estates.freeholders_id = freeholders.id and estates.id = " + estateId
+            "select * from freeholders, estates where estates.freeholders_id = freeholders.id and estates.id = " + estateId + " ORDER BY estates.valid_from"
         );
         try 
         {
@@ -118,19 +120,45 @@ public class FreeholderModel {
                     String surname = (String) rset.getString("surname");
                     String birthDate = (String) rset.getString("birth_date");
                     freeholder = new Freeholder(id, name, surname, birthDate);
+                    
                     Date validFrom = rset.getDate("valid_from");
                     Date validTo = rset.getDate("valid_to");
                     DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+                    freeholder.dateWasFreeholderOfEstateFrom = validFrom;
+                    freeholder.dateWasFreeholderOfEstateTo = validTo;
                     freeholder.wasFreeholderOfEstateFrom = df.format(validFrom); 
                     freeholder.wasFreeholderOfEstateTo = df.format(validTo);
-                    estatesFreeholders.add(freeholder);
+                    
+                    //estatesFreeholders.add(freeholder);
+                    if(tmpFreeholder != null)
+                    {
+                        if(tmpFreeholder.dateWasFreeholderOfEstateTo.equals(freeholder.dateWasFreeholderOfEstateFrom) && tmpFreeholder.id == freeholder.id)
+                        {
+                            tmpFreeholder.dateWasFreeholderOfEstateTo = validTo;
+                            tmpFreeholder.wasFreeholderOfEstateTo = df.format(validTo);
+                        }
+                        else
+                        {
+                            estatesFreeholders.add(tmpFreeholder);
+                            tmpFreeholder = freeholder;
+                        }
+                        
+                    }
+                    else
+                    {
+                        tmpFreeholder = freeholder;
+                    }
+                }
+                if(tmpFreeholder != null)
+                {
+                    estatesFreeholders.add(tmpFreeholder);
                 }
             } 
             finally 
             {
                 rset.close();
             }
-            } 
+        } 
         finally 
         {
             pstmtSelect.close();
