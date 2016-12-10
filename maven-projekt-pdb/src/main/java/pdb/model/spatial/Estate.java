@@ -61,4 +61,8 @@ public class Estate extends SpatialEntity{
     {
         return this.name;
     }
+    
+    public void setFreeholder(Freeholder holder){
+        freeholder = holder;
+    }
 }
