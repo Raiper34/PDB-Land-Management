@@ -44,6 +44,7 @@ import pdb.model.multimedial.Photo;
 import pdb.model.DatabaseModel;
 import pdb.model.freeholder.Freeholder;
 import pdb.model.freeholder.FreeholderModel;
+import pdb.model.spatial.Estate;
 import pdb.model.time.TimeModel;
 import pdb.model.time.TableViewItem;
 
@@ -266,10 +267,13 @@ public class TimePaneController implements Initializable {
         
         
         this.freeholdersHistoryTable.getColumns().clear();
-        this.freeholdersHistoryTable.getColumns().addAll(firstNameCol);
-        this.freeholdersHistoryTable.getColumns().addAll(secondNameCol);
-        this.freeholdersHistoryTable.getColumns().addAll(thirdNameCol);
-        this.freeholdersHistoryTable.setItems(estatesFreeholders);
+        if(this.mainController.selectedSpatialEntity instanceof Estate)
+        {
+            this.freeholdersHistoryTable.getColumns().addAll(firstNameCol);
+            this.freeholdersHistoryTable.getColumns().addAll(secondNameCol);
+            this.freeholdersHistoryTable.getColumns().addAll(thirdNameCol);
+            this.freeholdersHistoryTable.setItems(estatesFreeholders);
+        }
     }
     
     // method called when the controller is focused (user clicked on apropiate menu item)
