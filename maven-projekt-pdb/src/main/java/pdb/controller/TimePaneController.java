@@ -289,6 +289,7 @@ public class TimePaneController implements Initializable {
     }
     
     public void reloadComboBox() {
+        int size = listOfDateWhenSomethingSpatialObjectChanges.size();
         listOfDateWhenSomethingSpatialObjectChanges = this.timeModel.getListOfDateWhenSomethingSpatialObjectChanges(
                 this.mainController.undergroundCheckbox.isSelected(), 
                 this.mainController.groundCheckbox.isSelected(), 
@@ -311,6 +312,10 @@ public class TimePaneController implements Initializable {
         slider.setMajorTickUnit(1);
 
         int sliderValue = (int) slider.getValue();
+        if (listOfDateWhenSomethingSpatialObjectChanges.size() != size) {
+            sliderValue = 0;
+        }
+        
         selectedDateBoldLabel.setText(listOfDateWhenSomethingSpatialObjectChanges.get(sliderValue));
 
     }

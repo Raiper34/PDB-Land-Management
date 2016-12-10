@@ -222,7 +222,7 @@ public class EntityModificationPaneController implements Initializable {
                     return;
                 }
                 this.mainController.selectedSpatialEntity.geometry = translated;
-                this.mainController.mapPaneController.drawSpatialEntities();
+                this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
             } catch (Exception ex) {
                 Logger.getLogger(EntityModificationPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -266,7 +266,7 @@ public class EntityModificationPaneController implements Initializable {
                     return;
                 }
                 this.mainController.selectedSpatialEntity.geometry = translated;
-                this.mainController.mapPaneController.drawSpatialEntities();
+                this.mainController.mapPaneController.drawSpatialEntities(this.mainController.undergroundCheckbox.isSelected(), this.mainController.groundCheckbox.isSelected(), this.mainController.overgroundCheckbox.isSelected());
             } catch (Exception ex) {
                 Logger.getLogger(EntityModificationPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }

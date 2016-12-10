@@ -204,11 +204,11 @@ public class SpatialEntity {
             ImprovedPolygon improvedPolygon;
             // entity is estate
             if (entityOrEstate.equals("Estate")) {
-                improvedPolygon = new ImprovedPolygon(true, null, (Estate) spatialEntity);
+                improvedPolygon = new ImprovedPolygon(true, null, (Estate) spatialEntity, ((Estate) spatialEntity).id);
             }
             // entity is entity
             else {
-                improvedPolygon = new ImprovedPolygon(false, (Entity) spatialEntity, null);
+                improvedPolygon = new ImprovedPolygon(false, (Entity) spatialEntity, null, ((Entity) spatialEntity).id);
             }
             
             // slice original polygon points (remove 2 last points which close polygon)
@@ -222,7 +222,7 @@ public class SpatialEntity {
         
         // entity is circle
         else if (this.geometry.isCircle()) {
-            ImprovedCircle improvedCircle = new ImprovedCircle((Entity) spatialEntity);
+            ImprovedCircle improvedCircle = new ImprovedCircle((Entity) spatialEntity, ((Entity) spatialEntity).id);
 
             double centerX = this.geometry.getOrdinatesArray()[0];
             double centerY = this.geometry.getOrdinatesArray()[1] + (this.geometry.getOrdinatesArray()[3] - this.geometry.getOrdinatesArray()[1]) / 2.0;
@@ -235,7 +235,7 @@ public class SpatialEntity {
         
         // entity is point
         else if (this.geometry.getType() == JGeometry.GTYPE_POINT) {
-            ImprovedCircle improvedCircle = new ImprovedCircle((Entity) spatialEntity);
+            ImprovedCircle improvedCircle = new ImprovedCircle((Entity) spatialEntity, ((Entity) spatialEntity).id);
   
             improvedCircle.setCenterX(this.geometry.getPoint()[0]);
             improvedCircle.setCenterY(this.geometry.getPoint()[1]);
@@ -248,7 +248,7 @@ public class SpatialEntity {
             
             JGeometry[] elements = this.geometry.getElements();
             for (JGeometry element : elements) {
-                ImprovedCircle improvedCircle = new ImprovedCircle((Entity) spatialEntity);
+                ImprovedCircle improvedCircle = new ImprovedCircle((Entity) spatialEntity, ((Entity) spatialEntity).id);
                 
                 improvedCircle.setCenterX(element.getPoint()[0]);
                 improvedCircle.setCenterY(element.getPoint()[1]);
@@ -260,7 +260,7 @@ public class SpatialEntity {
         
         // entity is curve/line
         else if (this.geometry.getType() == JGeometry.GTYPE_CURVE) {
-            ImprovedPath improvedPath = new ImprovedPath((Entity) spatialEntity);
+            ImprovedPath improvedPath = new ImprovedPath((Entity) spatialEntity, ((Entity) spatialEntity).id);
 
             for (int i = 0; i < this.geometry.getNumPoints() * 2;) {
                
@@ -291,7 +291,7 @@ public class SpatialEntity {
             JGeometry[] elements = this.geometry.getElements();
             for (JGeometry element : elements) {
                 
-                ImprovedPath improvedPath = new ImprovedPath((Entity) spatialEntity);
+                ImprovedPath improvedPath = new ImprovedPath((Entity) spatialEntity, ((Entity) spatialEntity).id);
                 
                 for (int i = 0; i < element.getNumPoints() * 2;i = i+2) {
                

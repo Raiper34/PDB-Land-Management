@@ -18,14 +18,17 @@ public class ShapesColorsDefinition {
     public static final Color connectionToGasStroke = Color.rgb(214, 107, 0, 0.7);
     public static final Color connectionToGasFill = Color.rgb(214, 107, 0, 0.6);
     
-    public static final Color connectionToElectricityStroke = Color.rgb(186, 1, 29, 0.7);
-    public static final Color connectionToElectricityFill = Color.rgb(186, 1, 29, 0.6);
+    public static final Color connectionToElectricityStroke = Color.rgb(219, 204, 0, 0.7);
+    public static final Color connectionToElectricityFill = Color.rgb(219, 204, 0, 0.6);
+    
+    public static final Color selectedObjectStroke = Color.rgb(186, 1, 29, 0.7);
+    public static final Color selectedObjectFill = Color.rgb(186, 1, 29, 0.6);
     
     public static final Color waterPipesStroke = Color.rgb(1, 186, 186, 0.6);
     
     public static final Color gasPipesStroke = Color.rgb(214, 107, 0, 0.6);
     
-    public static final Color powerLinesStroke = Color.rgb(186, 1, 29, 0.6);
+    public static final Color powerLinesStroke = Color.rgb(219, 204, 0, 0.6);
     
     public static final Color pathStroke = Color.rgb(80, 80, 80, 0.6);
     

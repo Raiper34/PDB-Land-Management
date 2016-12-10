@@ -15,12 +15,14 @@ public class ImprovedPolygon extends Polygon {
     private Entity entityReference;
     private Estate estateReference;
     private boolean isEstate;
+    public int dbId;
     
-    public ImprovedPolygon(boolean isEstate, Entity entityReference, Estate estateReference) {
+    public ImprovedPolygon(boolean isEstate, Entity entityReference, Estate estateReference, int dbId) {
         super();
         this.entityReference = entityReference;
         this.estateReference = estateReference;
         this.isEstate = isEstate;
+        this.dbId = dbId;
     }
     
     public Entity getEntityReference() {

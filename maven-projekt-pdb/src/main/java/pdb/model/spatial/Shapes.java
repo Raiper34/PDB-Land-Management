@@ -26,8 +26,8 @@ public class Shapes {
         this.polygons = new ArrayList<>();
     }
     
-    public void addNewPath(Entity entityReference) {
-        paths.add(new ImprovedPath(entityReference));
+    public void addNewPath(Entity entityReference, int dbId) {
+        paths.add(new ImprovedPath(entityReference, dbId));
     }
     
     public void addElementToLastPath(double x, double y) {
