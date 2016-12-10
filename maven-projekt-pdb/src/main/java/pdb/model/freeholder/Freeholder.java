@@ -32,6 +32,8 @@ public class Freeholder
     public int id;
     public String wasFreeholderOfEstateFrom;
     public String wasFreeholderOfEstateTo;
+    public Date dateWasFreeholderOfEstateFrom;
+    public Date dateWasFreeholderOfEstateTo;
     
     
     Freeholder(int id, String first_name, String surname, String birthDate)
