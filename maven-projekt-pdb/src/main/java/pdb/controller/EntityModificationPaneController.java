@@ -141,6 +141,7 @@ public class EntityModificationPaneController implements Initializable {
        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
        this.mainController.selectedSpatialEntity.validFrom = Date.from(instant);
        localDate = this.pickerTo.getValue();
+       instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
        this.mainController.selectedSpatialEntity.validTo = Date.from(instant);
        //Set fdescription and name
        this.mainController.selectedSpatialEntity.name = this.nameField.getText();
