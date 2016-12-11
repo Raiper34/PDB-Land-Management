@@ -17,7 +17,7 @@ public class Entity extends SpatialEntity{
     private String layer;
     
     /**
-     *
+     * Constructor for the Entity class
      * @param id
      * @param name
      * @param description
@@ -44,24 +44,24 @@ public class Entity extends SpatialEntity{
     }
         
     /**
-     *
-     * @return
+     * Get Entity Type
+     * @return entity type
      */
     public String getEntityType() {
         return this.entityType;
     }
     
     /**
-     *
-     * @return
+     * Get layer of the entity
+     * @return layer
      */
     public String getLayer() {
         return this.layer;
     }
     
     /**
-     *
-     * @return
+     * Create shapes for javafx anchor pane (to draw on map pane)
+     * @return shapes
      */
     public Shapes toShapes(){
         SpatialEntity spatialEntity = (SpatialEntity) this;

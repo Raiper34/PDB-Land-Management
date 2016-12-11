@@ -16,12 +16,12 @@ import pdb.model.freeholder.Freeholder;
 public class Estate extends SpatialEntity{
 
     /**
-     *
+     * Freeholder reference
      */
     public Freeholder freeholder;
     
     /**
-     *
+     * Constructor for the estate
      * @param id
      * @param name
      * @param description
@@ -45,8 +45,8 @@ public class Estate extends SpatialEntity{
     }
         
     /**
-     *
-     * @return
+     * Create shapes for javafx anchor pane (to draw on map pane)
+     * @return shapes
      */
     public Shapes toShapes(){
         SpatialEntity spatialEntity = (SpatialEntity) this;
@@ -54,8 +54,8 @@ public class Estate extends SpatialEntity{
     }
     
     /**
-     *
-     * @return
+     * Return informations about the estate
+     * @return string info
      */
     public String getInfo() 
     {
@@ -64,8 +64,8 @@ public class Estate extends SpatialEntity{
     }
     
     /**
-     *
-     * @return
+     * Get id of the estate
+     * @return id
      */
     public String getId()
     {
@@ -73,8 +73,8 @@ public class Estate extends SpatialEntity{
     }
     
     /**
-     *
-     * @return
+     * Get time valid from
+     * @return validFrom
      */
     public String getFrom()
     {
@@ -82,8 +82,8 @@ public class Estate extends SpatialEntity{
     }
     
     /**
-     *
-     * @return
+     * * Get time valid to
+     * @return validTo
      */
     public String getTo()
     {
@@ -91,8 +91,8 @@ public class Estate extends SpatialEntity{
     }
     
     /**
-     *
-     * @return
+     * Get name of the estate
+     * @return name
      */
     public String getName()
     {
@@ -100,7 +100,7 @@ public class Estate extends SpatialEntity{
     }
     
     /**
-     *
+     * Set freeholder of the estate
      * @param holder
      */
     public void setFreeholder(Freeholder holder){
