@@ -51,13 +51,14 @@ import pdb.model.time.TableViewItem;
 
 
 /**
- * 
+ * FXML Controller class
+ * Time Pane Controller
  * @author jan
  */
 public class TimePaneController implements Initializable {
     
     @FXML
-    public ComboBox comboBox; 
+    private ComboBox comboBox; 
     
     @FXML
     public AnchorPane timeAnchorPane;
@@ -87,6 +88,11 @@ public class TimePaneController implements Initializable {
     
     private boolean dontUpdateSlider = false;
 
+    /**
+     * This method is called when user pick some date from date picker, when he want to show snaphot of map
+     * Map in chosen time is showed
+     * @param event action event
+     */
     @FXML
     void datePickerOnAction(ActionEvent event) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MM. yyyy");
@@ -105,12 +111,17 @@ public class TimePaneController implements Initializable {
         }
     }
     
+    /**
+     * MainController instance
+     */
     public MainController mainController;
     
     private TimeModel timeModel;
 
     /**
      * Initializes the controller class.
+     * @param url url
+     * @param rb resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -145,6 +156,11 @@ public class TimePaneController implements Initializable {
         });
     }
         
+    /**
+     * This method is called when user select some record from table of history of selected object
+     * Object represented which is represented by this record is showed on map
+     * @param event mouse event
+     */
     @FXML
     public void tableHistoryOfSelectedObjectClick(MouseEvent event)
     {
@@ -187,7 +203,11 @@ public class TimePaneController implements Initializable {
             }    
         });*/
     
-    
+    /**
+     * This method is called when user select some date from combo box in which he want to show snapshot of map in that date
+     * Map in selected time is showed
+     * @param event action event
+     */
     @FXML
     void comboBoxOnAction(ActionEvent event) {
        // comboBox.getSelectionModel().getSelectedItem();
@@ -212,10 +232,20 @@ public class TimePaneController implements Initializable {
        }
     }
     
+    /**
+     * Save instance of Parent controller MainController 
+     * @param  MainController instance
+     */
     public void addParent(MainController c1) {
         this.mainController = c1;
     }
     
+    /**
+     * Handling input events (which come from MapPaneController and which are redirected here) for shape, especially mouseclick event
+     * @param t input event
+     * @param shape shape on which event begin
+     * @throws SQLException
+     */
     public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException {
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED) {
             ObservableList<TableViewItem> data = this.timeModel.getHistoryOfObjecWithSpecifiedId(this.mainController.selectedSpatialEntity);
@@ -245,6 +275,11 @@ public class TimePaneController implements Initializable {
         }
     }
     
+    /**
+     * This method is called always from handleInputEventForShape when some inout event on some shape occured
+     * It reinitialize table of freeholders history for chosen estate
+     * @throws SQLException
+     */
     public void initFreeholdersHistory() throws SQLException
     {
         FreeholderModel freeholdersModel = new FreeholderModel();
@@ -277,6 +312,11 @@ public class TimePaneController implements Initializable {
     }
     
     // method called when the controller is focused (user clicked on apropiate menu item)
+
+    /**
+     * Method called when the controller is focused (user clicked on apropiate menu item)
+     * Usually ensures reinitialization of controller
+     */
     public void resetState() {
         reloadComboBox();
         /*
@@ -299,6 +339,11 @@ public class TimePaneController implements Initializable {
         */
     }
     
+    /**
+     * Method called when the controller is focused (user clicked on apropiate menu item) or when layers to show are changed
+     * Update array of dates when some object in map changes a witch this array reload combobox
+     * Also update time slider
+     */
     public void reloadComboBox() {
         int size = listOfDateWhenSomethingSpatialObjectChanges.size();
         listOfDateWhenSomethingSpatialObjectChanges = this.timeModel.getListOfDateWhenSomethingSpatialObjectChanges(

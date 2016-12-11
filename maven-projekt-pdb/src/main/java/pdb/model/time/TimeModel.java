@@ -27,7 +27,7 @@ import pdb.model.spatial.SpatialEntity;
 import pdb.model.time.TableViewItem;
 
 /**
- *
+ * Class which do backend operations for TimePaneController
  * @author jan
  */
 public class TimeModel {
@@ -35,11 +35,21 @@ public class TimeModel {
     private DatabaseModel DB;
     private Connection conn;
 
+    /**
+     * Contructor initialize internal attributes
+     */
     public TimeModel() {
         DB = DatabaseModel.getInstance();
         conn = DB.getConnection();
     }
     
+    /**
+     * Return list of strings which represents dates when some objects in map was changed
+     * @param considerUndergroundLayer consider objects in underground layer
+     * @param considerGroundLayer consider objects in ground layer
+     * @param considerOverGroundLayer consider objects in overground layer
+     * @return list of strings which represents dates when some objects in map was changed
+     */
     public List<String> getListOfDateWhenSomethingSpatialObjectChanges(boolean considerUndergroundLayer, boolean considerGroundLayer, boolean considerOverGroundLayer) {
         String layers = "''";
         if (considerUndergroundLayer) {
@@ -93,6 +103,11 @@ public class TimeModel {
         
     }
     
+    /**
+     * This method return all records from db in which figure selected spatial entity
+     * @param spatialEntity selected spatial entity
+     * @return all records from db in which figure selected spatial entity
+     */
     public ObservableList<TableViewItem> getHistoryOfObjecWithSpecifiedId(SpatialEntity spatialEntity) {
         ObservableList<TableViewItem> data = FXCollections.observableArrayList();
         
@@ -141,7 +156,16 @@ public class TimeModel {
         
         return data;
     }
-
+    
+    /**
+     * Return arraylist of prepraredstatements (one for selecting entity, one for selecting estate)
+     * One of prepared stetemnt select none object, because only entity or estate can be selected, it depends on argument spatialEntityType
+     * @param validFrom part of primary key according which spatial entoty is searched
+     * @param validTo part of primary key according which spatial entoty is searched
+     * @param id part of primary key according which spatial entoty is searched
+     * @param spatialEntityType entity or estate
+     * @return arraylist of prepraredstatements (one for selecting entity, one for selecting estate)
+     */
     public ArrayList<PreparedStatement> createSqlQueriesToGetObjectInHistotory(String validFrom, String validTo, int id, String spatialEntityType) {
 
         ArrayList<PreparedStatement> sqlQueriesToGetObjectInHistotory = new ArrayList<PreparedStatement>();

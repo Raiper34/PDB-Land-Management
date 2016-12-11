@@ -34,12 +34,13 @@ import pdb.model.spatial.SpatialEntity;
 import pdb.model.spatial.SpatialModel;
 
 /**
- * 
+ * FXML Controller class
+ * Spatial Pane Controller
  * @author jan
  */
 public class SpatialPaneController implements Initializable {
     
-    
+
     @FXML
     public AnchorPane spatialAnchorPane;
     
@@ -111,9 +112,11 @@ public class SpatialPaneController implements Initializable {
     @FXML
     private CheckBox checkBoxPath;
     
-    
     private SpatialModel spatialModel;
     
+    /**
+     * MainController instance
+     */
     public MainController mainController;
     
     private String internalState = "DEFAULT";
@@ -122,6 +125,8 @@ public class SpatialPaneController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url url
+     * @param rb resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -136,10 +141,19 @@ public class SpatialPaneController implements Initializable {
         choiceBoxShowEstatesOverWhich.setItems(FXCollections.observableList(Arrays.asList("passes through", "not passes through")));
     }
     
+    /**
+     * Save instance of Parent controller MainController 
+     * @param c1 MainController instance
+     */
     public void addParent(MainController c1) {
         this.mainController = c1;
     }
     
+    /**
+     * Handling input events (which come from MapPaneController and which are redirected here) for shape, especially mouseclick event
+     * @param t input event
+     * @param shape shape on which event begin
+     */
     public void handleInputEventForShape(InputEvent t, Shape shape) {
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED) {
             this.lengthOrPerimeter.textProperty().setValue(String.format("%.2f", spatialModel.getLengthOrPerimeter(this.mainController.selectedSpatialEntity)) + "m");
@@ -161,7 +175,11 @@ public class SpatialPaneController implements Initializable {
         }
     }
     
-    // method called when the controller is focused (user clicked on apropiate menu item)
+
+    /**
+     * Method called when the controller is focused (user clicked on apropiate menu item)
+     * Usually ensures reinitialization of controller
+     */
     public void resetState() {
         if (this.mainController.selectedSpatialEntity != null) {
             this.lengthOrPerimeter.textProperty().setValue(String.format("%.2f", spatialModel.getLengthOrPerimeter(this.mainController.selectedSpatialEntity)) + "m");
@@ -181,6 +199,10 @@ public class SpatialPaneController implements Initializable {
         this.calculateDistance.textProperty().setValue("Calculate distance to other geometry");
     }
     
+    /**
+     * This method is called when user click on button to calculate distance to other geometry
+     * @param event mouse event
+     */
     @FXML
     void calculateDistanceButtonClicked(MouseEvent event) {
         this.internalState = "READY TO MEASURE DISTANCE";
@@ -189,6 +211,10 @@ public class SpatialPaneController implements Initializable {
         this.previousSelectedSpatialEntity = this.mainController.selectedSpatialEntity;
     }
     
+    /**
+     * This method is called when user click on button to show obejct which are located in specified distance from selected object
+     * @param event mouse event
+     */
     @FXML
     void showDistanceButtonClicked(MouseEvent event) {
         try {
@@ -215,6 +241,10 @@ public class SpatialPaneController implements Initializable {
         }
     }
     
+    /**
+     * This method is called when user click on button to filter estates which contains or not contains specified objects
+     * @param event mouse event
+     */
     @FXML
     void buttonShowEstatesWhichClicked(MouseEvent event) {
         
@@ -237,6 +267,10 @@ public class SpatialPaneController implements Initializable {
 
     }
     
+    /**
+     * This method is called when user click on button to filter estates throught which passes specified objects
+     * @param event mouse event
+     */
     @FXML
     void buttonShowEstatesOverWhichClicked(MouseEvent event) {
         

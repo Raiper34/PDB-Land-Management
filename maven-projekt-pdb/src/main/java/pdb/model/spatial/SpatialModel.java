@@ -24,18 +24,26 @@ import pdb.model.DatabaseModel;
 import pdb.model.SpatialEntitiesModel;
 
 /**
- *
+ * Class which do backend operations for SpatialPaneController
  * @author jan
  */
 public class SpatialModel {
     private DatabaseModel DB;
     private Connection conn;
 
+    /**
+     * Contructor initialize internal attributes
+     */
     public SpatialModel() {
         DB = DatabaseModel.getInstance();
         conn = DB.getConnection();
     }
     
+    /**
+     * This method return length or perimeter of chosen spatial entity
+     * @param spatialEntity chosen spatial entity
+     * @return length or perimeter of chosen spatial entity
+     */
     public double getLengthOrPerimeter(SpatialEntity spatialEntity) {
         
         String sqlQuery = "";
@@ -90,6 +98,11 @@ public class SpatialModel {
         return length;
     }
     
+    /**
+     * This method return area of chosen spatial entity
+     * @param spatialEntity chosen spatial entity
+     * @return area of chosen spatial entity
+     */
     public double getArea(SpatialEntity spatialEntity) {
         
         String sqlQuery = "";
@@ -144,6 +157,12 @@ public class SpatialModel {
         return area;
     }
 
+    /**
+     * This method return distance of two chosen spatial entities
+     * @param previousSelectedSpatialEntity first spatial entity
+     * @param selectedSpatialEntity second spatial entity
+     * @return distance from two chosen spatial entities
+     */
     public double getDistance(SpatialEntity previousSelectedSpatialEntity, SpatialEntity selectedSpatialEntity) {
         
         String sqlQuery = "";
@@ -237,6 +256,15 @@ public class SpatialModel {
         return distance;
     }
     
+    /**
+     * This method return sql query (prepared statement) which ensure to get specified objects which are located in specified distance from chosen object
+     * It consider objects in current time context
+     * @param selectedSpatialEntity selected spatial entities for which we search object in specified distance
+     * @param whichObjectsInclude which kind of object include in search (all, entities, estate)
+     * @param distance distance into which look for objects
+     * @param dateOfCurrentlyShowedDatabaseSnapshot current time context
+     * @return sql query (prepared statement) which ensure to get specified object which are located in specified distance from chosen object
+     */
     public ArrayList<PreparedStatement> createSqlQueriesToGetObjectsInSpecifiedDistance(SpatialEntity selectedSpatialEntity, String whichObjectsInclude, double distance, String dateOfCurrentlyShowedDatabaseSnapshot) {
 
         ArrayList<PreparedStatement> sqlQueriesToGetObjectsInSpecifiedDistance = new ArrayList<PreparedStatement>();
@@ -333,7 +361,18 @@ public class SpatialModel {
         return sqlQueriesToGetObjectsInSpecifiedDistance;
     }
     
-    
+    /**
+     * This method return sql query (prepared statement) which ensure to get estates which contain or not contain specified kind of objects
+     * It consider objects in current time context
+     * @param checkBoxWaterConnectionIsSelected include water connection objects 
+     * @param checkBoxConnectionToElectricityIsSelected include connection to electricity objects
+     * @param checkBoxConnectionToGasIsSelected include connection to gas objects
+     * @param checkBoxHouseIsSelected include water area objects
+     * @param checkBoxWaterAreaIsSelected include water area objects
+     * @param containOrNotContain select estate which contain or not contain specified kind of objects
+     * @param dateOfCurrentlyShowedDatabaseSnapshot current time context
+     * @return sql query (prepared statement) which ensure to get estates which contain or not contain specified kind of objects
+     */
     public PreparedStatement createSqlQueryToGetEstatesWhichContainOrNotContainSpecifiedObjects(
             boolean checkBoxWaterConnectionIsSelected,
             boolean checkBoxConnectionToElectricityIsSelected,
@@ -433,7 +472,18 @@ public class SpatialModel {
         return psEstatesWhichContainOrNotContainSpecifiedObjects;
 
     }
-            
+    
+    /**
+     * This method return sql query (prepared statement) which ensure to get estates over which passes or not passes specified kind of objects
+     * It consider objects in current time context
+     * @param checkBoxWaterPipeIsSelected include water pipe objects
+     * @param checkBoxPowerLineIsSelected include power line objects
+     * @param checkBoxGasPipeIsSelected include gas pipe objects
+     * @param checkBoxPathIsSelected include path objects
+     * @param passesOrNotPassesThrough select estates over which passes or not passes specified kind of objects
+     * @param dateOfCurrentlyShowedDatabaseSnapshot current time context
+     * @return sql query (prepared statement) which ensure to get estates over which passes or not passes specified kind of objects
+     */
     public PreparedStatement createSqlQueryToGetEstatesOverWhichPassesOrNotPassesThroughSpecifiedObjects(
         boolean checkBoxWaterPipeIsSelected,
         boolean checkBoxPowerLineIsSelected,
