@@ -22,7 +22,20 @@ Jan Herec (xherec00):
 - A mnoho dalšího (kontrola/korektura výsledků práce druhých, apod.) 
  
 Filip Gulán (xgulan00):
--
+- V sql skripte riešil tabuľky estates, ich naplnenie datami.
+- V užívateľskej príručke riešil kapitolu Multimedia a Freeholders záložku.
+- V dokumentácií, ktorá popisuje TSQL riešil Update 1X a SELECT 2x.
+- V prorgamovej realizácií riešil:
+    - Vytvorenie základného GUI, návrh a realizácia, rozdelenie na pod súbori a ich controlery.
+    - Databázová trieda Singleton vzor
+    - Parsovanie inicializacného skriptu a inicializácia
+    - Prihlásenie do databáze, GUI, ukladanie údajov
+    - Záložka Multimedia, GUI, Controler, Model, všetky operácie s obrázkom... 
+    - Záložka Freeholders, GUI, Controler, Model
+    - Endity modification záložka, zmena údajov
+    - Základná funkcionalita vrstiev
+    - Time záložka, história freeholderov
+- Kontorla a korektura práce.
 
 Shrnutí:
 Práce na projektu probíhala průběžně (s vyjímkou období půlsemestrálních zkoušek). Spolupráce probíhala kontaktně prostřednictvím schůzek a vzdáleně pomocí FB a Trello. V každé fázi projektu se vždy potřebná práce rozvrhla (s cílem rovnoměrnosti) mezi všechny členy týmu.
