@@ -20,7 +20,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.DatabaseModel;
-import pdb.model.SpatialEntitiesModel;
+import pdb.model.spatial.SpatialEntitiesModel;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
 import pdb.model.spatial.SpatialEntity;

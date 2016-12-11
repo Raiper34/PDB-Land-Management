@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pdb.model;
+package pdb.model.spatial;
 
 import pdb.model.freeholder.FreeholderModel;
 import pdb.model.DatabaseModel;
@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.spatial.geometry.JGeometry;
+import pdb.model.DatabaseModel;
 import pdb.model.freeholder.Freeholder;
 import pdb.model.spatial.SpatialEntity;
 

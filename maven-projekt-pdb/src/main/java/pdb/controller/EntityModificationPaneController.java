@@ -46,7 +46,7 @@ import pdb.model.freeholder.Freeholder;
 import pdb.model.freeholder.FreeholderModel;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
-import pdb.model.SpatialEntitiesModel;
+import pdb.model.spatial.SpatialEntitiesModel;
 
 /**
  *

@@ -30,7 +30,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import oracle.spatial.geometry.JGeometry;
-import pdb.model.SpatialEntitiesModel;
+import pdb.model.spatial.SpatialEntitiesModel;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
 import pdb.model.spatial.Shapes;

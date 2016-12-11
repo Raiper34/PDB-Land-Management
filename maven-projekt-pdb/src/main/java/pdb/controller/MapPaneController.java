@@ -29,7 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 //import javafx.stage.Window;
-import pdb.model.SpatialEntitiesModel;
+import pdb.model.spatial.SpatialEntitiesModel;
 import pdb.model.spatial.Shapes;
 import pdb.model.spatial.ShapesColorsDefinition;
 

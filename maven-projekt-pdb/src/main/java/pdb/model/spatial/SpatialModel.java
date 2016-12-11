@@ -21,7 +21,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.DatabaseModel;
-import pdb.model.SpatialEntitiesModel;
 
 /**
  * Class which do backend operations for SpatialPaneController
