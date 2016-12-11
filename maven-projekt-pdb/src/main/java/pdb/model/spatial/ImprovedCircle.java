@@ -7,8 +7,7 @@ package pdb.model.spatial;
 
 import javafx.scene.shape.Circle;
 
-/**
- *
+/** Class ImprovedCircle represents circles with extra reference to Entity by which it was created
  * @author jan
  */
 public class ImprovedCircle extends Circle {

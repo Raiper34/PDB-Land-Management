@@ -6,9 +6,6 @@
 package pdb.model.spatial;
 
 import pdb.model.freeholder.FreeholderModel;
-import pdb.model.DatabaseModel;
-import pdb.model.spatial.Entity;
-import pdb.model.spatial.Estate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
@@ -16,17 +13,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Struct;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.DatabaseModel;
 import pdb.model.freeholder.Freeholder;
-import pdb.model.spatial.SpatialEntity;
 
-/**
- *
+/** Class SpatialEntitiesModel database model for Spatial entities
+ * Contains all the DB work for spatial entities
  * @author mmarus
  */
 public class SpatialEntitiesModel {
@@ -35,12 +30,18 @@ public class SpatialEntitiesModel {
     private Connection conn;
     private FreeholderModel freeholdersModel;
 
+    /** Constructor
+     */
     public SpatialEntitiesModel() {
         DB = DatabaseModel.getInstance();
         conn = DB.getConnection();
         freeholdersModel = new FreeholderModel();
     }
 
+    /** updateSpatialEntity Update the original entity with new data from new entity to db
+     * @param originalSpatialEntity
+     * @param spatialEntityToSave
+     */
     public void updateSpatialEntity(SpatialEntity originalSpatialEntity, SpatialEntity spatialEntityToSave){
         if(originalSpatialEntity instanceof Entity && spatialEntityToSave instanceof Entity){
             updateSpatialEntity((Entity) originalSpatialEntity, (Entity) spatialEntityToSave);
@@ -49,6 +50,11 @@ public class SpatialEntitiesModel {
             updateSpatialEntity((Estate) originalSpatialEntity, (Estate) spatialEntityToSave);
         }
     }
+    
+    /** updateSpatialEntity Update the original entity with new data from new entity to db
+     * @param originalSpatialEntity
+     * @param spatialEntityToSave
+     */
     public void updateSpatialEntity(Entity originalSpatialEntity, Entity spatialEntityToSave){
         try{
             PreparedStatement statementUpdateSpatialEntity = conn.prepareStatement("UPDATE related_spatial_entities "
@@ -82,6 +88,10 @@ public class SpatialEntitiesModel {
         }
     }
     
+    /** updateSpatialEntity Update the original entity with new data from new entity to db
+     * @param originalSpatialEntity
+     * @param spatialEntityToSave
+     */
     public void updateSpatialEntity(Estate originalSpatialEntity, Estate spatialEntityToSave){
         try{
             PreparedStatement statementUpdateSpatialEntity = conn.prepareStatement("UPDATE estates "
@@ -121,7 +131,9 @@ public class SpatialEntitiesModel {
         }
     }
     
-    
+    /** saveSpatialEntityToDB Insert spatial entity to db
+     * @param spatialEntityToSave
+     */
     public void saveSpatialEntityToDB(SpatialEntity spatialEntityToSave) {
         if(spatialEntityToSave instanceof Entity){
             saveSpatialEntityToDB((Entity) spatialEntityToSave);
@@ -133,9 +145,9 @@ public class SpatialEntitiesModel {
             System.err.println("THE SPATIAL ENTITY IS NOT ENTITY NOR ESTATE");
     }
     
-    /*
-    * @param Estate spatialEntityToSave
-    */
+    /** saveSpatialEntityToDB Insert spatial entity to db
+     * @param spatialEntityToSave
+     */
     public void saveSpatialEntityToDB(Estate spatialEntityToSave) {
         try{
             PreparedStatement statementInsertSpatialEntity;
@@ -174,9 +186,9 @@ public class SpatialEntitiesModel {
         }
     } 
     
-    /*
-    * @param Estate spatialEntityToSave
-    */
+    /** saveSpatialEntityToDB Insert spatial entity to db
+     * @param spatialEntityToSave
+     */
     public void saveSpatialEntityToDB(Entity spatialEntityToSave) {
         try{
             PreparedStatement statementInsertSpatialEntity = conn.prepareStatement(""
@@ -203,9 +215,9 @@ public class SpatialEntitiesModel {
         }
     }
     
-    /*
-    * @return List<Entity>
-    */
+    /** getEntities get all entities from DB to List of Entity
+     * @return ArrayList
+     */
     public List<Entity> getEntities() {
         List<Entity> entities = new ArrayList<>();
         
@@ -240,10 +252,14 @@ public class SpatialEntitiesModel {
         return entities;
     }
     
-    /*
-    * @return List<Estate>
-    */
-    public List<Estate> getEstateByIdWhichIntersectsInterval(int ID, Date from, Date to) {
+    /** getEstateByIdWhichIntersectInterval get all entities from DB to List of Entity with the ID which
+     * somehow exists in the selected interval
+     * @param ID
+     * @param from
+     * @param to
+     * @return ArrayList
+     */
+    public List<Estate> getEstateByIdWhichIntersectInterval(int ID, Date from, Date to) {
         List<Estate> estates = new ArrayList<>();
 
         try {
@@ -291,10 +307,14 @@ public class SpatialEntitiesModel {
         return estates;
     }
     
-    /*
-    * @return List<Entity>
-    */
-    public List<Entity> getEntityByIdWhichIntersectsInterval(int ID, Date from, Date to) {
+    /** getEntityByIdWhichIntersectInterval get all entities from DB to List of Entity with the ID which
+     * somehow exists in the selected interval
+     * @param ID
+     * @param from
+     * @param to
+     * @return ArrayList
+     */
+    public List<Entity> getEntityByIdWhichIntersectInterval(int ID, Date from, Date to) {
         List<Entity> entities = new ArrayList<>();
         
         try {
@@ -339,9 +359,12 @@ public class SpatialEntitiesModel {
         return entities;
     }
     
-    /*
-    * @return List<Estate>
-    */
+     /** createEstate
+     * @param ID
+     * @param from
+     * @param to
+     * @return Estate
+     */
     public Estate createEstate(int ID, Date from, Date to) {
         Estate estate = null;
 
@@ -380,9 +403,12 @@ public class SpatialEntitiesModel {
         return estate;
     }
     
-    /*
-    * @return List<Entity>
-    */
+    /** createEntity
+     * @param ID
+     * @param from
+     * @param to
+     * @return Entity
+     */
     public Entity createEntity(int ID, Date from, Date to) {
         Entity entity = null;
         
@@ -420,10 +446,10 @@ public class SpatialEntitiesModel {
         return entity;
     }
     
-    /*
-    * @param String dateSnapshot
-    * @return List<Entity>
-    */
+    /** getEntities which exist in the date
+     * @param dateSnapshot
+     * @return ArrayList of entities
+     */
     public List<Entity> getEntities(String dateSnapshot) {
         List<Entity> entities = new ArrayList<>();
         
@@ -456,10 +482,10 @@ public class SpatialEntitiesModel {
         return entities;
     }
 
-   /*
-    * @param String dateSnapshot
-    * @return List<Entity>
-    */
+    /** getEntities by the prepared SQL statement
+     * @param preparedSQLToGetEntitiesFromDB
+     * @return ArrayList of entities
+     */
     public List<Entity> getEntities(PreparedStatement preparedSQLToGetEntitiesFromDB) {
         List<Entity> entities = new ArrayList<>();
         
@@ -488,9 +514,9 @@ public class SpatialEntitiesModel {
         return entities;
     }
     
-    /*
-    * @return List<Estate>
-    */
+    /** getEstates get all the estates
+     * @return ArrayList of Estate
+     */
     public List<Estate> getEstates() {
         List<Estate> estates = new ArrayList<>();
 
@@ -528,9 +554,9 @@ public class SpatialEntitiesModel {
         return estates;
     }
     
-    /*
-    * @param String dateSnapshot
-    * @return List<Estate>
+    /** getEstates get all the estates existing in the date
+     * @param dateSnapshot
+    * @return ArrayList of Estates
     */
     public List<Estate> getEstates(String dateSnapshot) {
         List<Estate> estates = new ArrayList<>();
@@ -565,9 +591,9 @@ public class SpatialEntitiesModel {
         return estates;
     }
     
-            /*
-    * @param String dateSnapshot
-    * @return List<Estate>
+    /** getEstates get all the estates by preparedSQLToGetEstatesFromDB
+     * @param preparedSQLToGetEstatesFromDB
+    * @return ArrayList of Estates
     */
     public List<Estate> getEstates(PreparedStatement preparedSQLToGetEstatesFromDB) {
         List<Estate> estates = new ArrayList<>();
@@ -598,21 +624,19 @@ public class SpatialEntitiesModel {
         return estates;
     }
     
-    /*
-    * @return List<Estate>
+   /** getNewIdForEntity
     */
     public int getNewIdForEntity() {
         return getMaxIdFromTable("related_spatial_entities") + 1;
     }
     
-    /*
-    * @return List<Estate>
+    /** getNewIdForEstate
     */
     public int getNewIdForEstate() {
         return getMaxIdFromTable("estates") + 1;
     }
     
-    /*
+    /* getMaxIdFromTable
     * @param String table
     * @return int
     */

@@ -50,7 +50,7 @@ import pdb.model.spatial.SpatialEntity;
 
 /**
  * 
- * @author raiper34
+ * @author gulan
  */
 public class MainController implements Initializable {
 

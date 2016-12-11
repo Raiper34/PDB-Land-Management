@@ -6,8 +6,7 @@
 package pdb.model.spatial;
 
 import javafx.scene.shape.Path;
-/**
- *
+/** Class ImprovedPath represents paths with extra reference to Entity by which it was created
  * @author jan
  */
 public class ImprovedPath extends Path {

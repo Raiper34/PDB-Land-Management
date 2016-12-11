@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -17,9 +16,7 @@ import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 
 import pdb.model.DatabaseModel;
-import pdb.model.DatabaseModel;
 import pdb.model.spatial.Estate;
-import pdb.model.spatial.ImprovedCircle;
 
 /**
  * Class to manipulating with freeholders table
