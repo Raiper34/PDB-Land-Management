@@ -172,9 +172,9 @@ public class EntityModificationPaneController implements Initializable {
 
     public void saveClick(ActionEvent event) throws SQLException {
         this.mainController.originalSelectedSpatialEntityGeometry = this.mainController.selectedSpatialEntity.geometry;
-        SpatialEntitiesModel spatialEntitiesModel = mainController.mapPaneController.spatialEntitiesModel;
+        //SpatialEntitiesModel spatialEntitiesModel = mainController.mapPaneController.spatialEntitiesModel;
 
-        spatialEntitiesModel.updateSpatialEntity(this.mainController.selectedSpatialEntity, this.mainController.selectedSpatialEntity);
+        //spatialEntitiesModel.updateSpatialEntity(this.mainController.selectedSpatialEntity, this.mainController.selectedSpatialEntity);
 
         //Get model
         this.entityModificationModel.deleteObjectInInterval(this.mainController.selectedSpatialEntity, this.pickerFrom.getValue(), this.pickerTo.getValue());
