@@ -27,6 +27,9 @@ public class FreeholderModel {
     DatabaseModel database;
     Connection connection;
     
+    /**
+     *
+     */
     public ObservableList<Freeholder> freeholders;
     
     /**

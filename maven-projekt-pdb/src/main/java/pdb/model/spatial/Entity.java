@@ -16,7 +16,18 @@ public class Entity extends SpatialEntity{
     private String entityType; 
     private String layer;
     
-        public Entity(
+    /**
+     *
+     * @param id
+     * @param name
+     * @param description
+     * @param geometry
+     * @param valid_from
+     * @param valid_to
+     * @param entityType
+     * @param layer
+     */
+    public Entity(
             int id, 
             String name, 
             String description, 
@@ -32,14 +43,26 @@ public class Entity extends SpatialEntity{
         this.layer = layer; 
     }
         
+    /**
+     *
+     * @return
+     */
     public String getEntityType() {
         return this.entityType;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getLayer() {
         return this.layer;
     }
     
+    /**
+     *
+     * @return
+     */
     public Shapes toShapes(){
         SpatialEntity spatialEntity = (SpatialEntity) this;
         return super.toShapes(spatialEntity, "Entity");

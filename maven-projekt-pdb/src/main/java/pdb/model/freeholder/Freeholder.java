@@ -26,13 +26,45 @@ public class Freeholder
 
     private final SimpleStringProperty name;
     private final SimpleStringProperty birthDateP;
+
+    /**
+     *
+     */
     public String first_name;
+
+    /**
+     *
+     */
     public String surname;
+
+    /**
+     *
+     */
     public String birthDate;
+
+    /**
+     *
+     */
     public int id;
+
+    /**
+     *
+     */
     public String wasFreeholderOfEstateFrom;
+
+    /**
+     *
+     */
     public String wasFreeholderOfEstateTo;
+
+    /**
+     *
+     */
     public Date dateWasFreeholderOfEstateFrom;
+
+    /**
+     *
+     */
     public Date dateWasFreeholderOfEstateTo;
     
     
@@ -46,31 +78,56 @@ public class Freeholder
         birthDateP = new SimpleStringProperty(birthDate);
     }
     
+    /**
+     *
+     * @return
+     */
     public String getName() 
     {
         return name.get();
     }
     
+    /**
+     *
+     * @param fName
+     */
     public void setName(String fName) 
     {
         name.set(fName);
     }
     
+    /**
+     *
+     * @return
+     */
     public String getBirthDateP() 
     {
         return birthDateP.get();
     }
     
+    /**
+     *
+     * @return
+     */
     public String getWasFreeholderOfEstateFrom()
     {
         return this.wasFreeholderOfEstateFrom;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getWasFreeholderOfEstateTo()
     {
         return this.wasFreeholderOfEstateTo;
     }
     
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public ObservableList<Estate> ownedEstates() throws SQLException
     {
         DatabaseModel database = DatabaseModel.getInstance();

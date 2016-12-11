@@ -24,13 +24,46 @@ import javafx.scene.shape.Rectangle;
 public class SpatialEntity {
     private static final int SRID = 0;
     private static final int DIMENSION = 2;
+
+    /**
+     *
+     */
     public int id;
+
+    /**
+     *
+     */
     public String name;
+
+    /**
+     *
+     */
     public String description; 
+
+    /**
+     *
+     */
     public JGeometry geometry;
+
+    /**
+     *
+     */
     public Date validFrom;
+
+    /**
+     *
+     */
     public Date validTo;
     
+    /**
+     *
+     * @param id
+     * @param name
+     * @param description
+     * @param geometry
+     * @param validFrom
+     * @param validTo
+     */
     public SpatialEntity(
             int id, 
             String name, 

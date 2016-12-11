@@ -12,14 +12,27 @@ import javafx.scene.shape.Circle;
  */
 public class ImprovedCircle extends Circle {
     private Entity entityReference;
+
+    /**
+     *
+     */
     public int dbId;
     
+    /**
+     *
+     * @param entityReference
+     * @param dbId
+     */
     public ImprovedCircle(Entity entityReference, int dbId) {
         super();
         this.dbId = dbId;
         this.entityReference = entityReference;
     }
     
+    /**
+     *
+     * @return
+     */
     public Entity getEntityReference() {
         return this.entityReference;
     }

@@ -35,70 +35,135 @@ import pdb.model.DatabaseModel;
  */
 public class MultimediaPaneController implements Initializable {
     
+    /**
+     *
+     */
     @FXML
     public Button selectImageButton; 
     
+    /**
+     *
+     */
     @FXML
     public Button deleteImageButton; 
     
+    /**
+     *
+     */
     @FXML 
     public Button moreButton;
     
+    /**
+     *
+     */
     @FXML 
     public Button mirrorButton;
     
+    /**
+     *
+     */
     @FXML 
     public Button flipButton;
     
+    /**
+     *
+     */
     @FXML 
     public Button rotateButton;
     
+    /**
+     *
+     */
     @FXML 
     public Button smiliarButton;
     
+    /**
+     *
+     */
     @FXML
     public AnchorPane imageLayout;
     
+    /**
+     *
+     */
     public MainController mainController;
     
+    /**
+     *
+     */
     @FXML
     public AnchorPane smiliarPanel;
     
+    /**
+     *
+     */
     @FXML
     public AnchorPane imageSmiliarLayout1;
     
+    /**
+     *
+     */
     @FXML
     public AnchorPane imageSmiliarLayout2;
     
+    /**
+     *
+     */
     @FXML
     public AnchorPane imageSmiliarLayout3;
     
+    /**
+     *
+     */
     @FXML
     public AnchorPane imageSmiliarLayout4;
     
+    /**
+     *
+     */
     @FXML
     public AnchorPane gamaContrastPanel;
     
+    /**
+     *
+     */
     @FXML 
     public Slider gamaRed;
     
+    /**
+     *
+     */
     @FXML 
     public Slider gamaGreen;
     
+    /**
+     *
+     */
     @FXML 
     public Slider gamaBlue;
     
+    /**
+     *
+     */
     @FXML 
     public Slider contrastRed;
     
+    /**
+     *
+     */
     @FXML 
     public Slider contrastGreen;
     
+    /**
+     *
+     */
     @FXML 
     public Slider contrastBlue;
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

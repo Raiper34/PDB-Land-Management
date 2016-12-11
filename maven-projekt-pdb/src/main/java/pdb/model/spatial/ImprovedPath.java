@@ -11,14 +11,27 @@ import javafx.scene.shape.Path;
  */
 public class ImprovedPath extends Path {
     private Entity entityReference;
+
+    /**
+     *
+     */
     public int dbId;
     
+    /**
+     *
+     * @param entityReference
+     * @param dbId
+     */
     public ImprovedPath(Entity entityReference, int dbId) {
         super();
         this.dbId = dbId;
         this.entityReference = entityReference;
     }
     
+    /**
+     *
+     * @return
+     */
     public Entity getEntityReference() {
         return this.entityReference;
     }

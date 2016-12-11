@@ -60,6 +60,9 @@ public class TimePaneController implements Initializable {
     @FXML
     private ComboBox comboBox; 
     
+    /**
+     *
+     */
     @FXML
     public AnchorPane timeAnchorPane;
     
@@ -234,7 +237,7 @@ public class TimePaneController implements Initializable {
     
     /**
      * Save instance of Parent controller MainController 
-     * @param  MainController instance
+     * @param c1
      */
     public void addParent(MainController c1) {
         this.mainController = c1;

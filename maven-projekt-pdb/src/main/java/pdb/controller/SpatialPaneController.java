@@ -40,7 +40,9 @@ import pdb.model.spatial.SpatialModel;
  */
 public class SpatialPaneController implements Initializable {
     
-
+    /**
+     *
+     */
     @FXML
     public AnchorPane spatialAnchorPane;
     

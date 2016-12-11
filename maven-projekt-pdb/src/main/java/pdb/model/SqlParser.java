@@ -18,6 +18,9 @@ import java.util.logging.Logger;
  */
 public class SqlParser {
 
+    /**
+     *
+     */
     public List<String> queries;
     
     /**

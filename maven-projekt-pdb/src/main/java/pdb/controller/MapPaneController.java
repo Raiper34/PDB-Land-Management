@@ -48,22 +48,44 @@ public class MapPaneController implements Initializable {
     
     List<Shape> shapes;
     
+    /**
+     *
+     */
     @FXML
     public AnchorPane mapa;
 
+    /**
+     *
+     */
     public int cislo;
 
+    /**
+     *
+     */
     public MainController mainController;
 
     @FXML
     private MainController fXMLController;
     
+    /**
+     *
+     */
     public Paint[] arrPaintFillAndStrokeLastSelectedObject = new Paint[2];
+
+    /**
+     *
+     */
     public int lastSelectedShapeID = 0;
+
+    /**
+     *
+     */
     public String lastSelectedEntityType = ""; // estate or entity
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -102,7 +124,7 @@ public class MapPaneController implements Initializable {
     }
     
     /** removeShapesFromMap
-    * @param shapeToRemove
+     * @param shapesToRemove
     */
     public void removeShapesFromMap(Shapes shapesToRemove) {
         for (ImprovedCircle shape : shapesToRemove.circles)
@@ -120,6 +142,9 @@ public class MapPaneController implements Initializable {
         this.mainController = mainController;
     }
     
+    /**
+     *
+     */
     public void initializeSpatialEntitiesModel(){
         spatialEntitiesModel = new SpatialEntitiesModel();
     }
@@ -146,6 +171,11 @@ public class MapPaneController implements Initializable {
 
     /* loadentities from DB into entities variable on selected date
     */
+
+    /**
+     *
+     */
+
     public void loadEntities() {
         entities = spatialEntitiesModel.getEntities();
     }

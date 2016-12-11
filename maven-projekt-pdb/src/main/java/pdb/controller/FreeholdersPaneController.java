@@ -46,48 +46,92 @@ import pdb.model.time.TableViewItem;
  */
 public class FreeholdersPaneController implements Initializable {
 
+    /**
+     *
+     */
     public MainController mainController;
     
+    /**
+     *
+     */
     @FXML
     public TableView<Freeholder> freeholdersTable;
     
+    /**
+     *
+     */
     @FXML
     public TableView<Estate> estatesTable;
     
+    /**
+     *
+     */
     @FXML
     public DatePicker dateBirth;
     
+    /**
+     *
+     */
     @FXML
     public TextField name;
     
+    /**
+     *
+     */
     @FXML
     public TextField surname;
     
+    /**
+     *
+     */
     public ObservableList<Freeholder> freeholders;
     
+    /**
+     *
+     */
     @FXML 
     public AnchorPane detailPanel;
      
+    /**
+     *
+     */
     public Freeholder selectedFreeholder;
     
+    /**
+     *
+     */
     @FXML
     public DatePicker pickerFrom;
     
+    /**
+     *
+     */
     @FXML
     public DatePicker pickerTo;
     
+    /**
+     *
+     */
     @FXML
     public Label labelNumberOfFreeholdersOwnedEstate;
     
+    /**
+     *
+     */
     @FXML
     public Label labelNumberOwnedTimes;
     
+    /**
+     *
+     */
     @FXML
     public Label labelNumberOfEstatesOwnedByFreeholdWithSameName;
             
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

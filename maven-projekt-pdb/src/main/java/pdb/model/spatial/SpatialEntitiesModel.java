@@ -625,12 +625,14 @@ public class SpatialEntitiesModel {
     }
     
    /** getNewIdForEntity
+     * @return 
     */
     public int getNewIdForEntity() {
         return getMaxIdFromTable("related_spatial_entities") + 1;
     }
     
     /** getNewIdForEstate
+     * @return 
     */
     public int getNewIdForEstate() {
         return getMaxIdFromTable("estates") + 1;

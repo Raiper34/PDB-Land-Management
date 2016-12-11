@@ -55,11 +55,17 @@ import pdb.model.spatial.SpatialEntitiesModel;
  */
 public class EntityModificationPaneController implements Initializable {
 
+    /**
+     *
+     */
     public MainController mainController;
 
     @FXML
     private MainController fXMLController;
 
+    /**
+     *
+     */
     @FXML
     public AnchorPane entityModificationAnchorPane;
 
@@ -69,24 +75,45 @@ public class EntityModificationPaneController implements Initializable {
     @FXML
     private Button buttonSave;
 
+    /**
+     *
+     */
     @FXML
     public TextArea descriptionArea;
 
+    /**
+     *
+     */
     @FXML
     public TextField nameField;
 
+    /**
+     *
+     */
     @FXML
     public DatePicker pickerFrom;
 
+    /**
+     *
+     */
     @FXML
     public DatePicker pickerTo;
 
+    /**
+     *
+     */
     @FXML
     public ToggleGroup editation;
 
+    /**
+     *
+     */
     @FXML
     public DatePicker datePickerDeleteFrom;
 
+    /**
+     *
+     */
     @FXML
     public DatePicker datePickerDeleteTo;
 
@@ -101,6 +128,11 @@ public class EntityModificationPaneController implements Initializable {
 
     private EntityModificationModel entityModificationModel;
 
+    /**
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //drawTest();
@@ -118,6 +150,12 @@ public class EntityModificationPaneController implements Initializable {
     /*
     * @param MainController mainController
      */
+
+    /**
+     *
+     * @param mainController
+     */
+
     public void addParent(MainController mainController) {
         this.mainController = mainController;
     }
@@ -125,6 +163,13 @@ public class EntityModificationPaneController implements Initializable {
     /* Event handler of save button 
     * @param ActionEvent event
      */
+
+    /**
+     *
+     * @param event
+     * @throws SQLException
+     */
+
     public void saveClick(ActionEvent event) throws SQLException {
         this.mainController.originalSelectedSpatialEntityGeometry = this.mainController.selectedSpatialEntity.geometry;
         SpatialEntitiesModel spatialEntitiesModel = mainController.mapPaneController.spatialEntitiesModel;
@@ -163,6 +208,15 @@ public class EntityModificationPaneController implements Initializable {
     /* Event handler for Event of Shape
     * @param ActionEvent event
      */
+
+    /**
+     *
+     * @param t
+     * @param shape
+     * @throws SQLException
+     * @throws IOException
+     */
+
     public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException, IOException {
 
         //this.mainController.selectedSpatialEntity;
@@ -179,6 +233,12 @@ public class EntityModificationPaneController implements Initializable {
     /* Delegate the to relevant fucntion based on editation mode
     * @param InputEvent event
      */
+
+    /**
+     *
+     * @param t
+     */
+
     public void handleInputEventForMap(InputEvent t) {
         switch (editationMode) {
             case "Move":
@@ -197,6 +257,12 @@ public class EntityModificationPaneController implements Initializable {
     /* Move the selected object on map
     * @param InputEvent event
      */
+
+    /**
+     *
+     * @param t
+     */
+
     public void doMove(InputEvent t) {
         if (t.getEventType() == MouseEvent.MOUSE_PRESSED && this.mainController.selectedSpatialEntity != null) {
             if (!pressedOnSelectedObject(t)) {
@@ -279,6 +345,13 @@ public class EntityModificationPaneController implements Initializable {
     /* Check if the edited geometry is smaller than 30x30px, returns true if the geometry is smaller
     * @param JGeometry geometry
      */
+
+    /**
+     *
+     * @param translated
+     * @return
+     */
+
     public boolean isGeometryTooSmall(JGeometry translated) {
         double x = translated.getFirstPoint()[0];
         double y = translated.getFirstPoint()[1];
@@ -299,6 +372,13 @@ public class EntityModificationPaneController implements Initializable {
     /* Check if the edited geometry is in map - 650px X 650px rectangle
     * @param JGeometry geometry
      */
+
+    /**
+     *
+     * @param translated
+     * @return
+     */
+
     public boolean isGeometryInMap(JGeometry translated) {
         JGeometry map = new JGeometry(3, 0, new int[]{1, 1003, 1},
                 new double[]{0, 0, 650, 0, 650, 650, 0, 650, 0, 0}
@@ -331,6 +411,12 @@ public class EntityModificationPaneController implements Initializable {
     
     /* resetState of this panel - clean the variables, pickers etc
      */
+
+    /**
+     *
+     * @throws SQLException
+     */
+
     public void resetState() throws SQLException {
 
         if (this.mainController.selectedSpatialEntity != null) {

@@ -34,11 +34,20 @@ public class EntityModificationModel {
     private DatabaseModel DB;
     private Connection conn;
 
+    /**
+     *
+     */
     public EntityModificationModel() {
         DB = DatabaseModel.getInstance();
         conn = DB.getConnection();
     }
     
+    /**
+     *
+     * @param spatialEntity
+     * @param from
+     * @param to
+     */
     public void deleteObjectInInterval(SpatialEntity spatialEntity, LocalDate from, LocalDate to) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MM. yyyy");
         String deleteFrom = formatter.format(from);
@@ -244,6 +253,10 @@ public class EntityModificationModel {
        
     }
     
+    /**
+     *
+     * @param entity
+     */
     public void deleteSpatialEntity(Entity entity) {
         try {
             DateFormat df = new SimpleDateFormat("dd. MM. yyyy");
@@ -264,6 +277,10 @@ public class EntityModificationModel {
         }    
     }
     
+    /**
+     *
+     * @param entity
+     */
     public void deleteSpatialEntity(Estate entity) {
         try {
             DateFormat df = new SimpleDateFormat("dd. MM. yyyy");

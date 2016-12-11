@@ -67,6 +67,10 @@ public class MainController implements Initializable {
     private Canvas canvas;
     
     // showed object on map in this date, Date si in format "dd. MM. yyyy"
+
+    /**
+     *
+     */
     public String dateOfCurrentlyShowedDatabaseSnapshot;
     
     @FXML
@@ -81,49 +85,93 @@ public class MainController implements Initializable {
     @FXML
     private AnchorPane mapPane;
     
+    /**
+     *
+     */
     @FXML
     public AnchorPane databaseSettingsModal;
     
+    /**
+     *
+     */
     @FXML 
     public MapPaneController mapPaneController;
     
+    /**
+     *
+     */
     @FXML 
     public AddEntityPaneController addEntityPaneController;
     
+    /**
+     *
+     */
     @FXML 
     public EntityModificationPaneController entityModificationPaneController;
     
+    /**
+     *
+     */
     @FXML 
     public DatabaseSettingsController databaseSettingsController;
     
+    /**
+     *
+     */
     @FXML 
     public FreeholdersPaneController freeholdersPaneController;
     
+    /**
+     *
+     */
     @FXML 
     public TimePaneController timePaneController;
     
+    /**
+     *
+     */
     @FXML 
     public SpatialPaneController spatialPaneController;
     
+    /**
+     *
+     */
     @FXML
     public CheckBox undergroundCheckbox;
     
+    /**
+     *
+     */
     @FXML
     public CheckBox groundCheckbox;
     
+    /**
+     *
+     */
     @FXML
     public CheckBox overgroundCheckbox;
     
+    /**
+     *
+     */
     @FXML
     public MultimediaPaneController multimediaPaneController;
 
+    /**
+     *
+     */
     public SpatialEntity selectedSpatialEntity = null; 
 
+    /**
+     *
+     */
     public JGeometry originalSelectedSpatialEntityGeometry = null; 
 
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -196,6 +244,10 @@ public class MainController implements Initializable {
         this.databaseSettingsModal.setVisible(false);
     }
     
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void initializeClick(ActionEvent event)
     {
@@ -205,6 +257,10 @@ public class MainController implements Initializable {
         this.databaseInitialized();
     }
     
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void closeClick(ActionEvent event)
     {
@@ -212,6 +268,9 @@ public class MainController implements Initializable {
         stage.close();
     }
     
+    /**
+     *
+     */
     public void databaseInitialized()
     {
         this.mapPaneController.initializeSpatialEntitiesModel();
@@ -225,6 +284,13 @@ public class MainController implements Initializable {
         }
     }
     
+    /**
+     *
+     * @param t
+     * @param shape
+     * @throws SQLException
+     * @throws IOException
+     */
     public void handleInputEventForShape(InputEvent t, Shape shape) throws SQLException, IOException {
         if (t.getEventType() == MouseEvent.MOUSE_CLICKED) {
             if (shape instanceof ImprovedPolygon) {
@@ -294,6 +360,11 @@ public class MainController implements Initializable {
         }
     }
     
+    /**
+     *
+     * @param event
+     * @throws SQLException
+     */
     @FXML
     public void groundCheckboxClick(ActionEvent event) throws SQLException
     {
@@ -305,6 +376,10 @@ public class MainController implements Initializable {
         this.entityModificationPaneController.resetState();
     }
     
+    /**
+     *
+     * @param event
+     */
     public void handleInputEventForMap(InputEvent event) {
         switch (this.currentTitledPane) {
             case "DEFAULT":
@@ -331,10 +406,18 @@ public class MainController implements Initializable {
         }     
     }
     
+    /**
+     *
+     * @param state
+     */
     public void setCurrentTitledPane(String state) {
         this.currentTitledPane = state;
     }
     
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void disconnectClick(ActionEvent event)
     {
@@ -343,6 +426,10 @@ public class MainController implements Initializable {
 
     }
     
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void showAllObjectsInSelectedTimeContext(ActionEvent event) {
         this.mapPaneController.clearMap();
@@ -352,6 +439,10 @@ public class MainController implements Initializable {
         this.mapPaneController.drawSpatialEntities(this.undergroundCheckbox.isSelected(), this.groundCheckbox.isSelected(), this.overgroundCheckbox.isSelected());
     }
     
+    /**
+     *
+     * @param spatialEntity
+     */
     public void setSelectedSpatialEntity(SpatialEntity spatialEntity) {
         
         if(selectedSpatialEntity != null && originalSelectedSpatialEntityGeometry != null){

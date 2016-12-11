@@ -16,10 +16,25 @@ import javafx.scene.shape.PathElement;
  * @author mmarus
  */
 public class Shapes {
+
+    /**
+     *
+     */
     public List<ImprovedCircle> circles;
+
+    /**
+     *
+     */
     public List<ImprovedPath> paths;
+
+    /**
+     *
+     */
     public List<ImprovedPolygon> polygons;
     
+    /**
+     *
+     */
     public Shapes() {
         this.circles = new ArrayList<>();
         this.paths = new ArrayList<>();
