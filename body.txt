@@ -2,8 +2,19 @@ xgulan00 100 %
 xherec00 100 %
 xmarus05 100 %
 
-Vedoucím projektu je Marek Marušič (xmarus05):
--
+Vedoucím projektu je Marek Marušic (xmarus05):
+- SQL skript - tabuľky freeholders, photos + naplnenie dátami. 
+- V používateľskej príručke popísané záložky
+  - Add Entity
+  - Entity Modification	
+- V dokumentácii vytvoril v TSQL 3xSELECT s agregačnými funkciami plus implementácia do projektu.
+- Programová realizácia
+  - Vytvorenie základných tried ako Entity, Estate, SpatialEntity.
+  - Vytvorenie Add Entity záložky a všetká práca s danou záložkou spolu s potrebnými fciami pre vloženie/upravenie/vybranie Entit a Estates z/do DB.
+  - Vykreslovanie objektov na mapu
+  - Pridanie drag n drop pohyb objektov po mape, zväčšenie a rotácia objektov.
+  - V záložke Freeholders pridané zobrazenie výsledkov z TSQL SELECTov.
+- A mnoho dalšieho (kontrola/korektura výsledkov práce druhých, apod.) 
 
 Jan Herec (xherec00): 
 - V inicializačním SQL skriptu řešil tvorbu tabulky related_spatial_entities (pro ukládání prostorových entit kromě pozemků) a naplnění tabulky daty
