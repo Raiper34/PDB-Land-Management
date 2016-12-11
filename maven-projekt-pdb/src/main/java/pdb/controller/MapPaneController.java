@@ -6,7 +6,6 @@
 package pdb.controller;
 
 import java.io.IOException;
-import pdb.controller.MainController;
 import pdb.model.spatial.Entity;
 import pdb.model.spatial.Estate;
 import pdb.model.spatial.ImprovedCircle;
@@ -19,32 +18,20 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 //import javafx.stage.Window;
-import oracle.spatial.geometry.JGeometry;
 import pdb.model.SpatialEntitiesModel;
 import pdb.model.spatial.Shapes;
 import pdb.model.spatial.ShapesColorsDefinition;
-import pdb.model.spatial.SpatialEntity;
 
 /**
  * FXML Controller class
@@ -91,29 +78,32 @@ public class MapPaneController implements Initializable {
         });
     }
 
-    /*
-    * @param Estate spatialEntityToAdd
+    /** add Entity To Map
+    * @param spatialEntityToAdd
     */
     public void addSpatialEntityToMap(Estate spatialEntityToAdd) {
         estates.add(spatialEntityToAdd);
         drawSpatialEntities();
     }
     
-    /*
-    * @param Entity spatialEntityToAdd
+    /** add Entity To Map
+    * @param spatialEntityToAdd
     */
     public void addSpatialEntityToMap(Entity spatialEntityToAdd) {
         entities.add(spatialEntityToAdd);
         drawSpatialEntities();
     }
     
-    /*
-    * @param Node shapeToRemove
+    /** removeShapeFromMap
+    * @param shapeToRemove
     */
     public void removeShapeFromMap(Node shapeToRemove) {
         mapa.getChildren().remove(shapeToRemove);
     }
     
+    /** removeShapesFromMap
+    * @param shapeToRemove
+    */
     public void removeShapesFromMap(Shapes shapesToRemove) {
         for (ImprovedCircle shape : shapesToRemove.circles)
             removeShapeFromMap(shape);
@@ -123,8 +113,8 @@ public class MapPaneController implements Initializable {
             removeShapeFromMap(shape);
     }
     
-    /*
-    * @param MainController mainController
+    /**
+    * @param mainController
     */
     public void addParent(MainController mainController) {
         this.mainController = mainController;
@@ -134,30 +124,49 @@ public class MapPaneController implements Initializable {
         spatialEntitiesModel = new SpatialEntitiesModel();
     }
     
+    /** loadEstates from DB into estates variable
+    */
     public void loadEstates() {
         estates = spatialEntitiesModel.getEstates();
     }
     
+    /** loadEstates from DB into estates variable on selected date
+    * @param dateSnapshot
+    */
     public void loadEstates(String dateSnapshot) {
         estates = spatialEntitiesModel.getEstates(dateSnapshot);
     }
     
+    /** loadEstates with PreparedStatement
+    * @param preparedSQLToGetEstatesFromDB
+    */
     public void loadEstates(PreparedStatement preparedSQLToGetEstatesFromDB) {
         estates = spatialEntitiesModel.getEstates(preparedSQLToGetEstatesFromDB);
     }
 
+    /* loadentities from DB into entities variable on selected date
+    */
     public void loadEntities() {
         entities = spatialEntitiesModel.getEntities();
     }
     
+    /** Load entities from DB into entities variable on selected date
+    * @param dateSnapshot
+    */
     public void loadEntities(String dateSnapshot) {
         entities = spatialEntitiesModel.getEntities(dateSnapshot);
     }
     
+    /** Load entities from DB into entities variable on selected date
+     * @param preparedSQLToGetEntitiesFromDB
+    */
     public void loadEntities(PreparedStatement preparedSQLToGetEntitiesFromDB) {
         entities = spatialEntitiesModel.getEntities(preparedSQLToGetEntitiesFromDB);
     }
     
+    /** addShapeToMapAndSetListeners
+     * @param shape
+    */
     public void addShapeToMapAndSetListeners(Shape shape) {
         mapa.getChildren().add(shape);
         shape.addEventHandler(InputEvent.ANY, new EventHandler<InputEvent>()
@@ -403,14 +412,15 @@ public class MapPaneController implements Initializable {
         });
     }
     
+    /** clearMemoryAndMap clear map and memory
+    */
     public void clearMemoryAndMap()
     {
         this.clearMap();
-        //this.entities.clear();
-        //this.estates.clear();
-        //this.shapes.clear();
     }
     
+    /** clearMap removes all the shapes from map
+    */
     public void clearMap()
     {
         this.mapa.getChildren().clear();
@@ -420,14 +430,26 @@ public class MapPaneController implements Initializable {
         lastSelectedEntityType = "";
     }
     
+    /** drawSpatialEntities draw all the spatial entities no matter what layer they are in
+    */
     public void drawSpatialEntities(){
         this.drawSpatialEntitiesByLayer(true, true, true);
     }
     
+    /** drawSpatialEntities draw all the spatial entities in the selected layers
+     * @param underground
+     * @param ground
+     * @param overground
+    */
     public void drawSpatialEntities(boolean underground, boolean ground, boolean overground){
         this.drawSpatialEntitiesByLayer(underground, ground, overground);
     }
     
+    /** drawSpatialEntitiesByLayer draw all the spatial entities in the selected layers
+     * @param underground
+     * @param ground
+     * @param overground
+    */
     public void drawSpatialEntitiesByLayer(boolean underground, boolean ground, boolean overground)
     {
         int tmpID = lastSelectedShapeID;
@@ -614,6 +636,8 @@ public class MapPaneController implements Initializable {
         }
     }
     
+    /** setOriginalColorOnPreviousSelectedObject
+    */
     public void setOriginalColorOnPreviousSelectedObject() {
         for (Node node : mapa.getChildren()) {
             Shape shape = (Shape) node;
@@ -646,6 +670,8 @@ public class MapPaneController implements Initializable {
         }
     }
     
+    /** setColorToSelectedObject sets color to red of the selected object
+    */
     public void setColorToSelectedObject() {
         for (Node node : mapa.getChildren()) {
             Shape shape = (Shape) node;
