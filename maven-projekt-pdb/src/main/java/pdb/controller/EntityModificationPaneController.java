@@ -129,7 +129,7 @@ public class EntityModificationPaneController implements Initializable {
     private EntityModificationModel entityModificationModel;
 
     /**
-     *
+     * Initialize the pane
      * @param url
      * @param rb
      */
@@ -147,25 +147,16 @@ public class EntityModificationPaneController implements Initializable {
         });
     }
 
-    /*
-    * @param MainController mainController
-     */
-
     /**
-     *
+     * addParent reference
      * @param mainController
      */
-
     public void addParent(MainController mainController) {
         this.mainController = mainController;
     }
 
-    /* Event handler of save button 
-    * @param ActionEvent event
-     */
-
     /**
-     *
+     * Event handler of save button 
      * @param event
      * @throws SQLException
      */
@@ -205,12 +196,8 @@ public class EntityModificationPaneController implements Initializable {
         this.updateMapWithModifications();
     }
 
-    /* Event handler for Event of Shape
-    * @param ActionEvent event
-     */
-
     /**
-     *
+     * Event handler for Event of Shape
      * @param t
      * @param shape
      * @throws SQLException
@@ -230,12 +217,8 @@ public class EntityModificationPaneController implements Initializable {
         }
     }
     
-    /* Delegate the to relevant fucntion based on editation mode
-    * @param InputEvent event
-     */
-
-    /**
-     *
+    /** 
+     * Delegate the to relevant fucntion based on editation mode
      * @param t
      */
 
@@ -254,11 +237,7 @@ public class EntityModificationPaneController implements Initializable {
 
     }
 
-    /* Move the selected object on map
-    * @param InputEvent event
-     */
-
-    /**
+    /** Move the selected object on map
      *
      * @param t
      */
@@ -295,7 +274,7 @@ public class EntityModificationPaneController implements Initializable {
         }
     }
 
-    /* Resize or rotate the selected object on map when the mouse scroll
+    /** Resize or rotate the selected object on map when the mouse scroll
     * @param InputEvent event
      */
     private void doResize(InputEvent t, String operation) {
@@ -342,12 +321,8 @@ public class EntityModificationPaneController implements Initializable {
         }
     }
 
-    /* Check if the edited geometry is smaller than 30x30px, returns true if the geometry is smaller
-    * @param JGeometry geometry
-     */
-
     /**
-     *
+     * Check if the edited geometry is smaller than 30x30px, returns true if the geometry is smaller
      * @param translated
      * @return
      */
@@ -369,12 +344,8 @@ public class EntityModificationPaneController implements Initializable {
         return false;
     }
 
-    /* Check if the edited geometry is in map - 650px X 650px rectangle
-    * @param JGeometry geometry
-     */
-
     /**
-     *
+     * Check if the edited geometry is in map - 650px X 650px rectangle
      * @param translated
      * @return
      */
@@ -393,7 +364,7 @@ public class EntityModificationPaneController implements Initializable {
         return false;
     }
 
-    /* Check if mouse pressedOnSelectedObject
+    /** Check if mouse pressedOnSelectedObject
     * @param InputEvent t
      */
     private boolean pressedOnSelectedObject(InputEvent t) {
@@ -408,12 +379,9 @@ public class EntityModificationPaneController implements Initializable {
         return false;
     }
 
-    
-    /* resetState of this panel - clean the variables, pickers etc
-     */
 
     /**
-     *
+     * resetState of this panel - clean the variables, pickers etc
      * @throws SQLException
      */
 
@@ -434,7 +402,9 @@ public class EntityModificationPaneController implements Initializable {
         }
     }
 
-    /* actualizePaneContent pupulate boxes etc with the new values
+    /**
+     * actualizePaneContent pupulate boxes etc with the new values
+     * @throws SQLException 
      */
     private void actualizePaneContent() throws SQLException {
         FreeholderModel freeholdersModel = new FreeholderModel();
@@ -492,7 +462,7 @@ public class EntityModificationPaneController implements Initializable {
         this.buttonDeleteObjInInterval.setDisable(false);
     }
 
-    /* Delete object in the selected interval
+    /** Delete object in the selected interval
     * @param MouseEvent event
      */
     @FXML
@@ -503,7 +473,7 @@ public class EntityModificationPaneController implements Initializable {
         this.updateMapWithModifications();
     }
     
-    /* updateMapWithModifications redraw map etc
+    /** updateMapWithModifications redraw map etc
      */
     void updateMapWithModifications() {
         this.mainController.mapPaneController.clearMap();
