@@ -19,7 +19,7 @@ Vedoucím projektu je Marek Marušic (xmarus05):
 Jan Herec (xherec00): 
 - V inicializačním SQL skriptu řešil tvorbu tabulky related_spatial_entities (pro ukládání prostorových entit kromě pozemků) a naplnění tabulky daty
 - V uživatelké příručce řešil tyto kapitoly: Popis aplikace jako celku, Spatial záložka, Time záložka
-- V dokumentaci, která popisuje TSQL dotazy řešil dotazy na DELETE
+- V dokumentaci, která popisuje TSQL dotazy řešil dotazy na DELETE a jeden dotaz na SELECT
 - Co se týče programové realizace řešil zejména:
   - Vytvoření kostry programu v mavenu
   - Převod objektů typu JGeometry na Shape a jejich vykreslení na mapu (včetně grafických udělátek, které zlepšují dojem z používání programu)
