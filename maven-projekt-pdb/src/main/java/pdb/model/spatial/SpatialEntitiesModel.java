@@ -201,8 +201,8 @@ public class SpatialEntitiesModel {
         try{
             PreparedStatement statementInsertSpatialEntity = conn.prepareStatement(""
                     + "INSERT INTO related_spatial_entities"
-                    + "(id, name, geometry, layer, entity_type, valid_from, valid_to)"
-                    + "VALUES( ?, ?, ?, ?, ?, ?, ?)");
+                    + "(id, name, geometry, layer, entity_type, valid_from, valid_to, description)"
+                    + "VALUES( ?, ?, ?, ?, ?, ?, ?, ?)");
             try {
                 statementInsertSpatialEntity.setInt(1, spatialEntityToSave.id);
                 statementInsertSpatialEntity.setString(2, spatialEntityToSave.name);
@@ -211,6 +211,7 @@ public class SpatialEntitiesModel {
                 statementInsertSpatialEntity.setString(5, spatialEntityToSave.getEntityType());
                 statementInsertSpatialEntity.setDate(6, new java.sql.Date(spatialEntityToSave.validFrom.getTime()));
                 statementInsertSpatialEntity.setDate(7, new java.sql.Date(spatialEntityToSave.validTo.getTime()));
+                statementInsertSpatialEntity.setString(8, spatialEntityToSave.description);
                 statementInsertSpatialEntity.executeUpdate();
             } finally {
                 statementInsertSpatialEntity.close();
