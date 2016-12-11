@@ -6,8 +6,6 @@
 package pdb.model.spatial;
 
 import java.util.ArrayList;
-import pdb.model.freeholder.FreeholderModel;
-import pdb.model.multimedial.Photo;
 import oracle.spatial.geometry.JGeometry;
 import java.util.Date;
 import javafx.scene.shape.LineTo;
@@ -16,12 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.PathElement;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 /**
- *
+ * Class which is inherited in other spatial entities
  * @author mmarus
  */
 public class SpatialEntity {
@@ -52,8 +49,9 @@ public class SpatialEntity {
         
     }
     
-    /*
-    * @param Rectangle newRectangle
+    /** createJGeometryFromShapes
+     * @param newShapes
+     * @return 
     */
     public static JGeometry createJGeometryFromShapes(Shapes newShapes) {
         if( newShapes == null)
@@ -102,8 +100,10 @@ public class SpatialEntity {
         return null;
     }
 
-    /*
-    * @param List<Circle> newPoints, String linesOrPoints
+    /** createJGeometryFromShapes
+     * @param newPoints
+     * @param linesOrPoints
+     * @return JGeometry
     */
     public static JGeometry createJGeometryFromShapes(List<Circle> newPoints, String linesOrPoints) {
         if( newPoints.size() < 1)
@@ -143,8 +143,9 @@ public class SpatialEntity {
         return newJgeometry;
     }
     
-    /*
-    * @param Rectangle newRectangle
+    /** createJGeometryFromShapes
+     * @param newRectangle
+     * @return JGeometry
     */
     public static JGeometry createJGeometryFromShapes(Rectangle newRectangle) {
         if( newRectangle == null)
@@ -163,8 +164,9 @@ public class SpatialEntity {
         return newJgeometry;
     }
     
-    /*
-    * @param Polygon newPolygon
+    /** createJGeometryFromShapes
+     * @param newPolygon
+     * @return JGeometry
     */
     public static JGeometry createJGeometryFromShapes(Polygon newPolygon) {
         if( newPolygon == null)
@@ -178,8 +180,9 @@ public class SpatialEntity {
         return newJgeometry;
     }
     
-    /*
-    * @param Circle newCircle
+    /** createJGeometryFromShapes
+     * @param newCircle
+     * @return JGeometry
     */
     public static JGeometry createJGeometryFromShapes(Circle newCircle) {
         if( newCircle == null)
@@ -196,6 +199,11 @@ public class SpatialEntity {
         return newJgeometry;
     }
             
+    /** toShapes create ImprovedShapes from the geometry, which will be used for drawing the entities on map
+     * @param spatialEntity
+     * @param entityOrEstate
+     * @return Shapes
+    */
     public Shapes toShapes(SpatialEntity spatialEntity, String entityOrEstate){
         Shapes shapes = new Shapes();
         
