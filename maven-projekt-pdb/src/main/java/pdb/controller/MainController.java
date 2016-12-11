@@ -49,8 +49,9 @@ import pdb.model.spatial.SpatialEntity;
 
 
 /**
- * 
- * @author gulan
+ * FXML Controller class
+ * Main Controller which controll main window of appliacation
+ * @author gulan and others
  */
 public class MainController implements Initializable {
 
@@ -65,11 +66,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Canvas canvas;
-    
-    // showed object on map in this date, Date si in format "dd. MM. yyyy"
 
     /**
-     *
+     * showed object on map in this date, Date si in format "dd. MM. yyyy"
      */
     public String dateOfCurrentlyShowedDatabaseSnapshot;
     
@@ -86,92 +85,92 @@ public class MainController implements Initializable {
     private AnchorPane mapPane;
     
     /**
-     *
+     * Anchor pane instance which represents modal window to connect to database
      */
     @FXML
     public AnchorPane databaseSettingsModal;
     
     /**
-     *
+     * Instance of Map Pane Controler, so we can use map in other controolers
      */
     @FXML 
     public MapPaneController mapPaneController;
     
     /**
-     *
+     * Instance of Add Entity Pane Controler, so we can use this contoller in other controolers
      */
     @FXML 
     public AddEntityPaneController addEntityPaneController;
     
     /**
-     *
+     * Instance of Entity Modification Pane Controler, so we can use this contoller in other controllers
      */
     @FXML 
     public EntityModificationPaneController entityModificationPaneController;
     
     /**
-     *
+     * Instance of Database SEtting Controller, so we can use this contoller in other controllers
      */
     @FXML 
     public DatabaseSettingsController databaseSettingsController;
     
     /**
-     *
+     * Instance of Free Holders Pane Controller, so we can use this contoller in other controllers
      */
     @FXML 
     public FreeholdersPaneController freeholdersPaneController;
     
     /**
-     *
+     * Instance of Time Pane Controller, so we can use this contoller in other controllers
      */
     @FXML 
     public TimePaneController timePaneController;
     
     /**
-     *
+     * Instance of Spatial Pane Controller, so we can use this contoller in other controllers
      */
     @FXML 
     public SpatialPaneController spatialPaneController;
     
     /**
-     *
+     * Check box indicates if user want to show underground layer of map 
      */
     @FXML
     public CheckBox undergroundCheckbox;
     
     /**
-     *
+     * Check box indicates if user want to show ground layer of map 
      */
     @FXML
     public CheckBox groundCheckbox;
     
     /**
-     *
+     * Check box indicates if user want to show overground layer of map 
      */
     @FXML
     public CheckBox overgroundCheckbox;
     
     /**
-     *
+     * Instance of MUltimedia Pane Controller, so we can use this contoller in other controllers
      */
     @FXML
     public MultimediaPaneController multimediaPaneController;
 
     /**
-     *
+     * Currently selected spatial entity by user on map
      */
     public SpatialEntity selectedSpatialEntity = null; 
 
     /**
-     *
+     * Originally (previously) selected spatial entity by user on map
      */
     public JGeometry originalSelectedSpatialEntityGeometry = null; 
 
     
     /**
      * Initializes the controller class.
-     * @param url
-     * @param rb
+     * @param url url
+     * @param rb resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -245,8 +244,8 @@ public class MainController implements Initializable {
     }
     
     /**
-     *
-     * @param event
+     * Initialize database by initializing SQL script and redraw map
+     * @param event action event
      */
     @FXML
     public void initializeClick(ActionEvent event)
@@ -258,8 +257,8 @@ public class MainController implements Initializable {
     }
     
     /**
-     *
-     * @param event
+     * Close program
+     * @param event action event
      */
     @FXML
     public void closeClick(ActionEvent event)
@@ -269,7 +268,7 @@ public class MainController implements Initializable {
     }
     
     /**
-     *
+     * Redraw map after database was initialized by SQL script
      */
     public void databaseInitialized()
     {
@@ -285,9 +284,10 @@ public class MainController implements Initializable {
     }
     
     /**
-     *
-     * @param t
-     * @param shape
+     * Handling input events (which come from MapPaneController and which are redirected here) for shape, especially mouseclick event
+     * This input events are next redirected to active Contoller (variable this.currentTitledPane)
+     * @param t input event
+     * @param shape shape on which event begin
      * @throws SQLException
      * @throws IOException
      */
@@ -361,8 +361,9 @@ public class MainController implements Initializable {
     }
     
     /**
-     *
-     * @param event
+     * This method is called when user click to appripiate checkbox to change visible lyer in map
+     * Method redraw map and show only layers which want user to show
+     * @param event action event
      * @throws SQLException
      */
     @FXML
@@ -377,8 +378,9 @@ public class MainController implements Initializable {
     }
     
     /**
-     *
-     * @param event
+     * Handling input events (which come from MapPaneController and which are redirected here) for map
+     * This input events are next redirected to active Contoller (variable this.currentTitledPane)
+     * @param event input event
      */
     public void handleInputEventForMap(InputEvent event) {
         switch (this.currentTitledPane) {
@@ -407,16 +409,18 @@ public class MainController implements Initializable {
     }
     
     /**
-     *
-     * @param state
+     * Method to change active controller to which redirect input events on map and on shapes
+     * @param state Contoller to which redirect inout events
+     * possible values: "DEFAULT", "Add entity", "Entity modification", "Multimedia", "Time", "Spatial", "Freeholders"
      */
     public void setCurrentTitledPane(String state) {
         this.currentTitledPane = state;
     }
     
     /**
-     *
-     * @param event
+     * Method which is called when user click on disconnet from DB
+     * Method reshow dialog window to connect to db
+     * @param event action event
      */
     @FXML
     public void disconnectClick(ActionEvent event)
@@ -427,8 +431,8 @@ public class MainController implements Initializable {
     }
     
     /**
-     *
-     * @param event
+     * For current time context (dateOfCurrentlyShowedDatabaseSnapshot) showe on map all valid objects for selected layers
+     * @param event action event
      */
     @FXML
     public void showAllObjectsInSelectedTimeContext(ActionEvent event) {
@@ -440,8 +444,8 @@ public class MainController implements Initializable {
     }
     
     /**
-     *
-     * @param spatialEntity
+     * Method to select certain spatial entity on map
+     * @param spatialEntity spatial entity which will be selected
      */
     public void setSelectedSpatialEntity(SpatialEntity spatialEntity) {
         

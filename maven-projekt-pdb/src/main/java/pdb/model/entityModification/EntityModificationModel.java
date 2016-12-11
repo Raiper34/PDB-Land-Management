@@ -26,7 +26,7 @@ import pdb.model.spatial.SpatialEntity;
 import pdb.model.time.TableViewItem;
 
 /**
- *
+ * Class which do backend operations for EntityModificationPaneController, especially operation deleteion in interval
  * @author jan
  */
 public class EntityModificationModel {
@@ -35,7 +35,7 @@ public class EntityModificationModel {
     private Connection conn;
 
     /**
-     *
+     * Contructor initialize internal attributes
      */
     public EntityModificationModel() {
         DB = DatabaseModel.getInstance();
@@ -43,10 +43,10 @@ public class EntityModificationModel {
     }
     
     /**
-     *
-     * @param spatialEntity
-     * @param from
-     * @param to
+     * Methos delete spatial Entity by its id in specified time interval
+     * @param spatialEntity Spatila Entity which we delete in specified interval
+     * @param from begin of deletion interval
+     * @param to end of deletion interval
      */
     public void deleteObjectInInterval(SpatialEntity spatialEntity, LocalDate from, LocalDate to) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MM. yyyy");
@@ -254,8 +254,8 @@ public class EntityModificationModel {
     }
     
     /**
-     *
-     * @param entity
+     * Method delete specified entity in DB
+     * @param entity entity to delete
      */
     public void deleteSpatialEntity(Entity entity) {
         try {
@@ -278,17 +278,17 @@ public class EntityModificationModel {
     }
     
     /**
-     *
-     * @param entity
+     * Method delete specified estate in DB
+     * @param estate estate to delete
      */
-    public void deleteSpatialEntity(Estate entity) {
+    public void deleteSpatialEntity(Estate estate) {
         try {
             DateFormat df = new SimpleDateFormat("dd. MM. yyyy");
 
             String sqlQuery = "DELETE FROM estates " +
-                    "WHERE id = "+ entity.id +" " + 
-                    "AND valid_from = TO_DATE('"+ df.format(entity.validFrom) +"', 'dd. mm. yyyy') " +
-                    "AND valid_to = TO_DATE('"+ df.format(entity.validTo) +"', 'dd. mm. yyyy')";
+                    "WHERE id = "+ estate.id +" " + 
+                    "AND valid_from = TO_DATE('"+ df.format(estate.validFrom) +"', 'dd. mm. yyyy') " +
+                    "AND valid_to = TO_DATE('"+ df.format(estate.validTo) +"', 'dd. mm. yyyy')";
 
             try (Statement stmt = DatabaseModel.getInstance().getConnection().createStatement()) {
                 stmt.executeUpdate(sqlQuery);

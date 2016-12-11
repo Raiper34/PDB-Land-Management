@@ -8,7 +8,7 @@ package pdb.model.spatial;
 import javafx.scene.paint.Color;
 
 /**
- *
+ * Class which contains color definition (stroke and fill) for all spatial entities which are drawed onto map 
  * @author jan
  */
 public class ShapesColorsDefinition {

@@ -11,29 +11,29 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.PathElement;
 
-/** Class Shapes represents lists of ImprovedCircles, ImprovedPaths, ImprovedPolygons
- *
+/** 
+ * Class Shapes represents lists of ImprovedCircles, ImprovedPaths, ImprovedPolygons
  * @author mmarus
  */
 public class Shapes {
 
     /**
-     *
+     * List of circles
      */
     public List<ImprovedCircle> circles;
 
     /**
-     *
+     * List of paths
      */
     public List<ImprovedPath> paths;
 
     /**
-     *
+     * List of polygons
      */
     public List<ImprovedPolygon> polygons;
     
     /**
-     *
+     * Constructor initialize internal attributes
      */
     public Shapes() {
         this.circles = new ArrayList<>();
@@ -41,19 +41,19 @@ public class Shapes {
         this.polygons = new ArrayList<>();
     }
     
-    /***
-     * addNewPath adds new path
-     * @param entityReference
-     * @param dbId
+    /**
+     * adds new path
+     * @param entityReference entity to which add new path
+     * @param dbId id of entity in db
      */
     public void addNewPath(Entity entityReference, int dbId) {
         paths.add(new ImprovedPath(entityReference, dbId));
     }
     
-    /***
+    /**
      * add Element To Last Path from the list of paths
-     * @param x
-     * @param y
+     * @param x x coordinate of point added to path
+     * @param y y coordinate of point added to path
      */
     public void addElementToLastPath(double x, double y) {
         if (paths.isEmpty())
@@ -68,7 +68,7 @@ public class Shapes {
         lastPath.getElements().add(newElement);
     }
     
-    /***
+    /**
      * get Last Path from the list of paths
      * @return ImprovedPath
      */

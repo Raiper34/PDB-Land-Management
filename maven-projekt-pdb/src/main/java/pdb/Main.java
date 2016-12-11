@@ -14,13 +14,13 @@ import javafx.stage.Stage;
 
 
 /**
- *
+ * Class in which starts application
  * @author jan
  */
 public class Main extends Application {
 
     /**
-     *
+     * Set Main FXML as primary stage
      * @param primaryStage
      * @throws Exception
      */
@@ -36,6 +36,7 @@ public class Main extends Application {
     }
 
     /**
+     * Entry point of application
      * @param args the command line arguments
      */
     public static void main(String[] args) {

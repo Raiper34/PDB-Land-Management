@@ -13,14 +13,14 @@ public class ImprovedPath extends Path {
     private Entity entityReference;
 
     /**
-     *
+     * id which has entity represented by path in db
      */
     public int dbId;
     
     /**
-     *
-     * @param entityReference
-     * @param dbId
+     * Constructor initialize internal attributes
+     * @param entityReference entity from which origin path
+     * @param dbId id which has entity represented by path in db
      */
     public ImprovedPath(Entity entityReference, int dbId) {
         super();
@@ -29,8 +29,8 @@ public class ImprovedPath extends Path {
     }
     
     /**
-     *
-     * @return
+     * return entity from which origin path
+     * @return entity from which origin path
      */
     public Entity getEntityReference() {
         return this.entityReference;

@@ -14,14 +14,14 @@ public class ImprovedCircle extends Circle {
     private Entity entityReference;
 
     /**
-     *
+     * id which has entity represented by circle in db
      */
     public int dbId;
     
     /**
-     *
-     * @param entityReference
-     * @param dbId
+     * Constructor initialize internal attributes
+     * @param entityReference entity from which origin circle
+     * @param dbId id which has entity represented by circle in db
      */
     public ImprovedCircle(Entity entityReference, int dbId) {
         super();
@@ -30,8 +30,8 @@ public class ImprovedCircle extends Circle {
     }
     
     /**
-     *
-     * @return
+     * return entity from which origin circle
+     * @return entity from which origin circle
      */
     public Entity getEntityReference() {
         return this.entityReference;

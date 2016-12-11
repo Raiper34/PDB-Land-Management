@@ -35,8 +35,8 @@ import pdb.model.spatial.ShapesColorsDefinition;
 
 /**
  * FXML Controller class
- *
- * @author gulan
+ * Map Pane Controller
+ * @author gulan and others
  */
 public class MapPaneController implements Initializable {
 
@@ -49,7 +49,7 @@ public class MapPaneController implements Initializable {
     List<Shape> shapes;
     
     /**
-     *
+     * Anchor pane which represents map
      */
     @FXML
     public AnchorPane mapa;
@@ -60,7 +60,7 @@ public class MapPaneController implements Initializable {
     public int cislo;
 
     /**
-     *
+     * MainController instance
      */
     public MainController mainController;
 
@@ -68,24 +68,24 @@ public class MapPaneController implements Initializable {
     private MainController fXMLController;
     
     /**
-     *
+     * array where first object is fill of last selcted object and second object is stroke of last selected object
      */
     public Paint[] arrPaintFillAndStrokeLastSelectedObject = new Paint[2];
 
     /**
-     *
+     * ID of last selected shape
      */
     public int lastSelectedShapeID = 0;
 
     /**
-     *
+     * Type of last selected entity (entity or estate)
      */
     public String lastSelectedEntityType = ""; // estate or entity
 
     /**
      * Initializes the controller class.
-     * @param url
-     * @param rb
+     * @param url url
+     * @param rb resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -100,7 +100,8 @@ public class MapPaneController implements Initializable {
         });
     }
 
-    /** add Entity To Map
+   /** 
+    * add Entity To Map
     * @param spatialEntityToAdd
     */
     public void addSpatialEntityToMap(Estate spatialEntityToAdd) {
@@ -108,7 +109,8 @@ public class MapPaneController implements Initializable {
         drawSpatialEntities();
     }
     
-    /** add Entity To Map
+   /** 
+    * add Entity To Map
     * @param spatialEntityToAdd
     */
     public void addSpatialEntityToMap(Entity spatialEntityToAdd) {
@@ -116,15 +118,17 @@ public class MapPaneController implements Initializable {
         drawSpatialEntities();
     }
     
-    /** removeShapeFromMap
-    * @param shapeToRemove
+   /** 
+    * remove Shape From Map
+    * @param shapeToRemove instance of Node which is determinate to remove from map
     */
     public void removeShapeFromMap(Node shapeToRemove) {
         mapa.getChildren().remove(shapeToRemove);
     }
     
-    /** removeShapesFromMap
-     * @param shapesToRemove
+   /** 
+    * remove Shapes From Map
+    * @param shapesToRemove instance of shape which contain shapes to remove
     */
     public void removeShapesFromMap(Shapes shapesToRemove) {
         for (ImprovedCircle shape : shapesToRemove.circles)
@@ -135,68 +139,71 @@ public class MapPaneController implements Initializable {
             removeShapeFromMap(shape);
     }
     
-    /**
-    * @param mainController
+   /**
+    * Save instance of Parent controller MainController
+    * @param mainController MainController instance
     */
     public void addParent(MainController mainController) {
         this.mainController = mainController;
     }
     
     /**
-     *
+     * Initialize spatial entities model
      */
     public void initializeSpatialEntitiesModel(){
         spatialEntitiesModel = new SpatialEntitiesModel();
     }
     
-    /** loadEstates from DB into estates variable
+   /** 
+    * LoadEstates from DB into estates variable
     */
     public void loadEstates() {
         estates = spatialEntitiesModel.getEstates();
     }
     
-    /** loadEstates from DB into estates variable on selected date
+   /** 
+    * loadEstates from DB into estates variable on selected date
     * @param dateSnapshot
     */
     public void loadEstates(String dateSnapshot) {
         estates = spatialEntitiesModel.getEstates(dateSnapshot);
     }
     
-    /** loadEstates with PreparedStatement
+   /** 
+    * Load Estates from DB into estates with PreparedStatement
     * @param preparedSQLToGetEstatesFromDB
     */
     public void loadEstates(PreparedStatement preparedSQLToGetEstatesFromDB) {
         estates = spatialEntitiesModel.getEstates(preparedSQLToGetEstatesFromDB);
     }
-
-    /* loadentities from DB into entities variable on selected date
-    */
-
-    /**
-     *
+   
+    /** 
+     * Load Entities from DB into estates variable
      */
-
     public void loadEntities() {
         entities = spatialEntitiesModel.getEntities();
     }
     
-    /** Load entities from DB into entities variable on selected date
-    * @param dateSnapshot
-    */
+    /** 
+     * Load entities from DB into entities variable on selected date
+     * @param dateSnapshot
+     */
     public void loadEntities(String dateSnapshot) {
         entities = spatialEntitiesModel.getEntities(dateSnapshot);
     }
     
-    /** Load entities from DB into entities variable on selected date
+    /** Load entities from DB into entities variable with PreparedStatement
      * @param preparedSQLToGetEntitiesFromDB
-    */
+     */
     public void loadEntities(PreparedStatement preparedSQLToGetEntitiesFromDB) {
         entities = spatialEntitiesModel.getEntities(preparedSQLToGetEntitiesFromDB);
     }
     
-    /** addShapeToMapAndSetListeners
-     * @param shape
-    */
+    /** 
+     * Add Shape To Map And Set Listeners on this shape
+     * This method is called when shapes are drawing onto map
+     * @param shape shape to add
+     */
     public void addShapeToMapAndSetListeners(Shape shape) {
         mapa.getChildren().add(shape);
         shape.addEventHandler(InputEvent.ANY, new EventHandler<InputEvent>()
@@ -442,15 +449,17 @@ public class MapPaneController implements Initializable {
         });
     }
     
-    /** clearMemoryAndMap clear map and memory
-    */
+    /** 
+     * clear map and memory
+     */
     public void clearMemoryAndMap()
     {
         this.clearMap();
     }
     
-    /** clearMap removes all the shapes from map
-    */
+    /**
+     * removes all the shapes from map
+     */
     public void clearMap()
     {
         this.mapa.getChildren().clear();
@@ -460,26 +469,29 @@ public class MapPaneController implements Initializable {
         lastSelectedEntityType = "";
     }
     
-    /** drawSpatialEntities draw all the spatial entities no matter what layer they are in
-    */
+    /** 
+     * Draw all the spatial entities no matter what layer they are in
+     */
     public void drawSpatialEntities(){
         this.drawSpatialEntitiesByLayer(true, true, true);
     }
     
-    /** drawSpatialEntities draw all the spatial entities in the selected layers
-     * @param underground
-     * @param ground
-     * @param overground
-    */
+    /** 
+     * Draw all the spatial entities in the selected layers
+     * @param underground draw entities in undreground layer
+     * @param ground draw entities in ground layer
+     * @param overground draw entities in overground layer
+     */
     public void drawSpatialEntities(boolean underground, boolean ground, boolean overground){
         this.drawSpatialEntitiesByLayer(underground, ground, overground);
     }
     
-    /** drawSpatialEntitiesByLayer draw all the spatial entities in the selected layers
-     * @param underground
-     * @param ground
-     * @param overground
-    */
+    /** 
+     * DrawSpatialEntitiesByLayer draw all the spatial entities in the selected layers
+     * @param underground draw entities in undreground layer
+     * @param ground draw entities in ground layer
+     * @param overground draw entities in overground layer
+     */
     public void drawSpatialEntitiesByLayer(boolean underground, boolean ground, boolean overground)
     {
         int tmpID = lastSelectedShapeID;
@@ -666,8 +678,9 @@ public class MapPaneController implements Initializable {
         }
     }
     
-    /** setOriginalColorOnPreviousSelectedObject
-    */
+    /** 
+     * Set Original Color (fill and stroke) On Previous Selected Object on map
+     */
     public void setOriginalColorOnPreviousSelectedObject() {
         for (Node node : mapa.getChildren()) {
             Shape shape = (Shape) node;
@@ -700,8 +713,9 @@ public class MapPaneController implements Initializable {
         }
     }
     
-    /** setColorToSelectedObject sets color to red of the selected object
-    */
+    /** 
+     *  Sets color (fill and stroke) to red of the selected object on map
+     */
     public void setColorToSelectedObject() {
         for (Node node : mapa.getChildren()) {
             Shape shape = (Shape) node;

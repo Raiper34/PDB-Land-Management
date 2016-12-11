@@ -7,7 +7,8 @@ package pdb.model.spatial;
 
 import javafx.scene.shape.Polygon;
 
-/** Class ImprovedPolygon represents polygon with extra reference to Entity by which it was created
+/** 
+ * Class ImprovedPolygon represents polygon with extra reference to Entity by which it was created
  * @author jan
  */
 public class ImprovedPolygon extends Polygon {
@@ -16,16 +17,16 @@ public class ImprovedPolygon extends Polygon {
     private boolean isEstate;
 
     /**
-     *
+     * id which has entity represented by polygon in db
      */
     public int dbId;
     
     /**
-     *
-     * @param isEstate
-     * @param entityReference
-     * @param estateReference
-     * @param dbId
+     * Constructor initialize internal attributes
+     * @param isEstate was polygon created from estate
+     * @param entityReference entity from which origin polygon
+     * @param estateReference estate from which origin polygon
+     * @param dbId id which has entity represented by polygon in db
      */
     public ImprovedPolygon(boolean isEstate, Entity entityReference, Estate estateReference, int dbId) {
         super();
@@ -36,24 +37,24 @@ public class ImprovedPolygon extends Polygon {
     }
     
     /**
-     *
-     * @return
+     * Return entity from which origin polygon
+     * @return entity from which origin polygon
      */
     public Entity getEntityReference() {
         return this.entityReference;
     }
     
     /**
-     *
-     * @return
+     * Return estate from which origin polygon
+     * @return estate from which origin polygon
      */
     public Estate getEstateReference() {
         return this.estateReference;
     }
     
     /**
-     *
-     * @return
+     * Return true if was polygon created from estate, otherwise return false
+     * @return true if was polygon created from estate, otherwise return false
      */
     public boolean isEstate() {
         return isEstate;

@@ -19,50 +19,50 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 /**
  * Class which is inherited in other spatial entities
- * @author mmarus
+ * @author mmarus and others
  */
 public class SpatialEntity {
     private static final int SRID = 0;
     private static final int DIMENSION = 2;
 
     /**
-     *
+     * id of Spatial entity in db
      */
     public int id;
 
     /**
-     *
+     * name of Spatial entity in db
      */
     public String name;
 
     /**
-     *
+     * description of Spatial entity in db
      */
     public String description; 
 
     /**
-     *
+     * geometry of Spatial entity in db
      */
     public JGeometry geometry;
 
     /**
-     *
+     * valid_from of Spatial entity in db
      */
     public Date validFrom;
 
     /**
-     *
+     * valid_to of Spatial entity in db
      */
     public Date validTo;
     
     /**
-     *
-     * @param id
-     * @param name
-     * @param description
-     * @param geometry
-     * @param validFrom
-     * @param validTo
+     * Constructor initialize internal attributes
+     * @param id id of Spatial entity in db
+     * @param name name of Spatial entity in db
+     * @param description description of Spatial entity in db
+     * @param geometry geometry of Spatial entity in db
+     * @param validFrom valid_from of Spatial entity in db
+     * @param validTo valid_to of Spatial entity in db
      */
     public SpatialEntity(
             int id, 
@@ -82,9 +82,9 @@ public class SpatialEntity {
         
     }
     
-    /** createJGeometryFromShapes
-     * @param newShapes
-     * @return 
+    /** create JGeometry From Shapes
+     * @param newShapes Shapes instance which contain Shapes from which we create new JGeometry
+     * @return created jGeometry
     */
     public static JGeometry createJGeometryFromShapes(Shapes newShapes) {
         if( newShapes == null)
@@ -133,10 +133,10 @@ public class SpatialEntity {
         return null;
     }
 
-    /** createJGeometryFromShapes
-     * @param newPoints
-     * @param linesOrPoints
-     * @return JGeometry
+    /** create JGeometry From Shapes which are points and lines
+     * @param newPoints points from which we create JGeometry
+     * @param linesOrPoints lines or points from which we create JGeometry
+     * @return created JGeometry
     */
     public static JGeometry createJGeometryFromShapes(List<Circle> newPoints, String linesOrPoints) {
         if( newPoints.size() < 1)
@@ -176,10 +176,11 @@ public class SpatialEntity {
         return newJgeometry;
     }
     
-    /** createJGeometryFromShapes
-     * @param newRectangle
-     * @return JGeometry
-    */
+    /**
+     * create JGeometry From Rectangle
+     * @param newRectangle REctangle from which we create JGeometry
+     * @return created JGeometry
+     */
     public static JGeometry createJGeometryFromShapes(Rectangle newRectangle) {
         if( newRectangle == null)
             return null;
@@ -197,10 +198,11 @@ public class SpatialEntity {
         return newJgeometry;
     }
     
-    /** createJGeometryFromShapes
-     * @param newPolygon
-     * @return JGeometry
-    */
+    /** 
+     * create JGeometry From Polygon
+     * @param newPolygon Polygon from which we create JGeometry
+     * @return created JGeometry
+     */
     public static JGeometry createJGeometryFromShapes(Polygon newPolygon) {
         if( newPolygon == null)
             return null;
@@ -213,10 +215,11 @@ public class SpatialEntity {
         return newJgeometry;
     }
     
-    /** createJGeometryFromShapes
-     * @param newCircle
-     * @return JGeometry
-    */
+    /** 
+     * create JGeometry From Circle
+     * @param newCircle Circle from which we create JGeometry
+     * @return created JGeometry
+     */
     public static JGeometry createJGeometryFromShapes(Circle newCircle) {
         if( newCircle == null)
             return null;
@@ -232,11 +235,12 @@ public class SpatialEntity {
         return newJgeometry;
     }
             
-    /** toShapes create ImprovedShapes from the geometry, which will be used for drawing the entities on map
-     * @param spatialEntity
-     * @param entityOrEstate
-     * @return Shapes
-    */
+    /** 
+     * Create ImprovedShapes from the geometry, which will be used for drawing the entities on map
+     * @param spatialEntity SpatialEntity instance (can be boxed Entity or Estate)
+     * @param entityOrEstate specified what is boxed in spatialEntity
+     * @return created Shapes
+     */
     public Shapes toShapes(SpatialEntity spatialEntity, String entityOrEstate){
         Shapes shapes = new Shapes();
         

@@ -20,7 +20,8 @@ import oracle.spatial.geometry.JGeometry;
 import pdb.model.DatabaseModel;
 import pdb.model.freeholder.Freeholder;
 
-/** Class SpatialEntitiesModel database model for Spatial entities
+/** 
+ * Class SpatialEntitiesModel database model for Spatial entities
  * Contains all the DB work for spatial entities
  * @author mmarus
  */
@@ -30,7 +31,8 @@ public class SpatialEntitiesModel {
     private Connection conn;
     private FreeholderModel freeholdersModel;
 
-    /** Constructor
+    /** 
+     * Constructor
      */
     public SpatialEntitiesModel() {
         DB = DatabaseModel.getInstance();
@@ -38,7 +40,8 @@ public class SpatialEntitiesModel {
         freeholdersModel = new FreeholderModel();
     }
 
-    /** updateSpatialEntity Update the original entity with new data from new entity to db
+    /** 
+     * Update the original entity with new data from new entity to db
      * @param originalSpatialEntity
      * @param spatialEntityToSave
      */
@@ -51,7 +54,8 @@ public class SpatialEntitiesModel {
         }
     }
     
-    /** updateSpatialEntity Update the original entity with new data from new entity to db
+    /** 
+     * Update the original entity with new data from new entity to db
      * @param originalSpatialEntity
      * @param spatialEntityToSave
      */
@@ -88,7 +92,8 @@ public class SpatialEntitiesModel {
         }
     }
     
-    /** updateSpatialEntity Update the original entity with new data from new entity to db
+    /** 
+     * Update the original entity with new data from new entity to db
      * @param originalSpatialEntity
      * @param spatialEntityToSave
      */
@@ -131,8 +136,9 @@ public class SpatialEntitiesModel {
         }
     }
     
-    /** saveSpatialEntityToDB Insert spatial entity to db
-     * @param spatialEntityToSave
+    /** 
+     * Insert spatial entity to db
+     * @param spatialEntityToSave Spatial entity to insert
      */
     public void saveSpatialEntityToDB(SpatialEntity spatialEntityToSave) {
         if(spatialEntityToSave instanceof Entity){
@@ -145,8 +151,9 @@ public class SpatialEntitiesModel {
             System.err.println("THE SPATIAL ENTITY IS NOT ENTITY NOR ESTATE");
     }
     
-    /** saveSpatialEntityToDB Insert spatial entity to db
-     * @param spatialEntityToSave
+    /** 
+     * Insert Estate to db
+     * @param spatialEntityToSave Estate to insert
      */
     public void saveSpatialEntityToDB(Estate spatialEntityToSave) {
         try{
@@ -186,8 +193,9 @@ public class SpatialEntitiesModel {
         }
     } 
     
-    /** saveSpatialEntityToDB Insert spatial entity to db
-     * @param spatialEntityToSave
+    /** 
+     * Insert Entity to db
+     * @param spatialEntityToSave Entity to insert
      */
     public void saveSpatialEntityToDB(Entity spatialEntityToSave) {
         try{
@@ -215,7 +223,8 @@ public class SpatialEntitiesModel {
         }
     }
     
-    /** getEntities get all entities from DB to List of Entity
+    /** 
+     * get all entities valid in currren time from DB to List of Entity
      * @return ArrayList
      */
     public List<Entity> getEntities() {
@@ -252,11 +261,12 @@ public class SpatialEntitiesModel {
         return entities;
     }
     
-    /** getEstateByIdWhichIntersectInterval get all entities from DB to List of Entity with the ID which
+    /** 
+     * get all entities from DB to List of Entity with the ID which
      * somehow exists in the selected interval
-     * @param ID
-     * @param from
-     * @param to
+     * @param ID id of estate in DB
+     * @param from begin of interval
+     * @param to end to interval
      * @return ArrayList
      */
     public List<Estate> getEstateByIdWhichIntersectInterval(int ID, Date from, Date to) {
@@ -307,11 +317,12 @@ public class SpatialEntitiesModel {
         return estates;
     }
     
-    /** getEntityByIdWhichIntersectInterval get all entities from DB to List of Entity with the ID which
+    /** 
+     * get all entities from DB to List of Entity with the ID which
      * somehow exists in the selected interval
-     * @param ID
-     * @param from
-     * @param to
+     * @param ID id of estate in DB
+     * @param from begin of interval
+     * @param to end to interval
      * @return ArrayList
      */
     public List<Entity> getEntityByIdWhichIntersectInterval(int ID, Date from, Date to) {
@@ -359,11 +370,11 @@ public class SpatialEntitiesModel {
         return entities;
     }
     
-     /** createEstate
-     * @param ID
-     * @param from
-     * @param to
-     * @return Estate
+     /** create Estate object from estate returned from db
+     * @param ID id of estate in DB
+     * @param from valid_from of estate in DB
+     * @param to valid_to of estate in DB
+     * @return created Estate
      */
     public Estate createEstate(int ID, Date from, Date to) {
         Estate estate = null;
@@ -403,11 +414,12 @@ public class SpatialEntitiesModel {
         return estate;
     }
     
-    /** createEntity
-     * @param ID
-     * @param from
-     * @param to
-     * @return Entity
+    /** 
+     * create Entity object from entity returned from db
+     * @param ID id of entity in DB
+     * @param from valid_from of entity in DB
+     * @param to valid_to of entity in DB
+     * @return created Entity
      */
     public Entity createEntity(int ID, Date from, Date to) {
         Entity entity = null;
@@ -446,7 +458,8 @@ public class SpatialEntitiesModel {
         return entity;
     }
     
-    /** getEntities which exist in the date
+    /** 
+     * get Entities which exist in the date Snapshot
      * @param dateSnapshot
      * @return ArrayList of entities
      */
@@ -482,7 +495,8 @@ public class SpatialEntitiesModel {
         return entities;
     }
 
-    /** getEntities by the prepared SQL statement
+    /** 
+     * get Entities by the prepared SQL statement
      * @param preparedSQLToGetEntitiesFromDB
      * @return ArrayList of entities
      */
@@ -514,7 +528,8 @@ public class SpatialEntitiesModel {
         return entities;
     }
     
-    /** getEstates get all the estates
+    /** 
+     * get all the estates from db for current time
      * @return ArrayList of Estate
      */
     public List<Estate> getEstates() {
@@ -554,10 +569,11 @@ public class SpatialEntitiesModel {
         return estates;
     }
     
-    /** getEstates get all the estates existing in the date
+    /**
+     * get all the estates existing in the date snaphot
      * @param dateSnapshot
-    * @return ArrayList of Estates
-    */
+     * @return ArrayList of Estates
+     */
     public List<Estate> getEstates(String dateSnapshot) {
         List<Estate> estates = new ArrayList<>();
 
@@ -591,10 +607,11 @@ public class SpatialEntitiesModel {
         return estates;
     }
     
-    /** getEstates get all the estates by preparedSQLToGetEstatesFromDB
+    /** 
+     * get all the estates by prepared statement
      * @param preparedSQLToGetEstatesFromDB
-    * @return ArrayList of Estates
-    */
+     * @return ArrayList of Estates
+     */
     public List<Estate> getEstates(PreparedStatement preparedSQLToGetEstatesFromDB) {
         List<Estate> estates = new ArrayList<>();
         
@@ -624,24 +641,27 @@ public class SpatialEntitiesModel {
         return estates;
     }
     
-   /** getNewIdForEntity
-     * @return 
+   /** 
+    * get New Id For Entity which we want to save in db
+    * @return new Id for entity which we want to save in db
     */
     public int getNewIdForEntity() {
         return getMaxIdFromTable("related_spatial_entities") + 1;
     }
     
-    /** getNewIdForEstate
-     * @return 
-    */
+    /** 
+     * get New Id For Estate which we want to save in db
+     * @return new Id for estate which we want to save in db 
+     */
     public int getNewIdForEstate() {
         return getMaxIdFromTable("estates") + 1;
     }
     
-    /* getMaxIdFromTable
-    * @param String table
-    * @return int
-    */
+    /**
+     * get Max Id From specified table
+     * @param String table can be "related_spatial_entities" or "estates"
+     * @return Max Id From specified Table
+     */
     private int getMaxIdFromTable(String table) {
         if (!"related_spatial_entities".equals(table) && !"estates".equals(table)){
             System.err.println("ERROR bad TABLE NAME");
