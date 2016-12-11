@@ -1,0 +1,28 @@
+xgulan00 100 %
+xherec00 100 %
+xmarus05 100 %
+
+Vedoucím projektu je Marek Marušič (xmarus05):
+-
+
+Jan Herec (xherec00): 
+- V inicializačním SQL skriptu řešil tvorbu tabulky related_spatial_entities (pro ukládání prostorových entit kromě pozemků) a naplnění tabulky daty
+- V uživatelké příručce řešil tyto kapitoly: Popis aplikace jako celku, Spatial záložka, Time záložka
+- V dokumentaci, která popisuje TSQL dotazy řešil dotazy na DELETE
+- Co se týče programové realizace řešil zejména:
+  - Vytvoření kostry programu v mavenu
+  - Převod objektů typu JGeometry na Shape a jejich vykreslení na mapu (včetně grafických udělátek, které zlepšují dojem z používání programu)
+  - Vytvořený frameworku pro přeposílání událostí z mapy do odpovídajícího (aktivního) kontroléru
+  - Záložku Time (kromě tabulky vlastníků daného pozemku), tedy zobrazení mapy v daném čase (zvolen pomocí TimePIckeru, Comboboxu nebo slideru) nebo zobrazení historie zvoleného objektu
+  - Záložku Spatial, tedy zjištění obvodu/délky/plochy vybraného objektu, dále měření vzdálenosti mezi objekty a poté vykreslení pozemků které prostorové interagují se zvolenými entitami
+  - V menu Map funcionalitakta která umožní pro zvolený čas zobrazit všechny objekty na mapě
+  - V Záložce freeholders se po kliknutí na příslušný pozemek zobrazí tento na mapě
+  - V Záložce Entity modification řešil temporální mazání zvoleného objektu v časovém intervalu
+  - Vytvoření odpovídajích tříd a metod, které řeší výše uvedenou funkcionalitu
+- A mnoho dalšího (kontrola/korektura výsledků práce druhých, apod.) 
+ 
+Filip Gulán (xgulan00):
+-
+
+Shrnutí:
+Práce na projektu probíhala průběžně (s vyjímkou období půlsemestrálních zkoušek). Spolupráce probíhala kontaktně prostřednictvím schůzek a vzdáleně pomocí FB a Trello. V každé fázi projektu se vždy potřebná práce rozvrhla (s cílem rovnoměrnosti) mezi všechny členy týmu.
