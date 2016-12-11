@@ -13,7 +13,7 @@ import javafx.scene.shape.PathElement;
 
 /**
  *
- * @author archie
+ * @author mmarus
  */
 public class Shapes {
     public List<ImprovedCircle> circles;

@@ -10,7 +10,7 @@ import oracle.spatial.geometry.JGeometry;
 
 /**
  *
- * @author archie
+ * @author mmarus
  */
 public class Entity extends SpatialEntity{
     private String entityType; 

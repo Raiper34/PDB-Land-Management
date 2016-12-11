@@ -27,7 +27,7 @@ import pdb.model.spatial.SpatialEntity;
 
 /**
  *
- * @author archie
+ * @author mmarus
  */
 public class SpatialEntitiesModel {
 

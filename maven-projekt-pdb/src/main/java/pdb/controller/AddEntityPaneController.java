@@ -38,7 +38,7 @@ import pdb.model.spatial.SpatialEntity;
 
 /**
  *
- * @author archie
+ * @author mmarus
  */
 public class AddEntityPaneController implements Initializable {
 

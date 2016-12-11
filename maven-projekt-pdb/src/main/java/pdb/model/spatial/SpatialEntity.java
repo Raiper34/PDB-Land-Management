@@ -22,7 +22,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 /**
  *
- * @author archie
+ * @author mmarus
  */
 public class SpatialEntity {
     private static final int SRID = 0;

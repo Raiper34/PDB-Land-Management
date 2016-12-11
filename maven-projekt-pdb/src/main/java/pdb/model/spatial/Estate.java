@@ -11,7 +11,7 @@ import pdb.model.freeholder.Freeholder;
 
 /**
  *
- * @author archie
+ * @author mmarus
  */
 public class Estate extends SpatialEntity{
     public Freeholder freeholder;
