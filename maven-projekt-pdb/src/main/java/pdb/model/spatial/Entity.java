@@ -8,8 +8,8 @@ package pdb.model.spatial;
 import java.util.Date;
 import oracle.spatial.geometry.JGeometry;
 
-/**
- *
+/** Class Entity represents entity and its values - lake, house etc
+ * Can generate shapes from its geometry
  * @author mmarus
  */
 public class Entity extends SpatialEntity{

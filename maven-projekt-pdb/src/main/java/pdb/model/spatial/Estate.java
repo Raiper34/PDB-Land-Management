@@ -9,8 +9,8 @@ import java.util.Date;
 import oracle.spatial.geometry.JGeometry;
 import pdb.model.freeholder.Freeholder;
 
-/**
- *
+/** Class Estate represents estates and its values
+ * Can generate shapes from its geometry
  * @author mmarus
  */
 public class Estate extends SpatialEntity{

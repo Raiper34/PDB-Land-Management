@@ -37,7 +37,8 @@ import pdb.model.spatial.Shapes;
 import pdb.model.spatial.SpatialEntity;
 
 /**
- *
+ * FXML Controller class
+ * Add Entity Pane Controller
  * @author mmarus
  */
 public class AddEntityPaneController implements Initializable {

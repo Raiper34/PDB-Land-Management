@@ -7,8 +7,7 @@ package pdb.model.spatial;
 
 import javafx.scene.shape.Polygon;
 
-/**
- *
+/** Class ImprovedPolygon represents polygon with extra reference to Entity by which it was created
  * @author jan
  */
 public class ImprovedPolygon extends Polygon {

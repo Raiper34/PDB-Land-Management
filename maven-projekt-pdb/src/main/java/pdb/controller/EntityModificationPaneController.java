@@ -49,7 +49,8 @@ import pdb.model.spatial.Estate;
 import pdb.model.spatial.SpatialEntitiesModel;
 
 /**
- *
+ * FXML Controller class
+ * Entity Modification Pane Controller
  * @author mmarus
  */
 public class EntityModificationPaneController implements Initializable {
