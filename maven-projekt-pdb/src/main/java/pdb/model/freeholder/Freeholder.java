@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdb.model.freeholder;
 
 import java.sql.Connection;
@@ -18,7 +13,7 @@ import pdb.model.DatabaseModel;
 import pdb.model.spatial.Estate;
 
 /**
- *
+ * Freeholder classs
  * @author gulan
  */
 public class Freeholder 
@@ -68,6 +63,13 @@ public class Freeholder
     public Date dateWasFreeholderOfEstateTo;
     
     
+    /**
+     * Constructor
+     * @param id
+     * @param first_name
+     * @param surname
+     * @param birthDate 
+     */
     Freeholder(int id, String first_name, String surname, String birthDate)
     {
         this.id = id;
@@ -79,8 +81,8 @@ public class Freeholder
     }
     
     /**
-     *
-     * @return
+     * Get name of freeholder 
+     * @return string
      */
     public String getName() 
     {
@@ -88,7 +90,7 @@ public class Freeholder
     }
     
     /**
-     *
+     * Set name of freeholder
      * @param fName
      */
     public void setName(String fName) 
@@ -97,8 +99,8 @@ public class Freeholder
     }
     
     /**
-     *
-     * @return
+     * Get birthDate of freeholder
+     * @return string
      */
     public String getBirthDateP() 
     {
@@ -106,8 +108,8 @@ public class Freeholder
     }
     
     /**
-     *
-     * @return
+     * Get was freeholder of estate from
+     * @return date
      */
     public String getWasFreeholderOfEstateFrom()
     {
@@ -115,8 +117,8 @@ public class Freeholder
     }
     
     /**
-     *
-     * @return
+     * Get was freeholder of estate to
+     * @return date
      */
     public String getWasFreeholderOfEstateTo()
     {
@@ -124,7 +126,7 @@ public class Freeholder
     }
     
     /**
-     *
+     * Get freeholders owned estates
      * @return
      * @throws SQLException
      */
@@ -154,23 +156,7 @@ public class Freeholder
                     Date valid_to = (Date) rset.getDate("valid_to");
                     estate = new Estate(id, name, description, null, valid_from, valid_to, null);
                     estates.add(estate);
-                    /*int id = (int) rset.getInt("id");
-                    String name = (String) rset.getString("name");
-                    String description = (String) rset.getString("description");
-                    Date valid_from = (Date) rset.getDate("valid_from");
-                    Date valid_to = (Date) rset.getDate("valid_to");
-                    tempEstate = new Estate(id, name, description, null, valid_from, valid_to, null);
-                    if(estate == null)
-                    {
-                        estate = tempEstate;
-                    }
-                    else
-                    {
-                        if(tempEstate.validFrom > estate.validTo.)
-                        {
-                            
-                        }
-                    }*/
+                    
                 }
             } 
             finally 
@@ -186,6 +172,10 @@ public class Freeholder
         return estates;
     }
     
+    /**
+     * To string method
+     * @return String firstname + surname
+     */
     public String toString() 
     { 
         return this.first_name + " " + this.surname;
